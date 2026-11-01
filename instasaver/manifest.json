@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "InstaSaver \u2014 Free Social HD Media Inspector, Hashtag Extractor & 9:16 Preview",
+  "short_name": "InstaSaver",
+  "version": "1.0.0",
+  "description": "100% Free Inssist Pro alternative: Inspect HD social images/videos, extract #hashtags & @mentions in 1 click, and toggle a 9:16 mobile creator frame.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "InstaSaver \u2014 Social HD Media & Hashtag Inspector",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

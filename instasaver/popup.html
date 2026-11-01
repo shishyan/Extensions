@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>InstaSaver — Social HD Media Inspector, Hashtag Extractor & 9:16 Preview</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 400px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  h2 { margin: 0; font-size: 16px; color: #f472b6; }
+  .badge { background: rgba(236,72,153,0.2); color: #f9a8d4; border: 1px solid rgba(236,72,153,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  .lbl { font-size: 10px; font-weight: 700; color: #94a3b8; margin: 6px 0 4px; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; font-size: 11px; max-height: 110px; overflow-y: auto; line-height: 1.45; }
+  .btns { display: flex; gap: 6px; margin-top: 8px; }
+  button.primary { flex: 1.3; background: #ec4899; color: #fff; border: none; border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 800; cursor: pointer; }
+  button.sec { flex: 1; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="hdr">
+    <h2>📸 InstaSaver</h2>
+    <span class="badge">Inssist Pro Unlocked</span>
+  </div>
+  <p class="sub">HD Social Media Asset Inspector • Hashtag & Mention Extractor • 9:16 Preview</p>
+
+  <div class="lbl">DETECTED MEDIA ASSETS (IMAGES / REELS / POSTERS)</div>
+  <div class="box" id="assetsBox">Scanning active feed for HD media assets…</div>
+
+  <div class="lbl">EXTRACTED #HASHTAGS & @MENTIONS</div>
+  <div class="box" id="tagsBox" style="color:#f472b6;">#ai #creators #reels #growth #viral</div>
+
+  <div class="btns">
+    <button class="primary" id="copyTagsBtn">📋 Copy Hashtags</button>
+    <button class="sec" id="toggle916Btn">📱 Toggle 9:16 View</button>
+    <button class="sec" id="copyAssetsBtn">🔗 Copy URLs</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

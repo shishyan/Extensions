@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AhrefBacklink — Anchor Text & Broken Link Scanner</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 385px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #fb923c; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(234,88,12,0.2); color: #fdba74; border: 1px solid rgba(234,88,12,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .stats { display: flex; justify-content: space-between; background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 6px 10px; margin-bottom: 8px; font-size: 11px; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; max-height: 200px; overflow-y: auto; font-size: 11px; }
+  .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .row:last-child { border-bottom: none; }
+  .btns { display: flex; gap: 6px; margin-top: 9px; }
+  button.act { flex: 1; background: #ea580c; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+  button.act.sec { background: #334155; }
+</style>
+</head>
+<body>
+  <h2><span>🔗 AhrefBacklink</span><span class="badge">Ahrefs Toolbar Free</span></h2>
+  <p class="sub">Outbound Link Analyzer, Anchor Distribution & 404 Broken Scanner</p>
+
+  <div class="stats">
+    <span id="totSpan">🔗 Total Links: 0</span>
+    <span id="brkSpan" style="color:#fca5a5;">⚠️ Broken/Empty: 0</span>
+  </div>
+
+  <div id="anchorBox" class="box">Scanning page links and anchor text distribution...</div>
+
+  <div class="btns">
+    <button id="scanBtn" class="act">🔍 Scan Broken Links</button>
+    <button id="csvBtn" class="act sec">⬇️ Export Anchors .CSV</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

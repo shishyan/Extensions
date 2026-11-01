@@ -1,0 +1,34 @@
+.sortfeed-toolbar {
+  position: fixed;
+  left: 16px;
+  top: 14px;
+  z-index: 2147483645;
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #f97316;
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.4);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+}
+
+.sortfeed-toolbar button {
+  background: #f97316;
+  color: #0f172a;
+  border: none;
+  border-radius: 999px;
+  padding: 3px 9px;
+  font-size: 10.5px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.sortfeed-winner {
+  outline: 2px solid #f97316 !important;
+  position: relative !important;
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SortFeed — Social & Video Feed Sorter & Viral Outlier Ranker</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 400px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  h2 { margin: 0; font-size: 16px; color: #fb923c; }
+  .badge { background: rgba(249,115,22,0.2); color: #fdba74; border: 1px solid rgba(249,115,22,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  .btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 8px; }
+  button.primary { background: #f97316; color: #0f172a; border: none; border-radius: 6px; padding: 7px 6px; font-size: 11px; font-weight: 800; cursor: pointer; }
+  button.sec { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; padding: 7px 6px; font-size: 11px; font-weight: 700; cursor: pointer; }
+  #leaderboard { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; height: 185px; overflow-y: auto; font-size: 11px; line-height: 1.45; }
+  .row-item { padding: 5px 4px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; gap: 8px; }
+</style>
+</head>
+<body>
+  <div class="hdr">
+    <h2>🔥 SortFeed</h2>
+    <span class="badge">SortFeed Paid Unlocked</span>
+  </div>
+  <p class="sub">1-Click Social & Video Feed Sorter • Viral Outlier Multiplier • CSV Exporter</p>
+
+  <div class="btns">
+    <button class="primary" id="sortViewsBtn">🔥 Sort by Views</button>
+    <button class="sec" id="sortViralBtn">⚡ Viral Outliers</button>
+    <button class="sec" id="exportCsvBtn">⬇️ Export CSV</button>
+  </div>
+
+  <div id="leaderboard">Ranking feed items on active tab…</div>
+  <script src="popup.js"></script>
+</body>
+</html>

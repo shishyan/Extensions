@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "MozAuthority \u2014 Free DA/PA Estimator, Link Type Highlighter & Meta Inspector",
+  "short_name": "MozAuthority",
+  "version": "1.0.0",
+  "description": "100% Free MozBar Premium alternative: Instant Domain/Page Authority (DA/PA) scorer, visual Dofollow/Nofollow/Sponsored link highlighter & HTTP meta inspector.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "MozAuthority \u2014 DA/PA Estimator & Link Highlighter",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

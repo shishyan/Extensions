@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>UberSuggest — Keyword Multiplier & CPC/SD Scorer</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 385px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #fcd34d; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(217,119,6,0.22); color: #fde68a; border: 1px solid rgba(245,158,11,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .search-bar { display: flex; gap: 6px; margin-bottom: 8px; }
+  input { flex: 1; background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 7px 9px; font-size: 12px; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; max-height: 210px; overflow-y: auto; font-size: 11px; }
+  .row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .row:last-child { border-bottom: none; }
+  button.act { background: #d97706; color: #fff; border: none; padding: 7px 11px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <h2><span>💡 UberSuggest</span><span class="badge">Ubersuggest Pro Free</span></h2>
+  <p class="sub">Multi-Engine Keyword Multiplier, CPC ($) & SEO Difficulty (SD)</p>
+
+  <div class="search-bar">
+    <input id="seedInput" value="ai agents" placeholder="Enter seed keyword..." />
+    <button id="goBtn" class="act">Multiply</button>
+  </div>
+
+  <div id="kwBox" class="box"></div>
+  <button id="copyBriefBtn" class="act" style="width:100%;margin-top:8px;">📋 Copy SEO Content Brief (.MD)</button>
+  <script src="popup.js"></script>
+</body>
+</html>

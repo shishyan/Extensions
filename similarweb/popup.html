@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SimilarWeb — Domain Traffic Tier & Referral Mapper</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #60a5fa; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(37,99,235,0.2); color: #93c5fd; border: 1px solid rgba(59,130,246,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 8px; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; text-align: center; }
+  .lbl { font-size: 10px; color: #94a3b8; }
+  .val { font-size: 14px; font-weight: 800; color: #60a5fa; margin-top: 2px; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; font-size: 11px; }
+  .row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+  button.act { width: 100%; background: #2563eb; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <h2><span>🌐 SimilarWeb</span><span class="badge">Similarweb Pro Free</span></h2>
+  <p class="sub">Domain Traffic Tier, Engagement Matrix & Outbound Referral Mapper</p>
+
+  <div class="grid">
+    <div class="box"><div class="lbl">Est. Monthly Visits</div><div class="val" id="vVal">2.4M</div></div>
+    <div class="box"><div class="lbl">Bounce Rate</div><div class="val" id="bVal">36%</div></div>
+    <div class="box"><div class="lbl">Pages / Visit</div><div class="val" id="pVal">4.4</div></div>
+    <div class="box"><div class="lbl">Avg. Visit Duration</div><div class="val" id="dVal">04:18</div></div>
+  </div>
+
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:5px;color:#93c5fd;">📊 Traffic Channel Distribution</div>
+    <div class="row"><span>🔍 Organic Search:</span><strong id="chSearch">42%</strong></div>
+    <div class="row"><span>🎯 Direct Traffic:</span><strong id="chDirect">38%</strong></div>
+    <div class="row"><span>💬 Social Networks:</span><strong id="chSocial">12%</strong></div>
+    <div class="row" style="margin-bottom:0;"><span>🔗 Outbound/Referrals:</span><strong id="chRef">8%</strong></div>
+  </div>
+
+  <button id="copyBtn" class="act">📋 Copy Domain Intelligence Report</button>
+  <script src="popup.js"></script>
+</body>
+</html>

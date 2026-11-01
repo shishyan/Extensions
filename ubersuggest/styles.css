@@ -1,0 +1,26 @@
+#ubersuggest-widget {
+  background: linear-gradient(145deg, #0f172a 0%, #451a03 100%);
+  color: #f8fafc;
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+}
+
+#ubersuggest-widget .us-head {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 800;
+  color: #fcd34d;
+  margin-bottom: 6px;
+}
+
+#ubersuggest-widget .us-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+  font-size: 11px;
+  color: #e2e8f0;
+}

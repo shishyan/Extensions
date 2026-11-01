@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "SimilarWeb \u2014 Free Domain Traffic Tier, Channel Mix & Referral Ecosystem Mapper",
+  "short_name": "SimilarWeb",
+  "version": "1.0.0",
+  "description": "100% Free Similarweb Pro alternative: Instant domain traffic tier estimator, engagement & bounce metrics, channel mix breakdown & outbound referral mapper.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "SimilarWeb \u2014 Domain Traffic Tier & Referral Mapper",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "similarweb@gurukuladesam.org",
+      "strict_min_version": "109.0"
+    }
+  }
+}

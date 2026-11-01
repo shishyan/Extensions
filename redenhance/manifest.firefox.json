@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "RedEnhance \u2014 Free Forum Thread Filter, OP/Link/Code Finder & Image Zoomer",
+  "short_name": "RedEnhance",
+  "version": "1.0.0",
+  "description": "100% Free Reddit Enhancement Suite Pro alternative: Filter discussions by High-Signal, OP/Author, Links, or Code blocks, plus inline image zoom & MD export.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "RedEnhance \u2014 High-Signal Forum & Thread Enhancer",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "redenhance@gurukuladesam.org",
+      "strict_min_version": "109.0"
+    }
+  }
+}

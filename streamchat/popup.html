@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>StreamChat — Live Stream Chat Q&A Filter, Spam Blocker & Cinema Mode</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 400px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  h2 { margin: 0; font-size: 16px; color: #c084fc; }
+  .badge { background: rgba(147,51,234,0.2); color: #d8b4fe; border: 1px solid rgba(147,51,234,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 8px; }
+  .m-card { background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 6px; text-align: center; font-size: 10.5px; }
+  .m-card strong { display: block; font-size: 14px; color: #c084fc; }
+  .lbl { font-size: 10px; font-weight: 700; color: #94a3b8; margin-bottom: 4px; }
+  #qaList { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; height: 155px; overflow-y: auto; font-size: 11px; line-height: 1.45; white-space: pre-wrap; }
+  .btns { display: flex; gap: 6px; margin-top: 8px; }
+  button.primary { flex: 1.3; background: #9333ea; color: #fff; border: none; border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 800; cursor: pointer; }
+  button.sec { flex: 1; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="hdr">
+    <h2>💬 StreamChat</h2>
+    <span class="badge">7TV + BetterTTV Pro Unlocked</span>
+  </div>
+  <p class="sub">Live Stream Viewer Q&A Extractor • Duplicate Spam Blocker • Cinema Mode</p>
+
+  <div class="metrics">
+    <div class="m-card"><strong id="mpmVal">48</strong>Msgs / Min</div>
+    <div class="m-card"><strong id="qaCount">2</strong>Viewer Q&As</div>
+    <div class="m-card"><strong id="spamCount">0</strong>Spam Blocked</div>
+  </div>
+
+  <div class="lbl">❓ EXTRACTED VIEWER QUESTIONS (HIGH PRIORITY)</div>
+  <div id="qaList">Scanning live chat for viewer questions…</div>
+
+  <div class="btns">
+    <button class="primary" id="cinemaBtn">🎬 Toggle Cinema Mode</button>
+    <button class="sec" id="refreshBtn">🔄 Rescan Chat</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
