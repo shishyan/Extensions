@@ -1043,9 +1043,8 @@
           <button class="tm-tab-btn ${activeTab === "ai" ? "active" : ""}" data-wtab="ai">✨ AI Titles & Desc</button>
         </div>
         ${tabBody}
-        <div style="margin-top:8px;padding-top:6px;border-top:1px solid rgba(148,163,184,0.1);display:flex;justify-content:space-between;font-size:10px;color:#64748b;">
-          <span>100% Free Forever · Zero Paywalls</span>
-          <a href="https://influenzian-group.gitlab.io/Extensions/donate.html" target="_blank" rel="noopener" style="color:#94a3b8;text-decoration:none;">☕ Support Open Tools (Optional)</a>
+        <div style="margin-top:8px;text-align:right;">
+          <a href="https://influenzian-group.gitlab.io/Extensions/donate.html" target="_blank" rel="noopener" style="display:inline-block;padding:3px 9px;border-radius:6px;background:rgba(30,41,59,0.7);border:1px solid rgba(148,163,184,0.2);color:#94a3b8;font-size:10.5px;font-weight:600;text-decoration:none;">Donate</a>
         </div>
       `;
 
