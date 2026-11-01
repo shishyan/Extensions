@@ -1,9 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "TubeMetrix \u2014 Free YouTube SEO, Outlier Finder & Studio AI Suite",
+  "name": "TubeMetrix — Full YouTube SEO, Outlier, Competitor & Studio Suite",
   "short_name": "TubeMetrix",
-  "version": "99.0.0",
-  "description": "Surpasses vidIQ Max, TubeBuddy Legend & 1of10: Top-bar Live VPH, Search Keyword Inspector, 100-pt SEO Scorecard, Tag Generator, AI Title Studio & Thumbnail Downloader.",
+  "version": "100.2.0",
+  "update_url": "file:///opt/google/chrome/tubemetrix-store/updates.xml",
+  "description": "100% Free Full-Featured Replacement for vidIQ Max, TubeBuddy Legend & 1of10: Real SERP Keyword Engine, Tag Ranks, Outliers, Transcript/Chapters, Comment Insights, Channel Audit & Studio AI.",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -11,13 +12,14 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "TubeMetrix \u2014 Free YouTube SEO & Outlier Suite",
+    "default_title": "TubeMetrix — YouTube Growth & Outlier Command Center",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
       "128": "icons/icon128.png"
     }
   },
+  "options_page": "options.html",
   "background": {
     "service_worker": "background.js"
   },
@@ -36,13 +38,25 @@
       "run_at": "document_idle"
     }
   ],
-  "permissions": [
-    "storage",
-    "clipboardWrite"
-  ],
   "host_permissions": [
     "https://suggestqueries.google.com/*",
     "https://www.youtube.com/*",
-    "https://studio.youtube.com/*"
+    "https://studio.youtube.com/*",
+    "https://i.ytimg.com/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "yt_api_rules",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "clipboardWrite",
+    "declarativeNetRequestWithHostAccess"
   ]
 }

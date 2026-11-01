@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TubeMetrix Studio Command Center — Full YouTube Intelligence Suite</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #070b14;
+      color: #f8fafc;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: 100vh;
+    }
+    aside {
+      background: #0f172a;
+      border-right: 1px solid #1e293b;
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .logo {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 18px;
+      background: linear-gradient(90deg, #38bdf8, #818cf8, #e879f9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .side-btn {
+      text-align: left;
+      background: transparent;
+      color: #94a3b8;
+      border: 1px solid transparent;
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .side-btn:hover { background: #1e293b; color: #fff; }
+    .side-btn.active {
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: #fff;
+    }
+    main {
+      padding: 32px 40px;
+      max-width: 1200px;
+    }
+    .section { display: none; }
+    .section.active { display: block; }
+    h1 { font-size: 26px; font-weight: 900; margin-bottom: 6px; }
+    .sub { color: #94a3b8; font-size: 14px; margin-bottom: 22px; }
+    .bar { display: flex; gap: 10px; margin-bottom: 20px; }
+    input, textarea, select {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 11px 14px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+    }
+    input:focus, textarea:focus { border-color: #6366f1; }
+    .btn {
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 18px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .btn-emerald { background: linear-gradient(135deg, #059669, #10b981); }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
+    .stat-card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .stat-val { font-size: 26px; font-weight: 900; color: #38bdf8; }
+    .stat-lbl { font-size: 11.5px; color: #94a3b8; text-transform: uppercase; margin-top: 4px; font-weight: 700; }
+    .panel {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    th, td { padding: 11px 12px; text-align: left; border-bottom: 1px solid #1e293b; }
+    th { color: #94a3b8; font-size: 11px; text-transform: uppercase; }
+    .swipe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .swipe-card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .swipe-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+    .swipe-card-body { padding: 12px; }
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="logo">⚡ TubeMetrix Studio</div>
+    <button class="side-btn active" data-sec="kw">🔍 Keyword & SERP Explorer</button>
+    <button class="side-btn" data-sec="ideas">💡 Daily Viral Ideas</button>
+    <button class="side-btn" data-sec="comp">⚔️ Competitor Benchmark</button>
+    <button class="side-btn" data-sec="ab">🧪 A/B Title & Thumb Lab</button>
+    <button class="side-btn" data-sec="swipe">★ Outlier Swipe File</button>
+  </aside>
+
+  <main>
+    <!-- 1. KEYWORDS -->
+    <section id="sec-kw" class="section active">
+      <h1>Keyword & Real SERP Intelligence</h1>
+      <p class="sub">Scrapes live YouTube search results + multi-intent autocomplete to compute real Search Demand, Title Saturation, and Hidden Gems.</p>
+      <div class="bar">
+        <input id="d-kw-in" style="flex:1;" value="youtube shorts growth" placeholder="Enter seed keyword or topic..." />
+        <button id="d-kw-btn" class="btn">Analyze Live SERP</button>
+        <button id="d-kw-csv" class="btn btn-emerald">📥 Export Keywords CSV</button>
+      </div>
+      <div class="grid-4">
+        <div class="stat-card"><div id="d-opp" class="stat-val" style="color:#10b981">--</div><div class="stat-lbl">Overall Opportunity</div></div>
+        <div class="stat-card"><div id="d-dem" class="stat-val">--</div><div class="stat-lbl">Search Demand</div></div>
+        <div class="stat-card"><div id="d-cmp" class="stat-val" style="color:#f59e0b">--</div><div class="stat-lbl">Competition Score</div></div>
+        <div class="stat-card"><div id="d-med" class="stat-val" style="color:#a78bfa">--</div><div class="stat-lbl">SERP Median Views</div></div>
+      </div>
+      <div class="panel">
+        <table>
+          <thead><tr><th>Keyword (Click to Copy)</th><th>Category</th><th>Est. Monthly Vol</th><th>Demand</th><th>Competition</th><th>Opportunity</th></tr></thead>
+          <tbody id="d-kw-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 2. DAILY IDEAS -->
+    <section id="sec-ideas" class="section">
+      <h1>Daily View-Predicted Video Ideas</h1>
+      <p class="sub">Combines low-competition Hidden Gems in your niche with high-CTR outlier title frameworks.</p>
+      <div class="bar">
+        <input id="d-idea-in" style="flex:1;" value="artificial intelligence" placeholder="Enter your channel niche..." />
+        <button id="d-idea-btn" class="btn btn-emerald">✨ Generate 10 Fresh Ideas</button>
+      </div>
+      <div id="d-ideas-box" class="panel"></div>
+    </section>
+
+    <!-- 3. COMPETITORS -->
+    <section id="sec-comp" class="section">
+      <h1>Competitor Channel Spy & Outlier Radar</h1>
+      <p class="sub">Track any YouTube @channel to monitor their Median Views, Average VPH, 30-Day Upload Velocity, and #1 Breakout Outlier Video.</p>
+      <div class="bar">
+        <input id="d-comp-in" style="flex:1;" placeholder="Enter channel @handle (e.g. @fireship, @veritasium)..." />
+        <button id="d-comp-btn" class="btn">➕ Add & Audit Competitor</button>
+      </div>
+      <div id="d-comp-box"></div>
+    </section>
+
+    <!-- 4. A/B TITLE & THUMBNAIL LAB -->
+    <section id="sec-ab" class="section">
+      <h1>A/B Title CTR Scorer & Thumbnail Simulator</h1>
+      <p class="sub">Compare two Title + Thumbnail variants side-by-side before publishing to maximize Click-Through Rate.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div class="panel">
+          <h3 style="margin-bottom:10px;color:#38bdf8;">Variant A</h3>
+          <input id="ab-t-a" style="width:100%;margin-bottom:10px;" value="How to Learn Python Fast in 2026" />
+          <input id="ab-i-a" style="width:100%;margin-bottom:12px;" value="https://i.ytimg.com/vi/x7X9w_GIm1s/maxresdefault.jpg" placeholder="Thumbnail URL A..." />
+          <img id="ab-img-a" src="https://i.ytimg.com/vi/x7X9w_GIm1s/maxresdefault.jpg" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;" />
+          <div id="ab-title-preview-a" style="font-weight:800;font-size:15px;margin-top:10px;"></div>
+          <div id="ab-score-a" style="margin-top:10px;font-weight:900;color:#10b981;font-size:18px;"></div>
+        </div>
+        <div class="panel">
+          <h3 style="margin-bottom:10px;color:#e879f9;">Variant B</h3>
+          <input id="ab-t-b" style="width:100%;margin-bottom:10px;" value="I Learned Python in 7 Days — Copy My Exact Roadmap (2026)" />
+          <input id="ab-i-b" style="width:100%;margin-bottom:12px;" value="https://i.ytimg.com/vi/x7X9w_GIm1s/maxresdefault.jpg" placeholder="Thumbnail URL B..." />
+          <img id="ab-img-b" src="https://i.ytimg.com/vi/x7X9w_GIm1s/maxresdefault.jpg" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;" />
+          <div id="ab-title-preview-b" style="font-weight:800;font-size:15px;margin-top:10px;"></div>
+          <div id="ab-score-b" style="margin-top:10px;font-weight:900;color:#10b981;font-size:18px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. SWIPE FILE -->
+    <section id="sec-swipe" class="section">
+      <h1>Saved Outlier Swipe File</h1>
+      <p class="sub">Every video you star (★) on YouTube Home, Search, or Channel pages is saved here for title & thumbnail inspiration.</p>
+      <div id="d-swipe-grid" class="swipe-grid"></div>
+    </section>
+  </main>
+
+  <script src="options.js"></script>
+</body>
+</html>
