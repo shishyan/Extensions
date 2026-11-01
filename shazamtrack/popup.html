@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ShazamTrack — Media & Audio Stream Inspector</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 14px;
+      width: 380px;
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 12px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #334155;
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .meta-line {
+      margin-bottom: 4px;
+      color: #e2e8f0;
+    }
+    .links-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .links-row a {
+      flex: 1;
+      text-align: center;
+      background: #0f172a;
+      border: 1px solid #38bdf8;
+      color: #7dd3fc;
+      text-decoration: none;
+      padding: 5px 6px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 11px;
+    }
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      height: 85px;
+      background: #0f172a;
+      color: #e2e8f0;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      resize: none;
+    }
+    button {
+      width: 100%;
+      background: #0284c7;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 10px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="title">🎵 ShazamTrack Inspector</div>
+      <div style="font-size:11px;color:#94a3b8;">Audio/Video Stream Metadata & Credits Finder</div>
+    </div>
+    <span id="streamBadge" style="background:#1e3a8a;color:#bae6fd;padding:3px 8px;border-radius:999px;font-weight:700;">1 Stream</span>
+  </div>
+
+  <div class="card">
+    <div class="meta-line"><strong>Track Title:</strong> <span id="trackTitle">Midnight Neural Horizon</span></div>
+    <div class="meta-line"><strong>Artist / Creator:</strong> <span id="trackArtist">Aether &amp; Pulse</span></div>
+    <div class="meta-line"><strong>Album / Source:</strong> <span id="trackAlbum">Synthesized Odyssey LP</span></div>
+    <div class="links-row">
+      <a id="ytLink" href="https://www.youtube.com" target="_blank">YouTube</a>
+      <a id="spLink" href="https://open.spotify.com" target="_blank">Spotify</a>
+      <a id="lyLink" href="https://genius.com" target="_blank">Lyrics</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:6px;color:#7dd3fc;">Stream Codec, Chapters &amp; JSON Export</div>
+    <textarea id="jsonOutput" readonly></textarea>
+    <button id="copyJsonBtn">Copy JSON Stream Metadata</button>
+    <div id="statusMsg" style="font-size:11px;color:#4ade80;min-height:14px;margin-top:4px;"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

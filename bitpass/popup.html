@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BitPass Password & TOTP Studio</title>
+  <style>
+    body {
+      width: 380px;
+      margin: 0;
+      padding: 14px;
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 12px;
+    }
+    h2 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      color: #60a5fa;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    input {
+      flex: 1;
+      background: #090d16;
+      border: 1px solid #475569;
+      color: #93c5fd;
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-family: monospace;
+      font-size: 11px;
+    }
+    button {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .totp {
+      font-family: monospace;
+      font-size: 18px;
+      font-weight: 800;
+      color: #38bdf8;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <h2>🔐 BitPass — Generator & TOTP 2FA</h2>
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:5px;">Cryptographic Password / Passphrase</div>
+    <div class="row">
+      <input id="bp-pwd" readonly />
+    </div>
+    <div class="row">
+      <button id="bp-gen-pwd" style="flex:1">🎲 24-Char Password</button>
+      <button id="bp-gen-phrase" style="flex:1;background:#0284c7">📝 5-Word Passphrase</button>
+      <button id="bp-fill" style="flex:1;background:#059669">⚡ Autofill</button>
+    </div>
+    <div id="bp-entropy" style="font-size:10px;color:#94a3b8;">Entropy: 142 bits (Uncrackable)</div>
+  </div>
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:5px;">RFC-6238 TOTP 2FA Authenticator</div>
+    <div class="row">
+      <input id="bp-secret" value="JBSWY3DPEHPK3PXP" placeholder="Base32 2FA Secret" />
+      <button id="bp-totp-btn">Compute 2FA</button>
+    </div>
+    <div class="totp" id="bp-totp-code">------</div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

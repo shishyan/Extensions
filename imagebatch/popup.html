@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ImageBatch — Batch Image & SVG Extractor</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 14px;
+      width: 380px;
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 12px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #334155;
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #c084fc;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .filters {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    select, input {
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 5px 8px;
+      font-size: 11px;
+    }
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      height: 90px;
+      background: #0f172a;
+      color: #e2e8f0;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      resize: none;
+    }
+    .btn-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    button {
+      flex: 1;
+      background: #9333ea;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 11px;
+    }
+    button.secondary {
+      background: #334155;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="title">🖼️ ImageBatch Studio</div>
+      <div style="font-size:11px;color:#94a3b8;">Filter by Resolution/Format &amp; Export Contact Sheet</div>
+    </div>
+    <span id="countBadge" style="background:#581c87;color:#f3e8ff;padding:3px 8px;border-radius:999px;font-weight:700;">0 Found</span>
+  </div>
+
+  <div class="card">
+    <div class="filters">
+      <select id="formatFilter" style="flex:1;">
+        <option value="ALL">Format: ALL</option>
+        <option value="PNG">PNG</option>
+        <option value="JPG">JPG</option>
+        <option value="WEBP">WEBP</option>
+        <option value="SVG">SVG</option>
+      </select>
+      <input type="number" id="minWidthInput" value="0" placeholder="Min W (px)" style="width:95px;">
+      <input type="number" id="minHeightInput" value="0" placeholder="Min H (px)" style="width:95px;">
+    </div>
+    <textarea id="urlsOutput" readonly></textarea>
+    <div class="btn-row">
+      <button id="copyUrlsBtn">Copy Image URLs</button>
+      <button class="secondary" id="exportSheetBtn">Export Contact Sheet</button>
+      <button class="secondary" id="downloadAllBtn">Download Batch</button>
+    </div>
+    <div id="statusMsg" style="font-size:11px;color:#4ade80;min-height:14px;margin-top:4px;"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

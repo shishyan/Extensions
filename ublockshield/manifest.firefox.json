@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "UBlockShield — Cosmetic Ad, Tracker & Cookie-Wall Zapper",
+  "version": "1.0.0",
+  "description": "Zero-telemetry cosmetic ad blocker, automatic cookie-consent banner zapper, 3rd-party tracker auditor & interactive element zapper.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "ublockshield@gurukuladesam.org",
+      "strict_min_version": "109.0"
+    }
+  }
+}

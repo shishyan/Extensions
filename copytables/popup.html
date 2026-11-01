@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CopyTables — CSV, TSV, Markdown & JSON Table Exporter</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 14px;
+      width: 380px;
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 12px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #334155;
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #34d399;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    select {
+      width: 100%;
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      height: 105px;
+      background: #0f172a;
+      color: #e2e8f0;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      resize: none;
+    }
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    button {
+      background: #059669;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="title">📊 CopyTables Studio</div>
+      <div style="font-size:11px;color:#94a3b8;">1-Click CSV • TSV • GitHub Markdown • JSON Array</div>
+    </div>
+    <span id="tableCountBadge" style="background:#064e3b;color:#a7f3d0;padding:3px 8px;border-radius:999px;font-weight:700;">1 Table</span>
+  </div>
+
+  <div class="card">
+    <select id="tableSelect"></select>
+    <textarea id="tableOutput" readonly></textarea>
+    <div class="btn-row">
+      <button data-fmt="csv">Copy CSV</button>
+      <button data-fmt="tsv">Copy TSV</button>
+      <button data-fmt="markdown">Markdown</button>
+      <button data-fmt="json">JSON Array</button>
+    </div>
+    <div id="statusMsg" style="font-size:11px;color:#4ade80;min-height:14px;margin-top:4px;"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

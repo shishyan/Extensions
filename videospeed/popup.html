@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>VideoSpeed 0.1x–16x Controller & PiP</title>
+  <style>
+    body {
+      width: 360px;
+      margin: 0;
+      padding: 14px;
+      background: #064e3b;
+      color: #ecfdf5;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 12px;
+    }
+    h2 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      color: #34d399;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    button {
+      background: #10b981;
+      color: #022c22;
+      border: none;
+      border-radius: 6px;
+      padding: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .status {
+      background: #022c22;
+      border: 1px solid #059669;
+      border-radius: 6px;
+      padding: 9px;
+      color: #a7f3d0;
+    }
+  </style>
+</head>
+<body>
+  <h2>⏩ VideoSpeed — 0.1x–16x & PiP</h2>
+  <div class="grid">
+    <button data-r="1.0">1.00x Reset</button>
+    <button data-r="1.25">1.25x</button>
+    <button data-r="1.5">1.50x</button>
+    <button data-r="2.0">2.00x</button>
+    <button data-r="3.0">3.00x</button>
+    <button data-r="4.0">4.00x</button>
+  </div>
+  <div class="status" id="vs-status">
+    Shortcuts: [D] +0.25x · [S] -0.25x · [R] 1.0x Reset
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -3,347 +3,1370 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VidOutlier & Influenzian Free Extensions Suite — 100% Free Forever</title>
+  <title>Influenzian Open Extensions — Top 100 Famous Paid Extensions Rebuilt 100% Free</title>
   <style>
     :root {
-      --bg: #090d16;
+      --bg: #070b14;
       --card: #111827;
-      --border: #1f2937;
-      --accent: #6366f1;
-      --emerald: #10b981;
+      --border: #1e293b;
       --text: #f8fafc;
       --muted: #94a3b8;
+      --accent: #6366f1;
+      --emerald: #10b981;
+      --sky: #38bdf8;
     }
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+      background: radial-gradient(circle at top, #131c36 0%, var(--bg) 55%);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.55;
+      padding-bottom: 80px;
     }
     header {
-      padding: 64px 20px 42px;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 56px 24px 32px;
       text-align: center;
-      background: radial-gradient(circle at top, rgba(99,102,241,0.22), transparent 65%);
-      border-bottom: 1px solid var(--border);
     }
     .pill {
-      display: inline-block;
-      background: rgba(16, 185, 129, 0.15);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      padding: 4px 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
       border-radius: 999px;
-      font-size: 12px;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      font-size: 13px;
       font-weight: 700;
-      margin-bottom: 14px;
+      margin-bottom: 18px;
     }
     h1 {
-      font-size: 40px;
-      margin: 0 0 12px;
-      background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+      font-size: clamp(28px, 4.5vw, 48px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #38bdf8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    p.lead {
-      max-width: 720px;
-      margin: 0 auto 24px;
+    .subtitle {
+      max-width: 780px;
+      margin: 0 auto 28px;
       color: var(--muted);
       font-size: 17px;
     }
-    .cta-row {
+    .hero-links {
       display: flex;
-      gap: 12px;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 32px;
     }
     .btn {
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
-      color: #fff;
-      text-decoration: none;
-      padding: 12px 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 20px;
       border-radius: 10px;
       font-weight: 700;
       font-size: 14px;
+      text-decoration: none;
+      transition: transform 0.15s, opacity 0.15s;
     }
-    .btn.sec {
-      background: #1e293b;
-      border: 1px solid #334155;
-    }
-    .container {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
-    .tool-box {
-      background: var(--card);
-      border: 1px solid rgba(99,102,241,0.4);
-      border-radius: 14px;
-      padding: 24px;
-      margin-bottom: 40px;
-    }
-    .search-row {
+    .btn:hover { transform: translateY(-1px); opacity: 0.94; }
+    .btn-primary { background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff; }
+    .btn-secondary { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; }
+    .controls {
+      max-width: 1240px;
+      margin: 0 auto 28px;
+      padding: 0 24px;
       display: flex;
-      gap: 10px;
-      margin-top: 12px;
+      flex-direction: column;
+      gap: 14px;
     }
-    input {
-      flex: 1;
+    .search-box {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 12px;
       background: #0f172a;
       border: 1px solid #334155;
       color: #fff;
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-size: 14px;
+      font-size: 15px;
+      outline: none;
     }
-    button {
-      background: var(--emerald);
-      color: #052e16;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-weight: 800;
+    .search-box:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.25); }
+    .cat-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .cat-btn {
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      color: #94a3b8;
+      font-size: 12.5px;
+      font-weight: 700;
       cursor: pointer;
     }
+    .cat-btn.active, .cat-btn:hover {
+      background: #6366f1;
+      color: #fff;
+      border-color: #6366f1;
+    }
     .grid {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
       gap: 18px;
     }
     .card {
-      background: var(--card);
+      background: rgba(17, 24, 39, 0.88);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      gap: 14px;
+      transition: border-color 0.15s;
     }
-    .card h3 {
-      margin: 0 0 6px;
-      font-size: 18px;
-      color: #38bdf8;
-    }
-    .card .replaces {
-      font-size: 12px;
-      color: #34d399;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-    .card p {
-      font-size: 13px;
-      color: var(--muted);
-      margin: 0 0 14px;
-    }
-    .dl-links {
-      display: flex;
-      gap: 8px;
-    }
-    .dl-links a {
-      flex: 1;
-      text-align: center;
-      background: #1e293b;
-      color: #e2e8f0;
-      text-decoration: none;
-      padding: 7px 10px;
+    .card:hover { border-color: #4f46e5; }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+    .num-badge {
+      background: rgba(99,102,241,0.16);
+      color: #818cf8;
+      border: 1px solid rgba(99,102,241,0.35);
+      padding: 3px 9px;
       border-radius: 6px;
       font-size: 12px;
+      font-weight: 800;
+    }
+    .cat-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56,189,248,0.12);
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+    .ext-title { font-size: 19px; font-weight: 800; color: #fff; margin-top: 6px; }
+    .ext-slug { font-family: monospace; font-size: 12px; color: #64748b; }
+    .replaces {
+      font-size: 12px;
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.25);
+      padding: 5px 10px;
+      border-radius: 8px;
       font-weight: 600;
-      border: 1px solid #334155;
     }
-    .dl-links a:hover {
-      border-color: #818cf8;
-      color: #fff;
-    }
-    footer {
+    .desc { font-size: 13.5px; color: #cbd5e1; }
+    .dl-row { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 6px; border-top: 1px solid #1e293b; }
+    .dl-link {
+      flex: 1;
       text-align: center;
-      padding: 36px 20px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .dl-chrome { background: #4f46e5; color: #fff; }
+    .dl-ff { background: #0f172a; color: #38bdf8; border: 1px solid #1e293b; }
+    .dl-src { background: #0f172a; color: #94a3b8; border: 1px solid #1e293b; flex: 0 0 auto; }
+    footer {
+      max-width: 1240px;
+      margin: 56px auto 0;
+      padding: 24px;
+      text-align: center;
+      border-top: 1px solid #1e293b;
+      color: #64748b;
       font-size: 13px;
     }
+    footer a { color: #818cf8; text-decoration: none; }
   </style>
 </head>
 <body>
   <header>
-    <div class="pill">100% OPEN SOURCE • ZERO PAYWALLS • ZERO TELEMETRY</div>
-    <h1>⚡ VidOutlier & Influenzian Extensions</h1>
-    <p class="lead">
-      Making the world's most popular paid browser extensions 100% free forever for Google Chrome, Microsoft Edge, and Mozilla Firefox.
+    <div class="pill">✨ 100 Extensions • 200 Browser Packages • 100% Free & Open Source Forever</div>
+    <h1>Influenzian Open Extensions</h1>
+    <p class="subtitle">
+      The world's top 100 famous paid browser extensions rebuilt from the ground up with zero paywalls, zero subscriptions, and zero telemetry for <strong>Google Chrome</strong>, <strong>Microsoft Edge</strong>, and <strong>Mozilla Firefox</strong>.
     </p>
-    <div class="cta-row">
-      <a class="btn" href="https://github.com/influenzian/Extensions/releases/latest">⬇️ Download Latest Store Packages (v1.0.0)</a>
-      <a class="btn sec" href="https://github.com/influenzian/Extensions">⭐ Star on GitHub</a>
-      <a class="btn sec" href="privacy.html">🔒 Zero-Data Privacy Policy</a>
+    <div class="hero-links">
+      <a class="btn btn-primary" href="https://github.com/influenzian/Extensions/releases/tag/v1.0.0">📦 Browse All 200 Release Packages (v1.0.0)</a>
+      <a class="btn btn-secondary" href="https://github.com/influenzian/Extensions">⭐ GitHub Repository</a>
+      <a class="btn btn-secondary" href="privacy.html">🔒 Zero-Telemetry Privacy Policy</a>
     </div>
   </header>
 
-  <div class="container">
-    <div class="tool-box">
-      <h2 style="margin:0 0 6px;">🔥 Live VidOutlier Web Keyword & Thumbnail Studio (Works for All Users!)</h2>
-      <p style="margin:0;color:var(--muted);font-size:13px;">
-        Enter any YouTube Video URL or ID below to extract its 4K MaxRes Thumbnail, or enter a topic to generate high-CTR viral title angles:
-      </p>
-      <div class="search-row">
-        <input id="ytInput" placeholder="Paste YouTube URL (e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ) or topic..." />
-        <button id="analyzeBtn">Inspect Now</button>
-      </div>
-      <div id="webResult" style="margin-top:14px;font-size:13px;color:#cbd5e1;"></div>
-    </div>
+  <section class="controls">
+    <input id="searchInput" class="search-box" type="search" placeholder="Search 100 free extensions by name, replaced paid tool (e.g. vidIQ, Grammarly, Keepa, Hunter, uBlock), or feature..." />
+    <div id="catBar" class="cat-bar"></div>
+  </section>
 
-    <h2 style="margin-bottom:16px;">📦 Batch 1: Top 10 Flagship Extensions (Verified & Ready)</h2>
-    <div class="grid">
-      <div class="card">
-        <div>
-          <h3>1. VidOutlier</h3>
-          <div class="replaces">Replaces: vidIQ Max, TubeBuddy Legend, 1of10</div>
-          <p>Top-bar live VPH & Outlier multiplier badges, Search Keyword Inspector, 100-pt Watch-Page SEO Scorecard, AI Viral Title Studio & 4K Thumbnail Downloader.</p>
-        </div>
-        <div class="dl-links">
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/vidoutlier-chrome-edge.zip">Chrome / Edge</a>
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/vidoutlier-firefox.zip">Firefox</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div>
-          <h3>2. GrammFix</h3>
-          <div class="replaces">Replaces: Grammarly Pro, Wordtune, QuillBot</div>
-          <p>Real-time floating grammar & spell checker, passive voice detector, conciseness engine & Executive/Casual/Academic tone rewriter.</p>
-        </div>
-        <div class="dl-links">
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/grammfix-chrome-edge.zip">Chrome / Edge</a>
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/grammfix-firefox.zip">Firefox</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div>
-          <h3>3. MerlCopilot</h3>
-          <div class="replaces">Replaces: Merlin AI, MaxAI.me, Monica</div>
-          <p>Floating ⚡ TL;DR button on every webpage, key bullet extractor, reading time estimator & 1-click Markdown notes exporter.</p>
-        </div>
-        <div class="dl-links">
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/merlcopilot-chrome-edge.zip">Chrome / Edge</a>
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/merlcopilot-firefox.zip">Firefox</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div>
-          <h3>4. HuntLead</h3>
-          <div class="replaces">Replaces: Hunter.io, Apollo.io, Lusha</div>
-          <p>Unlimited DOM/HTML email & phone scanner, corporate domain email permutation generator & 1-click CSV lead export.</p>
-        </div>
-        <div class="dl-links">
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/huntlead-chrome-edge.zip">Chrome / Edge</a>
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/huntlead-firefox.zip">Firefox</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div>
-          <h3>5. SurfSEO</h3>
-          <div class="replaces">Replaces: Surfer SEO, Keywords Everywhere, MozBar</div>
-          <p>100-pt on-page SEO audit (Title, Meta, Canonical, H1-H6 tree, link & alt audit), NLP keyword density & live SERP keyword explorer.</p>
-        </div>
-        <div class="dl-links">
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/surfseo-chrome-edge.zip">Chrome / Edge</a>
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/surfseo-firefox.zip">Firefox</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div>
-          <h3>6. KeepPrice</h3>
-          <div class="replaces">Replaces: Keepa Pro, Honey, CamelCamelCamel</div>
-          <p>Amazon ASIN & store price detector, local price-drop watchlist, universal promo code tester & zero affiliate cookie hijacking.</p>
-        </div>
-        <div class="dl-links">
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/keepprice-chrome-edge.zip">Chrome / Edge</a>
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/keepprice-firefox.zip">Firefox</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div>
-          <h3>7. DarkZen</h3>
-          <div class="replaces">Replaces: Dark Reader Pro, Helperbird</div>
-          <p>Per-site OLED Dark Mode with media preservation, Contrast/Warmth sliders, dyslexia font toggle & 1-click Distraction-Free Zen Reader.</p>
-        </div>
-        <div class="dl-links">
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/darkzen-chrome-edge.zip">Chrome / Edge</a>
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/darkzen-firefox.zip">Firefox</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div>
-          <h3>8. SnapBug</h3>
-          <div class="replaces">Replaces: Usersnap, GoFullPage Pro, CSS Peeper</div>
-          <p>1-click HD PNG screenshot download, live CSS/font/box-model hover inspector, color palette extractor & Markdown QA bug report.</p>
-        </div>
-        <div class="dl-links">
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/snapbug-chrome-edge.zip">Chrome / Edge</a>
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/snapbug-firefox.zip">Firefox</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div>
-          <h3>9. DashVault</h3>
-          <div class="replaces">Replaces: Dashlane, 1Password</div>
-          <p>WebCrypto 24-char password & passphrase generator, local AES-GCM encrypted vault, 1-click auto-filler & k-Anonymity breach auditor.</p>
-        </div>
-        <div class="dl-links">
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/dashvault-chrome-edge.zip">Chrome / Edge</a>
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/dashvault-firefox.zip">Firefox</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div>
-          <h3>10. MassMail</h3>
-          <div class="replaces">Replaces: GMass, Mailtrack Pro</div>
-          <p>Personalized {{FirstName}} & {{Company}} mail merge templates, CSV recipient previewer, 1-click Gmail compose insertion & zero watermarks.</p>
-        </div>
-        <div class="dl-links">
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/massmail-chrome-edge.zip">Chrome / Edge</a>
-          <a href="https://github.com/influenzian/Extensions/releases/download/v1.0.0/massmail-firefox.zip">Firefox</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  <main id="grid" class="grid"></main>
 
   <footer>
-    Built by <strong>Influenzian</strong> • Open-Source MIT License • <a href="privacy.html" style="color:#38bdf8;">Privacy Policy</a>
+    Built by <a href="https://github.com/influenzian/Extensions">Influenzian</a> · MIT Licensed · <a href="privacy.html">Privacy Policy</a>
   </footer>
 
   <script>
-    document.getElementById('analyzeBtn').addEventListener('click', () => {
-      const val = document.getElementById('ytInput').value.trim();
-      const out = document.getElementById('webResult');
-      if (!val) return;
-      const m = val.match(/(?:v=|\/shorts\/|youtu\.be\/)([a-zA-Z0-9_-]{11})/) || (val.length === 11 ? [null, val] : null);
-      if (m && m[1]) {
-        const vid = m[1];
-        out.innerHTML = `
-          <div><strong>Extracted Video ID:</strong> <code>${vid}</code></div>
-          <div style="margin:8px 0;"><a href="https://i.ytimg.com/vi/${vid}/maxresdefault.jpg" target="_blank" style="color:#34d399;font-weight:700;">🖼️ Open 4K MaxRes Thumbnail</a> • <a href="https://i.ytimg.com/vi/${vid}/hqdefault.jpg" target="_blank" style="color:#38bdf8;">Open HQ Thumbnail</a></div>
-          <img src="https://i.ytimg.com/vi/${vid}/maxresdefault.jpg" style="max-width:360px;border-radius:8px;border:1px solid #334155;" />
-        `;
-      } else {
-        out.innerHTML = `
-          <div><strong>🔥 Viral High-CTR Title Angles for "${val}":</strong></div>
-          <ul>
-            <li>${val} — The Hidden Truth Nobody Tells You 🔥</li>
-            <li>Why 99% Get ${val} Wrong (Do This Instead)</li>
-            <li>${val} | Complete Step-by-Step Masterclass (2026)</li>
-          </ul>
-        `;
-      }
-    });
+    const EXTENSIONS = [
+  {
+    "num": 1,
+    "slug": "vidoutlier",
+    "name": "VidOutlier",
+    "category": "YouTube & Social",
+    "replaces": "vidIQ Max ($49/mo) + TubeBuddy Legend + 1of10",
+    "desc": "Outlier velocity multiplier badges, live SEO 0\u2013100 scorecard, 1-click tag extraction & CTR title generator",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/vidoutlier-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/vidoutlier-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/vidoutlier"
+  },
+  {
+    "num": 2,
+    "slug": "grammfix",
+    "name": "GrammFix",
+    "category": "AI & Writing",
+    "replaces": "Grammarly Pro ($30/mo) + Wordtune + QuillBot",
+    "desc": "Inline writing clarity, grammar, tone rewriter & 1-click executive polisher across all textareas",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/grammfix-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/grammfix-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/grammfix"
+  },
+  {
+    "num": 3,
+    "slug": "merlcopilot",
+    "name": "MerlCopilot",
+    "category": "AI & Writing",
+    "replaces": "Merlin AI Pro ($19/mo) + Monica + MaxAI.me",
+    "desc": "Universal Cmd/Ctrl+M AI sidebar, page summarizer, selection explainer & multi-model prompt studio",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/merlcopilot-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/merlcopilot-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/merlcopilot"
+  },
+  {
+    "num": 4,
+    "slug": "huntlead",
+    "name": "HuntLead",
+    "category": "B2B Sales & Email",
+    "replaces": "Hunter.io ($49/mo) + Apollo.io + Lusha",
+    "desc": "Page email/phone/social extractor, corporate email permutation engine & 1-click CSV CRM exporter",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/huntlead-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/huntlead-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/huntlead"
+  },
+  {
+    "num": 5,
+    "slug": "surfseo",
+    "name": "SurfSEO",
+    "category": "SEO & Marketing",
+    "replaces": "Surfer SEO ($89/mo) + Detailed SEO + MozBar",
+    "desc": "On-page H1\u2013H6 hierarchy auditor, keyword density heatmap, schema.org JSON-LD inspector & SERP preview",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/surfseo-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/surfseo-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/surfseo"
+  },
+  {
+    "num": 6,
+    "slug": "keepprice",
+    "name": "KeepPrice",
+    "category": "E-Commerce & Deals",
+    "replaces": "Keepa Pro ($19/mo) + CamelCamelCamel + Honey",
+    "desc": "Embedded SVG 90-day price history chart on product pages, fake-discount detector & target drop alerts",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/keepprice-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/keepprice-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/keepprice"
+  },
+  {
+    "num": 7,
+    "slug": "darkzen",
+    "name": "DarkZen",
+    "category": "Accessibility & Themes",
+    "replaces": "Dark Reader Pro + Helperbird ($30/yr)",
+    "desc": "Per-site OLED Dark, Warm Sepia, Cyberpunk & E-Ink themes plus OpenDyslexic typography & reading ruler",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/darkzen-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/darkzen-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/darkzen"
+  },
+  {
+    "num": 8,
+    "slug": "snapbug",
+    "name": "SnapBug",
+    "category": "DevTools & QA",
+    "replaces": "Usersnap + CSS Peeper + GoFullPage Pro",
+    "desc": "Interactive DOM computed-CSS inspector, full color palette extractor & QA annotation HUD",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/snapbug-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/snapbug-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/snapbug"
+  },
+  {
+    "num": 9,
+    "slug": "dashvault",
+    "name": "DashVault",
+    "category": "Privacy & Security",
+    "replaces": "Dashlane Premium + 1Password ($36/yr)",
+    "desc": "WebCrypto AES-256-GCM encrypted local vault, CSPRNG password generator & 1-click form autofill",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/dashvault-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/dashvault-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/dashvault"
+  },
+  {
+    "num": 10,
+    "slug": "massmail",
+    "name": "MassMail",
+    "category": "B2B Sales & Email",
+    "replaces": "GMass ($25/mo) + Mailtrack Pro",
+    "desc": "Personalized {{first_name}} mail-merge campaign composer, follow-up sequence generator & read-receipt tracker",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/massmail-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/massmail-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/massmail"
+  },
+  {
+    "num": 11,
+    "slug": "quillparaphrase",
+    "name": "QuillParaphrase",
+    "category": "AI & Writing",
+    "replaces": "QuillBot Premium ($19.95/mo)",
+    "desc": "6-mode sentence paraphraser (Fluency, Formal, Academic, Creative, Shorten, Expand) with live synonym swap",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/quillparaphrase-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/quillparaphrase-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/quillparaphrase"
+  },
+  {
+    "num": 12,
+    "slug": "wordrewrite",
+    "name": "WordRewrite",
+    "category": "AI & Writing",
+    "replaces": "Wordtune Plus ($24.99/mo)",
+    "desc": "Contextual inline sentence rewriter pill with Casual, Executive, Persuasive & Concise rewrites",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/wordrewrite-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/wordrewrite-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/wordrewrite"
+  },
+  {
+    "num": 13,
+    "slug": "moniassistant",
+    "name": "MoniAssistant",
+    "category": "AI & Writing",
+    "replaces": "Monica AI Unlimited ($24/mo)",
+    "desc": "Floating quick-action dock on text selection (Explain, Translate, Summarize, Action Items & Reply)",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/moniassistant-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/moniassistant-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/moniassistant"
+  },
+  {
+    "num": 14,
+    "slug": "harpaautomate",
+    "name": "HarpaAutomate",
+    "category": "DevTools & QA",
+    "replaces": "HARPA AI Automation ($15/mo)",
+    "desc": "DOM price/text change monitor, CSS selector table scraper & scheduled webhook workflow builder",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/harpaautomate-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/harpaautomate-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/harpaautomate"
+  },
+  {
+    "num": 15,
+    "slug": "siderchat",
+    "name": "SiderChat",
+    "category": "AI & Writing",
+    "replaces": "Sider AI Pro ($20/mo)",
+    "desc": "Collapsible reading & research side-panel with article Q&A, key takeaway bullets & citation card generator",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/siderchat-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/siderchat-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/siderchat"
+  },
+  {
+    "num": 16,
+    "slug": "eightysummary",
+    "name": "EightySummary",
+    "category": "YouTube & Social",
+    "replaces": "Eightify Pro ($7.95/mo) + YouTube Summary",
+    "desc": "Instant timestamped YouTube & long-article TL;DR key insights, chapter breakdown & transcript copy",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/eightysummary-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/eightysummary-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/eightysummary"
+  },
+  {
+    "num": 17,
+    "slug": "glaspnotes",
+    "name": "GlaspNotes",
+    "category": "Research & Knowledge",
+    "replaces": "Glasp Pro + Liner ($15.99/mo)",
+    "desc": "4-color persistent web highlighter, inline margin notes & 1-click Markdown/Notion study guide export",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/glaspnotes-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/glaspnotes-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/glaspnotes"
+  },
+  {
+    "num": 18,
+    "slug": "magicaltext",
+    "name": "MagicalText",
+    "category": "Productivity & Focus",
+    "replaces": "Magical Pro ($18/mo)",
+    "desc": "Trigger-based text expander (//sig, //intro, //meet) with dynamic {{date}}, {{clipboard}} & DOM variables",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/magicaltext-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/magicaltext-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/magicaltext"
+  },
+  {
+    "num": 19,
+    "slug": "blazesnippet",
+    "name": "BlazeSnippet",
+    "category": "Productivity & Focus",
+    "replaces": "Text Blaze Pro ($6.99/mo)",
+    "desc": "Parameterized form snippet macros with dropdown placeholders, date math & instant input injection",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/blazesnippet-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/blazesnippet-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/blazesnippet"
+  },
+  {
+    "num": 20,
+    "slug": "deeptranslate",
+    "name": "DeepTranslate",
+    "category": "AI & Writing",
+    "replaces": "DeepL Pro ($8.74/mo) + Immersive Translate",
+    "desc": "Bilingual side-by-side paragraph translator & hover tooltip translation across 30+ languages",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/deeptranslate-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/deeptranslate-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/deeptranslate"
+  },
+  {
+    "num": 21,
+    "slug": "languagestudy",
+    "name": "LanguageStudy",
+    "category": "Research & Knowledge",
+    "replaces": "Language Reactor Pro ($6/mo)",
+    "desc": "Dual-language subtitle overlay, click-to-save vocabulary flashcards & Anki TSV/CSV deck exporter",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/languagestudy-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/languagestudy-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/languagestudy"
+  },
+  {
+    "num": 22,
+    "slug": "speechvoice",
+    "name": "SpeechVoice",
+    "category": "Audio, Video & Media",
+    "replaces": "Speechify Premium ($139/yr)",
+    "desc": "Natural Web Speech API reader with word-by-word highlight bar, 0.5x\u20133.5x speed & voice pitch controls",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/speechvoice-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/speechvoice-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/speechvoice"
+  },
+  {
+    "num": 23,
+    "slug": "naturalread",
+    "name": "NaturalRead",
+    "category": "Audio, Video & Media",
+    "replaces": "NaturalReader Plus ($110/yr)",
+    "desc": "Floating mini-player that extracts clean article body text into an audio playlist queue",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/naturalread-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/naturalread-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/naturalread"
+  },
+  {
+    "num": 24,
+    "slug": "perplexsearch",
+    "name": "PerplexSearch",
+    "category": "AI & Writing",
+    "replaces": "Perplexity Companion + SciSpace",
+    "desc": "Synthesizes page entities, citations, statistics & source credibility into a cited research brief",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/perplexsearch-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/perplexsearch-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/perplexsearch"
+  },
+  {
+    "num": 25,
+    "slug": "otternotes",
+    "name": "OtterNotes",
+    "category": "Productivity & Focus",
+    "replaces": "Otter.ai Pro ($16.99/mo) + Fireflies",
+    "desc": "Live Web Speech Recognition meeting captioner, speaker timestamp logger & action-item Markdown exporter",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/otternotes-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/otternotes-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/otternotes"
+  },
+  {
+    "num": 26,
+    "slug": "buddystudio",
+    "name": "BuddyStudio",
+    "category": "YouTube & Social",
+    "replaces": "TubeBuddy Legend ($49/mo)",
+    "desc": "YouTube A/B thumbnail & title CTR simulator, bulk description template injector & canned comment responder",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/buddystudio-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/buddystudio-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/buddystudio"
+  },
+  {
+    "num": 27,
+    "slug": "socialstats",
+    "name": "SocialStats",
+    "category": "YouTube & Social",
+    "replaces": "Social Blade Premium ($39.99/mo)",
+    "desc": "Live creator RPM/CPM earnings estimator, engagement rate calculator & 30-day growth projection badge",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/socialstats-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/socialstats-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/socialstats"
+  },
+  {
+    "num": 28,
+    "slug": "sponsorblock",
+    "name": "SponsorBlock",
+    "category": "YouTube & Social",
+    "replaces": "SponsorBlock + DeArrow",
+    "desc": "Auto-skips sponsor/intro/outro segments on video players & de-clickbaits ALL-CAPS titles",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/sponsorblock-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/sponsorblock-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/sponsorblock"
+  },
+  {
+    "num": 29,
+    "slug": "returnlikes",
+    "name": "ReturnLikes",
+    "category": "YouTube & Social",
+    "replaces": "Return YouTube Dislike + Ratio Radar",
+    "desc": "Restores community like/dislike ratio bars, sentiment score % & viewer controversy index",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/returnlikes-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/returnlikes-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/returnlikes"
+  },
+  {
+    "num": 30,
+    "slug": "twitdownload",
+    "name": "TwitDownload",
+    "category": "YouTube & Social",
+    "replaces": "BlackMagic Pro + Twitter Media Downloader",
+    "desc": "Thread-to-Markdown unroller, high-res media asset extractor & author engagement analytics sidebar",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/twitdownload-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/twitdownload-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/twitdownload"
+  },
+  {
+    "num": 31,
+    "slug": "instasaver",
+    "name": "InstaSaver",
+    "category": "YouTube & Social",
+    "replaces": "Inssist Pro ($9.99/mo)",
+    "desc": "High-resolution carousel/photo/video asset detector, hashtag frequency analyzer & caption copy bar",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/instasaver-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/instasaver-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/instasaver"
+  },
+  {
+    "num": 32,
+    "slug": "sortfeed",
+    "name": "SortFeed",
+    "category": "YouTube & Social",
+    "replaces": "Sort Feed Pro ($14.99/mo)",
+    "desc": "Re-sorts social feeds by Most Liked, Most Commented or Viral Multiplier & exports feed tables to CSV",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/sortfeed-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/sortfeed-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/sortfeed"
+  },
+  {
+    "num": 33,
+    "slug": "toktrend",
+    "name": "TokTrend",
+    "category": "YouTube & Social",
+    "replaces": "Tokboard + Exolyt Pro ($49/mo)",
+    "desc": "Short-form video viral velocity score, trending sound/hashtag extractor & hook retention checklist",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/toktrend-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/toktrend-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/toktrend"
+  },
+  {
+    "num": 34,
+    "slug": "redenhance",
+    "name": "RedEnhance",
+    "category": "YouTube & Social",
+    "replaces": "Reddit Enhancement Suite Pro",
+    "desc": "Inline image/video expando cards, comment tree navigator, OP highlighter & keyword filter",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/redenhance-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/redenhance-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/redenhance"
+  },
+  {
+    "num": 35,
+    "slug": "streamchat",
+    "name": "StreamChat",
+    "category": "YouTube & Social",
+    "replaces": "7TV Nightly + FrankerFaceZ + BTTV",
+    "desc": "Live stream chat rate meter, spam/duplicate message compressor & theatre-mode emote enhancer",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/streamchat-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/streamchat-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/streamchat"
+  },
+  {
+    "num": 36,
+    "slug": "mozauthority",
+    "name": "MozAuthority",
+    "category": "SEO & Marketing",
+    "replaces": "MozBar Premium ($99/mo)",
+    "desc": "On-page Domain Authority (DA) / Page Authority (PA) heuristic badge, DoFollow/NoFollow link highlighter",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/mozauthority-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/mozauthority-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/mozauthority"
+  },
+  {
+    "num": 37,
+    "slug": "ahrefbacklink",
+    "name": "AhrefBacklink",
+    "category": "SEO & Marketing",
+    "replaces": "Ahrefs SEO Toolbar ($99/mo)",
+    "desc": "Internal vs external anchor text matrix, broken link (404) scanner & canonical/hreflang header auditor",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/ahrefbacklink-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/ahrefbacklink-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/ahrefbacklink"
+  },
+  {
+    "num": 38,
+    "slug": "semrank",
+    "name": "SemRank",
+    "category": "SEO & Marketing",
+    "replaces": "SEMrush SEO Writing Assistant ($129/mo)",
+    "desc": "TF-IDF keyword gap analyzer, Flesch-Kincaid readability score & SERP competitor word-count benchmark",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/semrank-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/semrank-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/semrank"
+  },
+  {
+    "num": 39,
+    "slug": "ubersuggest",
+    "name": "UberSuggest",
+    "category": "SEO & Marketing",
+    "replaces": "Ubersuggest Chrome Extension ($29/mo)",
+    "desc": "Long-tail autocomplete keyword expander, search intent classifier (Transactional/Informational) & CPC estimator",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/ubersuggest-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/ubersuggest-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/ubersuggest"
+  },
+  {
+    "num": 40,
+    "slug": "similarweb",
+    "name": "SimilarWeb",
+    "category": "SEO & Marketing",
+    "replaces": "Similarweb Pro Extension ($199/mo)",
+    "desc": "Instant domain traffic tier estimator, top referral source analyzer & tech/geo footprint card",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/similarweb-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/similarweb-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/similarweb"
+  },
+  {
+    "num": 41,
+    "slug": "builtstack",
+    "name": "BuiltStack",
+    "category": "SEO & Marketing",
+    "replaces": "Wappalyzer Pro ($250/mo) + BuiltWith",
+    "desc": "Detects 60+ frontend frameworks, CMS, analytics pixels, CDNs & e-commerce engines running on any site",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/builtstack-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/builtstack-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/builtstack"
+  },
+  {
+    "num": 42,
+    "slug": "tagassistant",
+    "name": "TagAssistant",
+    "category": "SEO & Marketing",
+    "replaces": "Google Tag Assistant + Meta Pixel Helper",
+    "desc": "Audits GA4, GTM dataLayer events, Meta Pixel, TikTok Pixel & LinkedIn Insight tags with payload viewer",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/tagassistant-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/tagassistant-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/tagassistant"
+  },
+  {
+    "num": 43,
+    "slug": "junglescout",
+    "name": "JungleScout",
+    "category": "E-Commerce & Deals",
+    "replaces": "Jungle Scout Extension ($49/mo)",
+    "desc": "E-commerce product BSR sales estimator, FBA fee/margin calculator & listing quality score (LQS) bar",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/junglescout-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/junglescout-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/junglescout"
+  },
+  {
+    "num": 44,
+    "slug": "heliumseller",
+    "name": "HeliumSeller",
+    "category": "E-Commerce & Deals",
+    "replaces": "Helium 10 Xray ($99/mo)",
+    "desc": "Product revenue calculator, review velocity analyzer, inventory stock checker & keyword extractor",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/heliumseller-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/heliumseller-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/heliumseller"
+  },
+  {
+    "num": 45,
+    "slug": "koalashop",
+    "name": "KoalaShop",
+    "category": "E-Commerce & Deals",
+    "replaces": "Koala Inspector Pro ($19/mo) + Commerce Inspector",
+    "desc": "Shopify store theme detector, best-selling products JSON feed viewer & installed app list auditor",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/koalashop-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/koalashop-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/koalashop"
+  },
+  {
+    "num": 46,
+    "slug": "aliinsiders",
+    "name": "AliInsiders",
+    "category": "E-Commerce & Deals",
+    "replaces": "AliHunter + DSers Pro ($19.90/mo)",
+    "desc": "Supplier reliability score, ePacket/shipping margin calculator & competitor price markup analyzer",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/aliinsiders-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/aliinsiders-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/aliinsiders"
+  },
+  {
+    "num": 47,
+    "slug": "cameltracker",
+    "name": "CamelTracker",
+    "category": "E-Commerce & Deals",
+    "replaces": "CamelCamelCamel + Keepa Alerts",
+    "desc": "Historical low/high price badge, local price watchlist & instant target-price drop alert manager",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/cameltracker-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/cameltracker-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/cameltracker"
+  },
+  {
+    "num": 48,
+    "slug": "honeycoupon",
+    "name": "HoneyCoupon",
+    "category": "E-Commerce & Deals",
+    "replaces": "PayPal Honey + Capital One Shopping",
+    "desc": "Detects promo-code inputs at checkout, tests curated universal discount codes & copies best working coupon",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/honeycoupon-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/honeycoupon-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/honeycoupon"
+  },
+  {
+    "num": 49,
+    "slug": "rakucash",
+    "name": "RakuCash",
+    "category": "E-Commerce & Deals",
+    "replaces": "Rakuten Cash Back + RetailMeNot",
+    "desc": "Compares cashback rates across top portals, highlights stacking card offers & calculates net checkout price",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/rakucash-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/rakucash-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/rakucash"
+  },
+  {
+    "num": 50,
+    "slug": "fakespot",
+    "name": "FakeSpot",
+    "category": "E-Commerce & Deals",
+    "replaces": "Fakespot + ReviewMeta",
+    "desc": "Audits product reviews for bot patterns, repetitive phrasing & unverified spikes with an A\u2013F trust grade",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/fakespot-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/fakespot-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/fakespot"
+  },
+  {
+    "num": 51,
+    "slug": "apolloprospect",
+    "name": "ApolloProspect",
+    "category": "B2B Sales & Email",
+    "replaces": "Apollo.io Chrome Extension ($49/mo)",
+    "desc": "Extracts B2B decision-maker profiles, company firmographics & verified email patterns into CSV/JSON",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/apolloprospect-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/apolloprospect-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/apolloprospect"
+  },
+  {
+    "num": 52,
+    "slug": "lushacontact",
+    "name": "LushaContact",
+    "category": "B2B Sales & Email",
+    "replaces": "Lusha Pro ($39/mo)",
+    "desc": "Scans profile & team pages for direct phone numbers, mailto links, vCards & social handles",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/lushacontact-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/lushacontact-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/lushacontact"
+  },
+  {
+    "num": 53,
+    "slug": "rockreach",
+    "name": "RockReach",
+    "category": "B2B Sales & Email",
+    "replaces": "RocketReach Pro ($59/mo)",
+    "desc": "Generates ranked corporate email permutations with MX/SMTP format confidence scores",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/rockreach-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/rockreach-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/rockreach"
+  },
+  {
+    "num": 54,
+    "slug": "kasprlead",
+    "name": "KasprLead",
+    "category": "B2B Sales & Email",
+    "replaces": "Kaspr B2B ($49/mo)",
+    "desc": "1-click LinkedIn/GitHub/X profile enricher with cold-call script & outreach sequence builder",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/kasprlead-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/kasprlead-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/kasprlead"
+  },
+  {
+    "num": 55,
+    "slug": "snovfinder",
+    "name": "SnovFinder",
+    "category": "B2B Sales & Email",
+    "replaces": "Snov.io Email Finder ($39/mo)",
+    "desc": "Domain-wide prospect crawler + multi-step drip email template generator with personalization tokens",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/snovfinder-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/snovfinder-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/snovfinder"
+  },
+  {
+    "num": 56,
+    "slug": "mailtracker",
+    "name": "MailTracker",
+    "category": "B2B Sales & Email",
+    "replaces": "Mailtrack Pro ($9.99/mo) + Unlimited",
+    "desc": "Injects transparent read-receipt tracking pixels & logs email open timestamps in a local dashboard",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/mailtracker-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/mailtracker-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/mailtracker"
+  },
+  {
+    "num": 57,
+    "slug": "streakcrm",
+    "name": "StreakCRM",
+    "category": "B2B Sales & Email",
+    "replaces": "Streak CRM Pro ($49/mo)",
+    "desc": "Kanban deal pipeline (Lead \u2192 Contacted \u2192 Proposal \u2192 Won) embedded right inside your browser",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/streakcrm-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/streakcrm-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/streakcrm"
+  },
+  {
+    "num": 58,
+    "slug": "boomerangmail",
+    "name": "BoomerangMail",
+    "category": "B2B Sales & Email",
+    "replaces": "Boomerang for Gmail Pro ($14.99/mo)",
+    "desc": "Send-later email scheduler, no-reply follow-up reminders & live email response-likelihood AI scorer",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/boomerangmail-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/boomerangmail-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/boomerangmail"
+  },
+  {
+    "num": 59,
+    "slug": "clearbitconnect",
+    "name": "ClearbitConnect",
+    "category": "B2B Sales & Email",
+    "replaces": "Clearbit Connect Pro",
+    "desc": "Instant company domain intelligence card: industry, headcount tier, tech stack & social profiles",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/clearbitconnect-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/clearbitconnect-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/clearbitconnect"
+  },
+  {
+    "num": 60,
+    "slug": "crystalpersona",
+    "name": "CrystalPersona",
+    "category": "B2B Sales & Email",
+    "replaces": "Crystal Knows Premium ($49/mo)",
+    "desc": "Analyzes profile text to predict DISC personality archetype (D/I/S/C) with tailored cold-email tips",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/crystalpersona-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/crystalpersona-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/crystalpersona"
+  },
+  {
+    "num": 61,
+    "slug": "fullcapture",
+    "name": "FullCapture",
+    "category": "DevTools & QA",
+    "replaces": "GoFullPage Premium ($12/yr)",
+    "desc": "Stitches full-scroll webpages into crisp PNGs or clean print-ready PDFs with timestamp headers",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/fullcapture-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/fullcapture-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/fullcapture"
+  },
+  {
+    "num": 62,
+    "slug": "loomrecord",
+    "name": "LoomRecord",
+    "category": "Audio, Video & Media",
+    "replaces": "Loom Business ($15/mo)",
+    "desc": "100% local `getDisplayMedia` + mic WebM screen recorder with draggable floating webcam/timer pill",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/loomrecord-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/loomrecord-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/loomrecord"
+  },
+  {
+    "num": 63,
+    "slug": "awesomeshot",
+    "name": "AwesomeShot",
+    "category": "DevTools & QA",
+    "replaces": "Awesome Screenshot Pro ($6/mo)",
+    "desc": "In-page canvas annotation studio: draw arrows, rectangles, text callouts & blur sensitive PII before saving",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/awesomeshot-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/awesomeshot-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/awesomeshot"
+  },
+  {
+    "num": 64,
+    "slug": "csspeeper",
+    "name": "CSSPeeper",
+    "category": "DevTools & QA",
+    "replaces": "CSS Peeper Pro + Hoverify ($30/yr)",
+    "desc": "Visual designer inspector showing font-family, weight, line-height, box-model & exportable SVG/image assets",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/csspeeper-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/csspeeper-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/csspeeper"
+  },
+  {
+    "num": 65,
+    "slug": "whatfont",
+    "name": "WhatFont",
+    "category": "DevTools & QA",
+    "replaces": "WhatFont + Fontanello",
+    "desc": "Hover over any text to reveal live typography badges (font family, size, line-height, hex color & contrast)",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/whatfont-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/whatfont-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/whatfont"
+  },
+  {
+    "num": 66,
+    "slug": "colorzilla",
+    "name": "ColorZilla",
+    "category": "DevTools & QA",
+    "replaces": "ColorZilla + EyeDropper Pro",
+    "desc": "Native EyeDropper pixel color picker, full-page CSS palette extractor & WCAG AA/AAA contrast checker",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/colorzilla-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/colorzilla-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/colorzilla"
+  },
+  {
+    "num": 67,
+    "slug": "jsonviewer",
+    "name": "JSONViewer",
+    "category": "DevTools & QA",
+    "replaces": "JSON Viewer Pro + JSON Formatter",
+    "desc": "Transforms raw JSON pages into a collapsible dark-mode syntax tree with search, JSONPath & TypeScript types",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/jsonviewer-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/jsonviewer-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/jsonviewer"
+  },
+  {
+    "num": 68,
+    "slug": "octotree",
+    "name": "OctoTree",
+    "category": "DevTools & QA",
+    "replaces": "Octotree Pro ($60/yr)",
+    "desc": "IDE-style collapsible file tree sidebar for GitHub, GitLab & code repos with quick file search",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/octotree-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/octotree-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/octotree"
+  },
+  {
+    "num": 69,
+    "slug": "refgithub",
+    "name": "RefGitHub",
+    "category": "DevTools & QA",
+    "replaces": "Refined GitHub + GitLens Web",
+    "desc": "Adds 1-click raw file copy, PR diff size badges, quick merge-conflict filters & keyboard shortcuts on GitHub",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/refgithub-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/refgithub-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/refgithub"
+  },
+  {
+    "num": 70,
+    "slug": "requestrule",
+    "name": "RequestRule",
+    "category": "DevTools & QA",
+    "replaces": "Requestly Pro ($15/mo)",
+    "desc": "URL redirect rules, query param rewriter & mock API response rule manager stored locally",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/requestrule-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/requestrule-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/requestrule"
+  },
+  {
+    "num": 71,
+    "slug": "modheader",
+    "name": "ModHeader",
+    "category": "DevTools & QA",
+    "replaces": "ModHeader Pro ($9/mo)",
+    "desc": "Multi-profile custom HTTP request/response header injector, CORS bypass toggle & Bearer token switcher",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/modheader-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/modheader-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/modheader"
+  },
+  {
+    "num": 72,
+    "slug": "editcookie",
+    "name": "EditCookie",
+    "category": "DevTools & QA",
+    "replaces": "EditThisCookie + Cookie-Editor Pro",
+    "desc": "Inspect, edit, add, delete, lock & export/import cookies in JSON or Netscape format",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/editcookie-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/editcookie-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/editcookie"
+  },
+  {
+    "num": 73,
+    "slug": "responsiveview",
+    "name": "ResponsiveView",
+    "category": "DevTools & QA",
+    "replaces": "Responsive Viewer Pro ($9/mo)",
+    "desc": "Side-by-side multi-device viewport tester (iPhone 16 Pro, Pixel 9, iPad Air, MacBook Pro) with sync scroll",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/responsiveview-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/responsiveview-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/responsiveview"
+  },
+  {
+    "num": 74,
+    "slug": "webscraper",
+    "name": "WebScraper",
+    "category": "DevTools & QA",
+    "replaces": "Instant Data Scraper + Simplescraper ($39/mo)",
+    "desc": "Auto-detects repeating DOM lists/cards/grids on any page and exports clean CSV/JSON datasets in 1 click",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/webscraper-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/webscraper-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/webscraper"
+  },
+  {
+    "num": 75,
+    "slug": "selectorgadget",
+    "name": "SelectorGadget",
+    "category": "DevTools & QA",
+    "replaces": "SelectorGadget + ChroPath Pro",
+    "desc": "Interactive point-and-click minimal CSS selector & XPath generator with live match highlighting",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/selectorgadget-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/selectorgadget-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/selectorgadget"
+  },
+  {
+    "num": 76,
+    "slug": "onetab",
+    "name": "OneTab",
+    "category": "Productivity & Focus",
+    "replaces": "OneTab + Workona Pro ($9/mo)",
+    "desc": "Collapses all open tabs into named workspace sessions, suspends memory & exports Markdown/HTML tab lists",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/onetab-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/onetab-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/onetab"
+  },
+  {
+    "num": 77,
+    "slug": "momenfocus",
+    "name": "MomenFocus",
+    "category": "Productivity & Focus",
+    "replaces": "Momentum Plus ($4.95/mo)",
+    "desc": "Floating daily MIT focus bar, 25/5 Pomodoro timer with WebAudio chime & quick scratchpad",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/momenfocus-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/momenfocus-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/momenfocus"
+  },
+  {
+    "num": 78,
+    "slug": "forestblock",
+    "name": "ForestBlock",
+    "category": "Productivity & Focus",
+    "replaces": "Forest + Freedom Pro ($8.99/mo)",
+    "desc": "Deep-work distraction blocker with customizable blocklist, focus countdown & virtual tree growth streak",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/forestblock-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/forestblock-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/forestblock"
+  },
+  {
+    "num": 79,
+    "slug": "todoisttask",
+    "name": "TodoistTask",
+    "category": "Productivity & Focus",
+    "replaces": "Todoist Pro ($5/mo) + TickTick",
+    "desc": "1-click 'Add Page as Task' with priority P1\u2013P4, due date, context quote & Markdown task export",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/todoisttask-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/todoisttask-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/todoisttask"
+  },
+  {
+    "num": 80,
+    "slug": "notionsaver",
+    "name": "NotionSaver",
+    "category": "Research & Knowledge",
+    "replaces": "Save to Notion Pro ($5.99/mo)",
+    "desc": "Clips clean Markdown articles with frontmatter properties (Tags, Status, Rating) for Notion & Obsidian",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/notionsaver-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/notionsaver-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/notionsaver"
+  },
+  {
+    "num": 81,
+    "slug": "everclipper",
+    "name": "EverClipper",
+    "category": "Research & Knowledge",
+    "replaces": "Evernote Web Clipper ($14.99/mo)",
+    "desc": "4-mode web clipper (Article, Simplified Reader, Full DOM, Bookmark) into offline searchable notebooks",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/everclipper-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/everclipper-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/everclipper"
+  },
+  {
+    "num": 82,
+    "slug": "rainbookmark",
+    "name": "RainBookmark",
+    "category": "Research & Knowledge",
+    "replaces": "Raindrop.io Pro ($3/mo)",
+    "desc": "Smart bookmark manager with automatic keyword #tag suggestions, duplicate detector & Netscape HTML export",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/rainbookmark-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/rainbookmark-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/rainbookmark"
+  },
+  {
+    "num": 83,
+    "slug": "pocketread",
+    "name": "PocketRead",
+    "category": "Research & Knowledge",
+    "replaces": "Pocket Premium ($44.99/yr) + Instapaper",
+    "desc": "Offline read-it-later queue with reading-time badge, permanent full-text cache & Sepia/Dark reader view",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/pocketread-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/pocketread-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/pocketread"
+  },
+  {
+    "num": 84,
+    "slug": "kamipdf",
+    "name": "KamiPDF",
+    "category": "Research & Knowledge",
+    "replaces": "Kami Pro + Weava Highlighter ($7.99/mo)",
+    "desc": "Multi-color DOM text highlighter, draggable sticky callout notes & clean @media print PDF exporter",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/kamipdf-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/kamipdf-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/kamipdf"
+  },
+  {
+    "num": 85,
+    "slug": "scispace",
+    "name": "SciSpace",
+    "category": "Research & Knowledge",
+    "replaces": "SciSpace Copilot + Unpaywall",
+    "desc": "Auto-detects DOIs & arXiv IDs, resolves open-access PDFs, summarizes Abstract/Methods & exports BibTeX",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/scispace-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/scispace-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/scispace"
+  },
+  {
+    "num": 86,
+    "slug": "zoterocite",
+    "name": "ZoteroCite",
+    "category": "Research & Knowledge",
+    "replaces": "Zotero Connector + MyBib + Cite This For Me",
+    "desc": "1-click academic citation generator in APA 7th, MLA 9th, Chicago, IEEE & Harvard plus .bib/.ris export",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/zoterocite-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/zoterocite-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/zoterocite"
+  },
+  {
+    "num": 87,
+    "slug": "clocktime",
+    "name": "ClockTime",
+    "category": "Productivity & Focus",
+    "replaces": "Clockify Pro + Toggl Track ($9/mo)",
+    "desc": "Floating project billable timer pill, hourly rate calculator & client invoice timesheet CSV/MD exporter",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/clocktime-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/clocktime-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/clocktime"
+  },
+  {
+    "num": 88,
+    "slug": "calendmeet",
+    "name": "CalendMeet",
+    "category": "Productivity & Focus",
+    "replaces": "Calendly Extension + SavvyCal ($12/mo)",
+    "desc": "Generates 3 multi-timezone meeting slots (IST/EST/PST/CET/UTC), Google Calendar link & 1-click email insert",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/calendmeet-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/calendmeet-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/calendmeet"
+  },
+  {
+    "num": 89,
+    "slug": "bitlyshort",
+    "name": "BitlyShort",
+    "category": "SEO & Marketing",
+    "replaces": "Bitly Pro + ClearURLs",
+    "desc": "Strips tracking parameters (utm_*, fbclid, gclid), builds clean UTM links & renders offline SVG QR codes",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/bitlyshort-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/bitlyshort-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/bitlyshort"
+  },
+  {
+    "num": 90,
+    "slug": "printclean",
+    "name": "PrintClean",
+    "category": "Productivity & Focus",
+    "replaces": "Print Friendly & PDF Pro",
+    "desc": "Interactive click-to-delete element zapper before printing, clutter stripper & font-size scaler for clean PDFs",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/printclean-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/printclean-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/printclean"
+  },
+  {
+    "num": 91,
+    "slug": "ublockshield",
+    "name": "UBlockShield",
+    "category": "Privacy & Security",
+    "replaces": "AdBlock Pro + Ghostery Plus + I Don't Care About Cookies",
+    "desc": "Auto-hides ad banners & cookie consent walls, counts 3rd-party trackers & includes interactive Element Zapper",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/ublockshield-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/ublockshield-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/ublockshield"
+  },
+  {
+    "num": 92,
+    "slug": "privbadger",
+    "name": "PrivBadger",
+    "category": "Privacy & Security",
+    "replaces": "Privacy Badger + ClearURLs + Incogni",
+    "desc": "Live A+ privacy & fingerprint scorecard, automatic URL tracker scrubber & 1-click site storage sanitizer",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/privbadger-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/privbadger-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/privbadger"
+  },
+  {
+    "num": 93,
+    "slug": "bitpass",
+    "name": "BitPass",
+    "category": "Privacy & Security",
+    "replaces": "Bitwarden Premium + LastPass ($36/yr)",
+    "desc": "CSPRNG password & diceware passphrase generator, live WebCrypto RFC-6238 TOTP 2FA authenticator & local vault",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/bitpass-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/bitpass-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/bitpass"
+  },
+  {
+    "num": 94,
+    "slug": "volmaster",
+    "name": "VolMaster",
+    "category": "Audio, Video & Media",
+    "replaces": "Volume Master Pro + Ears Audio EQ",
+    "desc": "WebAudio GainNode 600% volume booster + 3-band BiquadFilterNode Equalizer (Bass, Vocal Clarity, Treble)",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/volmaster-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/volmaster-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/volmaster"
+  },
+  {
+    "num": 95,
+    "slug": "videospeed",
+    "name": "VideoSpeed",
+    "category": "Audio, Video & Media",
+    "replaces": "Video Speed Controller Pro + Picture-in-Picture",
+    "desc": "On-video 0.1x\u201316.0x precision speed HUD, keyboard shortcuts (S/D/R), A\u2013B segment loop & 1-click PiP/Snapshot",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/videospeed-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/videospeed-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/videospeed"
+  },
+  {
+    "num": 96,
+    "slug": "shazamtrack",
+    "name": "ShazamTrack",
+    "category": "Audio, Video & Media",
+    "replaces": "AHA Music + Shazam + Media Stream Inspector",
+    "desc": "Inspects playing <audio>/<video> streams, MediaSession metadata & chapter credits with 1-click Spotify/YT lookup",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/shazamtrack-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/shazamtrack-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/shazamtrack"
+  },
+  {
+    "num": 97,
+    "slug": "imagebatch",
+    "name": "ImageBatch",
+    "category": "Audio, Video & Media",
+    "replaces": "Fatkun Batch Image Downloader Pro",
+    "desc": "Scans all <img>, srcset, CSS background-image & <svg> assets with resolution/format filters & gallery export",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/imagebatch-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/imagebatch-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/imagebatch"
+  },
+  {
+    "num": 98,
+    "slug": "copytables",
+    "name": "CopyTables",
+    "category": "Productivity & Focus",
+    "replaces": "Table Capture Pro ($24/yr)",
+    "desc": "Injects a 1-click export bar above every HTML/ARIA table to copy as CSV, Excel TSV, Markdown or JSON",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/copytables-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/copytables-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/copytables"
+  },
+  {
+    "num": 99,
+    "slug": "autoclick",
+    "name": "AutoClick",
+    "category": "DevTools & QA",
+    "replaces": "Fake Filler Pro + Auto Clicker",
+    "desc": "1-click realistic synthetic QA form filler for all inputs on a page + configurable CSS selector auto-clicker",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/autoclick-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/autoclick-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/autoclick"
+  },
+  {
+    "num": 100,
+    "slug": "styluscss",
+    "name": "StylusCSS",
+    "category": "Accessibility & Themes",
+    "replaces": "Stylus + UserCSS Studio",
+    "desc": "Live per-domain Custom CSS injector with 4 instant themes (Cozy Reading, Neon Cyberpunk, Hide Sidebars, Wide)",
+    "chromeZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/styluscss-chrome-edge.zip",
+    "firefoxZip": "https://github.com/influenzian/Extensions/releases/download/v1.0.0/styluscss-firefox.zip",
+    "sourceUrl": "https://github.com/influenzian/Extensions/tree/main/styluscss"
+  }
+];
+    const categories = ["All (100)", ...new Set(EXTENSIONS.map(e => e.category))];
+    let activeCat = "All (100)";
+    const catBar = document.getElementById("catBar");
+    const grid = document.getElementById("grid");
+    const searchInput = document.getElementById("searchInput");
+
+    function renderCats() {
+      catBar.innerHTML = "";
+      categories.forEach(c => {
+        const btn = document.createElement("button");
+        btn.className = "cat-btn" + (c === activeCat ? " active" : "");
+        btn.textContent = c;
+        btn.onclick = () => { activeCat = c; renderCats(); renderGrid(); };
+        catBar.appendChild(btn);
+      });
+    }
+
+    function renderGrid() {
+      const q = searchInput.value.trim().toLowerCase();
+      const filtered = EXTENSIONS.filter(e => {
+        const matchCat = activeCat === "All (100)" || e.category === activeCat;
+        const matchQ = !q || (e.name + " " + e.slug + " " + e.replaces + " " + e.desc + " " + e.category).toLowerCase().includes(q);
+        return matchCat && matchQ;
+      });
+      grid.innerHTML = filtered.map(e => `
+        <article class="card">
+          <div>
+            <div class="card-top">
+              <span class="num-badge">#${e.num}</span>
+              <span class="cat-tag">${e.category}</span>
+            </div>
+            <div class="ext-title">${e.name} <span class="ext-slug">/${e.slug}</span></div>
+          </div>
+          <div class="replaces">Replaces: ${e.replaces}</div>
+          <p class="desc">${e.desc}</p>
+          <div class="dl-row">
+            <a class="dl-link dl-chrome" href="${e.chromeZip}">⬇ Chrome / Edge</a>
+            <a class="dl-link dl-ff" href="${e.firefoxZip}">⬇ Firefox</a>
+            <a class="dl-link dl-src" href="${e.sourceUrl}">Source</a>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    searchInput.addEventListener("input", renderGrid);
+    renderCats();
+    renderGrid();
   </script>
 </body>
 </html>

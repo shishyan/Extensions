@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "VolMaster — 600% Audio Booster & 3-Band WebAudio Equalizer",
+  "version": "1.0.0",
+  "description": "600% volume booster, 3-band WebAudio BiquadFilter equalizer (Bass, Vocal Mid, Treble) & audio clarity presets.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
