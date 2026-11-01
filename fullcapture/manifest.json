@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "FullCapture \u2014 Free Full-Page Screenshot, Clean PDF Print & Pixel Grid",
+  "short_name": "FullCapture",
+  "version": "1.0.0",
+  "description": "100% Free GoFullPage Premium alternative: 1-click PNG screenshot capture, clean print-to-PDF optimizer, viewport dimension ruler & 8px design grid overlay.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "FullCapture \u2014 Screenshot, Clean PDF & Pixel Grid",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

@@ -1,0 +1,42 @@
+#octotree-sidebar {
+  position: fixed;
+  top: 64px;
+  left: 12px;
+  width: 240px;
+  max-height: 75vh;
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #3b82f6;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 11px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  z-index: 2147483640;
+  overflow-y: auto;
+}
+
+#octotree-sidebar .ot-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 800;
+  color: #60a5fa;
+  margin-bottom: 6px;
+}
+
+#octotree-sidebar .ot-item {
+  padding: 4px 6px;
+  border-radius: 5px;
+  color: #e2e8f0;
+  display: block;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#octotree-sidebar .ot-item:hover {
+  background: #1e293b;
+  color: #60a5fa;
+}

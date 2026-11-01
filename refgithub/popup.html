@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RefGitHub — Code Copy Injector & Snippet Harvester</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #c4b5fd; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(124,58,237,0.22); color: #ddd6fe; border: 1px solid rgba(139,92,246,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .stats { display: flex; justify-content: space-between; background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 6px 10px; margin-bottom: 8px; font-size: 11px; }
+  pre { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; max-height: 185px; overflow-y: auto; font-size: 11px; color: #e2e8f0; margin: 0 0 8px; }
+  button.act { width: 100%; background: #7c3aed; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <h2><span>⚡ RefGitHub</span><span class="badge">Refined GitHub Pro</span></h2>
+  <p class="sub">1-Click Code Block Copy Injector, LOC Counter & Snippet Harvester</p>
+
+  <div class="stats">
+    <span id="snipCount">📦 Snippets: 0</span>
+    <span id="locCount" style="color:#c4b5fd;font-weight:700;">📏 Total Lines: 0</span>
+  </div>
+
+  <pre id="codePreview">// Scanning &lt;pre&gt; and &lt;code&gt; blocks on active tab...</pre>
+  <button id="harvestBtn" class="act">📋 Copy All Page Code Snippets</button>
+  <script src="popup.js"></script>
+</body>
+</html>

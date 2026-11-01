@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "ColorZilla \u2014 Free Eyedropper Color Picker, WCAG Contrast & Gradient Studio",
+  "short_name": "ColorZilla",
+  "version": "1.0.0",
+  "description": "100% Free ColorZilla & WCAG Contrast Pro alternative: Native EyeDropper pixel picker, HEX/RGB/HSL converter, WCAG AA/AAA contrast auditor & CSS gradient studio.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ColorZilla \u2014 Eyedropper, WCAG Contrast & Gradient Studio",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "colorzilla@gurukuladesam.org",
+      "strict_min_version": "109.0"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "LoomRecord \u2014 Free Screen Recorder, Presenter Teleprompter & Timer HUD",
+  "short_name": "LoomRecord",
+  "version": "1.0.0",
+  "description": "100% Free Loom Business alternative: Zero-watermark WebM screen/tab recorder, floating presenter teleprompter & live recording timer HUD.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "LoomRecord \u2014 Screen Recorder & Presenter Teleprompter",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "CSSPeeper \u2014 Free Design-System Color Palette, CSS & SVG Extractor",
+  "short_name": "CSSPeeper",
+  "version": "1.0.0",
+  "description": "100% Free CSS Peeper Pro alternative: Extract any website's full HEX/RGB color palette, typography scale, SVG/image assets & :root CSS variables in 1 click.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "CSSPeeper \u2014 Color Palette, CSS & SVG Asset Extractor",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

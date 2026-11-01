@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FullCapture — Full-Page Screenshot, Clean PDF & Pixel Grid</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 390px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  h2 { margin: 0; font-size: 16px; color: #34d399; }
+  .badge { background: rgba(16,185,129,0.2); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  .dims { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px; }
+  .d-box { background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 7px; text-align: center; font-size: 10px; color: #94a3b8; }
+  .d-box strong { display: block; font-size: 13px; color: #38bdf8; }
+  .btns { display: flex; flex-direction: column; gap: 6px; }
+  button.primary { background: #10b981; color: #052e16; border: none; border-radius: 6px; padding: 9px; font-size: 12px; font-weight: 800; cursor: pointer; }
+  button.sec { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
+  #statusBox { margin-top: 8px; font-size: 11px; color: #34d399; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="hdr">
+    <h2>📸 FullCapture</h2>
+    <span class="badge">GoFullPage Pro Unlocked</span>
+  </div>
+  <p class="sub">High-DPI PNG Screenshot Capture • Clean PDF Export • 16px Design Grid</p>
+
+  <div class="dims">
+    <div class="d-box"><strong id="vpDim">1280x720</strong>Viewport</div>
+    <div class="d-box"><strong id="fullDim">1280x2400</strong>Full Scroll</div>
+    <div class="d-box"><strong id="dprVal">2.0x</strong>Retina DPR</div>
+  </div>
+
+  <div class="btns">
+    <button class="primary" id="snapPngBtn">📸 Capture High-DPI PNG Screenshot</button>
+    <button class="sec" id="toggleGridBtn">📐 Toggle 16px Design Alignment Grid</button>
+  </div>
+  <div id="statusBox">Ready to capture active tab.</div>
+  <script src="popup.js"></script>
+</body>
+</html>

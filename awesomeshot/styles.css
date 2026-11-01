@@ -1,0 +1,40 @@
+.awesomeshot-toolbar {
+  position: fixed;
+  left: 16px;
+  top: 90px;
+  z-index: 2147483645;
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #f43f5e;
+  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.45);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  user-select: none;
+}
+
+.awesomeshot-toolbar button {
+  background: #f43f5e;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.awesomeshot-blurred {
+  filter: blur(6px) !important;
+  user-select: none !important;
+}
+
+.awesomeshot-callout {
+  outline: 3px solid #ef4444 !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.25) !important;
+  border-radius: 4px !important;
+}

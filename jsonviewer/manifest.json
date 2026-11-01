@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "JSONViewer \u2014 Free JSON Tree Formatter, Path Filter & TypeScript Generator",
+  "short_name": "JSONViewer",
+  "version": "1.0.0",
+  "description": "100% Free JSON Viewer Pro alternative: Automatic JSON & JSON-LD dark-mode tree formatter, key/path filter & 1-click TypeScript interface generator.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "JSONViewer \u2014 JSON Tree Formatter & TypeScript Generator",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}
