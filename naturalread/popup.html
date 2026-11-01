@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NaturalRead — Focus Reading Ruler & 300–900 WPM RSVP Speed Reader</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 400px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  h2 { margin: 0; font-size: 16px; color: #84cc16; }
+  .badge { background: rgba(132,204,22,0.2); color: #bef264; border: 1px solid rgba(132,204,22,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .rsvp-stage { background: #020617; border: 2px solid #84cc16; border-radius: 10px; height: 84px; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; color: #f8fafc; letter-spacing: 0.5px; margin-bottom: 10px; }
+  .rsvp-pivot { color: #f43f5e; }
+  .slider-row { display: flex; justify-content: space-between; align-items: center; background: #1e293b; border: 1px solid #334155; padding: 6px 10px; border-radius: 8px; font-size: 11px; margin-bottom: 8px; }
+  .slider-row input { width: 160px; accent-color: #84cc16; }
+  textarea { width: 100%; height: 80px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: #fff; padding: 8px; font-size: 11.5px; resize: vertical; outline: none; }
+  .btns { display: flex; gap: 6px; margin-top: 8px; }
+  button.primary { flex: 1.4; background: #84cc16; color: #0f172a; border: none; border-radius: 6px; padding: 8px; font-size: 11.5px; font-weight: 800; cursor: pointer; }
+  button.sec { flex: 1; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="hdr">
+    <h2>📏 NaturalRead</h2>
+    <span class="badge">NaturalReader Plus Unlocked</span>
+  </div>
+  <p class="sub">Spritz RSVP Speed Reader (300–900 WPM) + Dyslexia Focus Reading Ruler</p>
+
+  <div class="rsvp-stage" id="rsvpStage">Ready</div>
+
+  <div class="slider-row">
+    <span>⚡ Speed: <strong id="wpmLabel" style="color:#bef264;">450 WPM</strong></span>
+    <input type="range" id="wpmSlider" min="250" max="900" step="50" value="450" />
+  </div>
+
+  <textarea id="sourceText">Speed reading with Rapid Serial Visual Presentation eliminates eye saccades and lets you absorb complex technical articles at 450 to 900 words per minute with full comprehension.</textarea>
+
+  <div class="btns">
+    <button class="primary" id="startRsvpBtn">▶ Start Speed Reader</button>
+    <button class="sec" id="toggleRulerBtn">📏 Toggle Page Ruler</button>
+    <button class="sec" id="pullPageBtn">📥 Pull Page</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

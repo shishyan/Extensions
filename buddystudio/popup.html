@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BuddyStudio — YouTube A/B Title Tester & Creator Toolkit</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 385px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #fda4af; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(244,63,94,0.2); color: #fecdd3; border: 1px solid rgba(244,63,94,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 9px; margin-bottom: 8px; font-size: 11px; }
+  input, textarea { width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 6px 8px; font-size: 11px; margin-bottom: 6px; }
+  textarea { height: 46px; resize: none; }
+  .score-row { display: flex; justify-content: space-between; font-weight: 700; color: #fda4af; margin-top: 4px; }
+  .chk-item { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; color: #cbd5e1; }
+  button.act { width: 100%; background: #e11d48; color: #fff; border: none; padding: 7px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <h2><span>🚀 BuddyStudio</span><span class="badge">TubeBuddy Legend Free</span></h2>
+  <p class="sub">A/B Title CTR Scorer, Tag Deduplicator & 10-Point Upload Checklist</p>
+
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:5px;color:#f8fafc;">⚖️ A/B Title CTR Tester</div>
+    <input id="titleA" value="How to Build AI Agents" placeholder="Title Variant A" />
+    <input id="titleB" value="How to Build Autonomous AI Agents in 2026 [7-Step Blueprint]" placeholder="Title Variant B" />
+    <button id="abBtn" class="act">Run A/B CTR Simulation</button>
+    <div id="abResult" class="score-row"></div>
+  </div>
+
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:5px;color:#f8fafc;">🏷️ Tag Sorter & Deduplicator</div>
+    <textarea id="tagInput" placeholder="ai, youtube seo, ai, automation, creator tools, youtube seo">ai, youtube seo, ai, automation, creator tools, youtube seo</textarea>
+    <button id="cleanTagsBtn" class="act" style="background:#334155;">✨ Deduplicate & Sort Tags (500-Char Safe)</button>
+  </div>
+
+  <div class="card" id="checklistCard">
+    <div style="font-weight:700;margin-bottom:5px;color:#f8fafc;">✅ Upload Best-Practice Launch Pad</div>
+    <label class="chk-item"><input type="checkbox" checked /> High-Contrast Thumbnail + 3-Word Hook</label>
+    <label class="chk-item"><input type="checkbox" checked /> Keyword in First 60 Chars of Title & Description</label>
+    <label class="chk-item"><input type="checkbox" checked /> Minimum 5 Timestamp Chapters Added (00:00)</label>
+    <label class="chk-item"><input type="checkbox" checked /> Pinned Comment with Question + CTA Link</label>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

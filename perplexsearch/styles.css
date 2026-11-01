@@ -1,0 +1,33 @@
+.perplexsearch-fab {
+  position: fixed;
+  left: 16px;
+  bottom: 102px;
+  z-index: 2147483645;
+  background: linear-gradient(135deg, #14b8a6, #0891b2);
+  color: #ffffff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 7px 13px;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(20, 184, 166, 0.45);
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.perplexsearch-card {
+  position: fixed;
+  left: 16px;
+  bottom: 142px;
+  width: 350px;
+  z-index: 2147483647;
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #14b8a6;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 14px 36px rgba(2, 6, 23, 0.78);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11.5px;
+}

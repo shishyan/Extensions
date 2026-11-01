@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "SponsorBlock \u2014 Free Auto-Skip Sponsor/Intro HUD & Clickbait Title Normalizer",
+  "short_name": "SponsorBlock",
+  "version": "1.0.0",
+  "description": "100% Free SponsorBlock & DeArrow alternative: Auto-skip sponsor/intro/filler segments, floating +10s/+30s skip HUD & clickbait title de-sensationalizer.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "SponsorBlock \u2014 Auto-Skip Sponsors & De-Clickbait Titles",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "sponsorblock@gurukuladesam.org",
+      "strict_min_version": "109.0"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "BuddyStudio \u2014 Free YouTube A/B Title CTR Tester, Canned Replies & Launch Checklist",
+  "short_name": "BuddyStudio",
+  "version": "1.0.0",
+  "description": "100% Free TubeBuddy Legend alternative: A/B Title CTR scorer, 1-click canned comment reply templates, tag deduplicator & 10-point upload checklist.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "BuddyStudio \u2014 YouTube A/B Title Tester & Creator Toolkit",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

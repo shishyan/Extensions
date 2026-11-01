@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SocialStats — Creator Channel Grade & Earnings Forecaster</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #fdba74; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(249,115,22,0.2); color: #fed7aa; border: 1px solid rgba(249,115,22,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 8px; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; text-align: center; }
+  .lbl { font-size: 10px; color: #94a3b8; }
+  .val { font-size: 14px; font-weight: 800; color: #fdba74; margin-top: 2px; }
+  .rpm-bar { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px 10px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  button.act { width: 100%; background: #ea580c; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <h2><span>📊 SocialStats</span><span class="badge">SocialBlade Pro Free</span></h2>
+  <p class="sub">Live Creator Channel Grade, Adjustable RPM Matrix & 1-Year Forecaster</p>
+
+  <div class="grid">
+    <div class="box"><div class="lbl">Channel Grade</div><div class="val" id="gVal">A</div></div>
+    <div class="box"><div class="lbl">30-Day Views</div><div class="val" id="vVal">378,600</div></div>
+    <div class="box"><div class="lbl">Est. Monthly Revenue</div><div class="val" id="mRev">$1,704</div></div>
+    <div class="box"><div class="lbl">1-Year Forecast</div><div class="val" id="yRev">$20,728</div></div>
+  </div>
+
+  <div class="rpm-bar">
+    <span>Niche RPM: <strong id="rpmTxt">$4.50</strong></span>
+    <input type="range" id="rpmRange" min="1.5" max="12.0" step="0.5" value="4.5" style="width:160px;" />
+  </div>
+
+  <button id="csvBtn" class="act">⬇️ Export Channel Forecast (.CSV)</button>
+  <script src="popup.js"></script>
+</body>
+</html>

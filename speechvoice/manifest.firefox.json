@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "SpeechVoice \u2014 Free AI Text-to-Speech Reader, Speed Controller & Highlighter",
+  "short_name": "SpeechVoice",
+  "version": "1.0.0",
+  "description": "100% Free Speechify Premium alternative: Natural WebSpeech TTS audio bar, active-sentence glowing highlighter, 1.0x\u20133.5x speed control & voice selector.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "SpeechVoice \u2014 Free AI Text-to-Speech Player & Sentence Highlighter",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "speechvoice@gurukuladesam.org",
+      "strict_min_version": "109.0"
+    }
+  }
+}

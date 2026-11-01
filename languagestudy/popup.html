@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>LanguageStudy — Bilingual Subtitles, Word Lookup & Anki Flashcards</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 400px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  h2 { margin: 0; font-size: 16px; color: #f43f5e; }
+  .badge { background: rgba(244,63,94,0.2); color: #fda4af; border: 1px solid rgba(244,63,94,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .lookup-row { display: flex; gap: 6px; margin-bottom: 10px; }
+  input { flex: 2; background: #1e293b; color: #fff; border: 1px solid #334155; border-radius: 6px; padding: 7px 9px; font-size: 11.5px; outline: none; }
+  select { flex: 1; background: #1e293b; color: #fff; border: 1px solid #334155; border-radius: 6px; padding: 7px 6px; font-size: 11px; }
+  button.primary { background: #f43f5e; color: #fff; border: none; border-radius: 6px; padding: 7px 11px; font-size: 11px; font-weight: 700; cursor: pointer; }
+  .flashcard { background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #f43f5e; border-radius: 10px; padding: 14px; text-align: center; cursor: pointer; margin-bottom: 10px; min-height: 96px; display: flex; flex-direction: column; justify-content: center; }
+  .fc-word { font-size: 18px; font-weight: 800; color: #fda4af; }
+  .fc-back { font-size: 13px; color: #38bdf8; margin-top: 6px; }
+  .fc-ctx { font-size: 10.5px; color: #94a3b8; margin-top: 6px; }
+  .deck-controls { display: flex; gap: 6px; }
+  button.sec { flex: 1; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; padding: 7px; font-size: 11px; font-weight: 700; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="hdr">
+    <h2>🌐 LanguageStudy</h2>
+    <span class="badge">Language Reactor Pro Unlocked</span>
+  </div>
+  <p class="sub">Interactive Bilingual Word Lookup • Flashcard Quiz • Anki CSV Exporter</p>
+
+  <div class="lookup-row">
+    <input id="wordInput" type="text" value="automation" placeholder="Word to translate & save..." />
+    <select id="langSelect">
+      <option value="es">ES</option>
+      <option value="fr">FR</option>
+      <option value="de">DE</option>
+    </select>
+    <button class="primary" id="lookupSaveBtn">+ Lookup & Save</button>
+  </div>
+
+  <div class="flashcard" id="flashcardBox" title="Click to flip flashcard">
+    <div class="fc-word" id="fcWord">Loading Deck…</div>
+    <div class="fc-back" id="fcTranslation"></div>
+    <div class="fc-ctx" id="fcContext">Click card to flip • Saved vocabulary deck</div>
+  </div>
+
+  <div class="deck-controls">
+    <button class="sec" id="prevCardBtn">⏮ Prev Card</button>
+    <button class="sec" id="flipCardBtn">🔄 Flip (<span id="deckCount">0</span>)</button>
+    <button class="sec" id="nextCardBtn">⏭ Next Card</button>
+    <button class="sec" id="exportAnkiBtn">⬇️ Anki CSV</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

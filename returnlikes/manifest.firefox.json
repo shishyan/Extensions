@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "ReturnLikes \u2014 Free YouTube Dislike Counter, Sentiment Bar & LVR Meter",
+  "short_name": "ReturnLikes",
+  "version": "1.0.0",
+  "description": "100% Free Return YouTube Dislike Pro alternative: Real-time dislike counter, Like-to-Dislike sentiment bar & Like-to-View Engagement Ratio (LVR) badge.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ReturnLikes \u2014 YouTube Dislike Counter & Engagement Ratio",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "returnlikes@gurukuladesam.org",
+      "strict_min_version": "109.0"
+    }
+  }
+}

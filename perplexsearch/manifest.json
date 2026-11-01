@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "PerplexSearch \u2014 Free AI Citation Fact-Checker & Multi-Source Research Bar",
+  "short_name": "PerplexSearch",
+  "version": "1.0.0",
+  "description": "100% Free Perplexity Pro alternative: Instant citation-backed answer synthesizer ([1], [2], [3]) powered by Wikipedia & DuckDuckGo Instant Answer APIs.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "PerplexSearch \u2014 Free Citation-Backed Answer Synthesizer",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

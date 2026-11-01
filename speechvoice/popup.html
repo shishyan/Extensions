@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SpeechVoice — AI Text-to-Speech Reader, Speed Controller & Highlighter</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 390px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  h2 { margin: 0; font-size: 16px; color: #38bdf8; }
+  .badge { background: rgba(14,165,233,0.2); color: #7dd3fc; border: 1px solid rgba(14,165,233,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  textarea { width: 100%; height: 105px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: #fff; padding: 8px; font-size: 11.5px; resize: vertical; outline: none; line-height: 1.45; }
+  .row { display: flex; gap: 6px; margin-top: 8px; align-items: center; }
+  select { flex: 1; background: #1e293b; color: #fff; border: 1px solid #334155; border-radius: 6px; padding: 6px; font-size: 11px; }
+  button.primary { flex: 1.5; background: #0ea5e9; color: #082f49; border: none; border-radius: 6px; padding: 8px; font-size: 11.5px; font-weight: 800; cursor: pointer; }
+  button.sec { flex: 1; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
+  #metaBar { margin-top: 10px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 8px; font-size: 11px; color: #cbd5e1; }
+</style>
+</head>
+<body>
+  <div class="hdr">
+    <h2>🔊 SpeechVoice</h2>
+    <span class="badge">Speechify Premium Unlocked</span>
+  </div>
+  <p class="sub">Natural Neural WebSpeech TTS Player • 1.0x–3.5x Speed • Sentence Highlighter</p>
+
+  <textarea id="ttsText">SpeechVoice reads articles, PDFs, and web pages aloud at up to 3.5x speed while highlighting the active paragraph in real time.</textarea>
+
+  <div class="row">
+    <select id="voiceSelect"><option value="">Default Neural Voice</option></select>
+    <select id="rateSelect">
+      <option value="1">1.0x (200 WPM)</option>
+      <option value="1.25" selected>1.25x (250 WPM)</option>
+      <option value="1.5">1.5x (300 WPM)</option>
+      <option value="2">2.0x (400 WPM)</option>
+      <option value="2.5">2.5x (500 WPM)</option>
+      <option value="3">3.0x (600 WPM)</option>
+      <option value="3.5">3.5x (700 WPM)</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <button class="primary" id="speakPopupBtn">▶ Read Text Aloud</button>
+    <button class="sec" id="readPageBtn">📖 Read Active Tab</button>
+    <button class="sec" id="stopBtn">⏹ Stop</button>
+  </div>
+
+  <div id="metaBar">Estimated listening time: ~15 sec at 1.25x speed.</div>
+  <script src="popup.js"></script>
+</body>
+</html>

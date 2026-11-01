@@ -4,7 +4,7 @@ This suite replaces the 10 most famous paid/freemium browser extensions with **1
 
 | # | Extension Name | 50% Original + 50% Contextual | Paid Tools Replaced | Chrome & Edge Package | Firefox Package (AMO) |
 |---|---|---|---|---|---|
-| 1 | **TubeIQ** | `Tube` (TubeBuddy) + `IQ` (vidIQ/Analytics) | vidIQ, TubeBuddy, 1of10 | `tubeiq-chrome-edge.zip` | `tubeiq-firefox.zip` |
+| 1 | **VidOutlier** | `Tube` (TubeBuddy) + `IQ` (vidIQ/Analytics) | vidIQ, TubeBuddy, 1of10 | `vidoutlier-chrome-edge.zip` | `vidoutlier-firefox.zip` |
 | 2 | **GrammFix** | `Gramm` (Grammarly) + `Fix` (Proofreader) | Grammarly Pro, Wordtune, QuillBot | `grammfix-chrome-edge.zip` | `grammfix-firefox.zip` |
 | 3 | **MerlCopilot** | `Merl` (Merlin AI) + `Copilot` (AI Assistant) | Merlin AI, MaxAI.me,Monica | `merlcopilot-chrome-edge.zip` | `merlcopilot-firefox.zip` |
 | 4 | **HuntLead** | `Hunt` (Hunter.io) + `Lead` (B2B Extractor) | Hunter.io, Apollo.io, Lusha | `huntlead-chrome-edge.zip` | `huntlead-firefox.zip` |

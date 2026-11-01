@@ -1,0 +1,67 @@
+#socialstats-card {
+  background: linear-gradient(145deg, #0f172a 0%, #2e1505 100%);
+  color: #f8fafc;
+  border: 1px solid rgba(249, 115, 22, 0.45);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  font-family: system-ui, -apple-system, sans-serif;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+#socialstats-card .ss-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+#socialstats-card .ss-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #fdba74;
+}
+
+#socialstats-card .ss-grade {
+  background: #ea580c;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 13px;
+  padding: 2px 10px;
+  border-radius: 6px;
+}
+
+#socialstats-card .ss-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+#socialstats-card .ss-metric {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid #334155;
+  border-radius: 7px;
+  padding: 6px 8px;
+  text-align: center;
+}
+
+#socialstats-card .ss-metric .lbl {
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+#socialstats-card .ss-metric .val {
+  font-size: 12px;
+  font-weight: 800;
+  color: #fed7aa;
+  margin-top: 2px;
+}
+
+#socialstats-card .ss-Controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: #cbd5e1;
+}
