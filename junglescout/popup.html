@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>JungleScout — E-Commerce Sales Estimator, FBA Profit & LQS Auditor</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 400px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  h2 { margin: 0; font-size: 16px; color: #f59e0b; }
+  .badge { background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 8px; }
+  .kpi { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 7px; text-align: center; font-size: 10px; color: #94a3b8; }
+  .kpi strong { display: block; font-size: 14px; color: #fbbf24; margin-bottom: 2px; }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px; }
+  .field { background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 6px 8px; }
+  .field label { display: block; font-size: 9.5px; color: #94a3b8; }
+  .field input { width: 100%; background: transparent; border: none; color: #fff; font-weight: 700; font-size: 12px; outline: none; }
+  #profitBanner { background: #064e3b; border: 1px solid #10b981; border-radius: 8px; padding: 8px 10px; font-size: 11.5px; color: #ecfdf5; display: flex; justify-content: space-between; font-weight: 700; }
+</style>
+</head>
+<body>
+  <div class="hdr">
+    <h2>🌴 JungleScout</h2>
+    <span class="badge">Jungle Scout Pro Unlocked</span>
+  </div>
+  <p class="sub">BSR-to-Monthly-Sales Estimator • Opportunity Score • FBA Net Profit & ROI</p>
+
+  <div class="kpis">
+    <div class="kpi"><strong id="unitsVal">1,980</strong>Est. Monthly Units</div>
+    <div class="kpi"><strong id="revVal">$97,020</strong>Est. Monthly Rev</div>
+    <div class="kpi"><strong id="lqsVal">88 / 100</strong>Listing Quality (LQS)</div>
+  </div>
+
+  <div class="calc-grid">
+    <div class="field"><label>SALE PRICE ($)</label><input id="priceIn" type="number" value="49.00" step="0.5" /></div>
+    <div class="field"><label>UNIT COGS ($)</label><input id="cogsIn" type="number" value="11.50" step="0.5" /></div>
+    <div class="field"><label>FBA / SHIPPING FEE ($)</label><input id="fbaIn" type="number" value="6.80" step="0.5" /></div>
+    <div class="field"><label>REFERRAL FEE (%)</label><input id="refIn" type="number" value="15" step="1" /></div>
+  </div>
+
+  <div id="profitBanner">
+    <span>Net Profit: <strong id="netProfit">$23.35 / unit</strong></span>
+    <span>Margin: <strong id="netMargin">47.7%</strong> (ROI: <strong id="netRoi">203%</strong>)</span>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

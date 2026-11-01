@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "CamelTracker \u2014 Free 90-Day SVG Price History Chart & Drop Alert Manager",
+  "short_name": "CamelTracker",
+  "version": "1.0.0",
+  "description": "100% Free Camelizer & Price History alternative: Interactive 90-day SVG price chart, Buy/Wait recommendation engine & target price drop alert manager.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "CamelTracker \u2014 90-Day Price History & Drop Alerts",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

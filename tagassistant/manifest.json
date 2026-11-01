@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "TagAssistant \u2014 Free GA4, GTM, Meta/TikTok Pixel & DataLayer Debugger",
+  "short_name": "TagAssistant",
+  "version": "1.0.0",
+  "description": "100% Free Tag/Pixel Debugger: Inspect GA4, Google Tag Manager, Meta Pixel, LinkedIn/TikTok tags & live dataLayer JSON events with health diagnostics.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "TagAssistant \u2014 GA4, GTM, Pixel & DataLayer Debugger",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

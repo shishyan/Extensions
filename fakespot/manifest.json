@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "FakeSpot \u2014 Free Review Authenticity Grader, Bot Detector & True Star Calculator",
+  "short_name": "FakeSpot",
+  "version": "1.0.0",
+  "description": "100% Free Fakespot alternative: Instant product review authenticity grader (A to F), bot/incentivized phrase detector & adjusted real star rating calculator.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "FakeSpot \u2014 Review Authenticity Grader & Adjusted Rating",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

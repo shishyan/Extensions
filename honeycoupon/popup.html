@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>HoneyCoupon — Auto-Coupon Applier & Discount Finder</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #fb923c; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(249,115,22,0.2); color: #fed7aa; border: 1px solid rgba(249,115,22,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; margin-bottom: 8px; font-size: 11px; }
+  .row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .row:last-child { border-bottom: none; }
+  .code-pill { background: rgba(249,115,22,0.2); color: #fb923c; border: 1px solid rgba(249,115,22,0.45); border-radius: 4px; padding: 2px 6px; font-family: monospace; font-weight: 800; }
+  button.act { width: 100%; background: #f97316; color: #0f172a; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <h2><span>🍯 HoneyCoupon</span><span class="badge">Zero-Tracking Coupons</span></h2>
+  <p class="sub">1-Click Checkout Promo Code Tester & Best-Discount Calculator</p>
+
+  <div id="codeList" class="box"></div>
+
+  <button id="applyBtn" class="act">⚡ Auto-Test & Apply Best Coupon</button>
+  <script src="popup.js"></script>
+</body>
+</html>

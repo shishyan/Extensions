@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AliInsiders — Supplier Scorer & Dropship Profit Calculator</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #fca5a5; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(220,38,38,0.2); color: #fecaca; border: 1px solid rgba(220,38,38,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 8px; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; text-align: center; }
+  .lbl { font-size: 10px; color: #94a3b8; }
+  .val { font-size: 14px; font-weight: 800; color: #fca5a5; margin-top: 2px; }
+  button.act { width: 100%; background: #dc2626; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <h2><span>🛍️ AliInsiders</span><span class="badge">AliHunter + DSers Free</span></h2>
+  <p class="sub">Supplier Trust Scorer, Dropship Markup & Product Image Harvester</p>
+
+  <div class="grid">
+    <div class="box"><div class="lbl">Supplier Trust Score</div><div class="val" id="tVal" style="color:#4ade80;">94%</div></div>
+    <div class="box"><div class="lbl">Landed Unit Cost</div><div class="val" id="cVal">$17.00</div></div>
+    <div class="box"><div class="lbl">Recommended RRP (3x)</div><div class="val" id="rVal">$51.00</div></div>
+    <div class="box"><div class="lbl">Est. Profit / Order</div><div class="val" id="pVal" style="color:#4ade80;">+$34.00</div></div>
+  </div>
+
+  <button id="harvestBtn" class="act">📸 Copy All Product Image URLs</button>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TagAssistant — GA4, GTM, Meta/TikTok Pixel & DataLayer Debugger</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 410px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  h2 { margin: 0; font-size: 16px; color: #60a5fa; }
+  .badge { background: rgba(37,99,235,0.2); color: #93c5fd; border: 1px solid rgba(37,99,235,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  .lbl { font-size: 10px; font-weight: 800; color: #94a3b8; margin: 6px 0 4px; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; font-size: 11px; max-height: 110px; overflow-y: auto; line-height: 1.45; }
+  pre { margin: 0; font-size: 10.5px; color: #34d399; white-space: pre-wrap; }
+  button.primary { width: 100%; margin-top: 8px; background: #2563eb; color: #fff; border: none; border-radius: 6px; padding: 8px; font-size: 11.5px; font-weight: 800; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="hdr">
+    <h2>🏷️ TagAssistant</h2>
+    <span class="badge">GA4 + GTM + Pixel Debugger</span>
+  </div>
+  <p class="sub">Real-Time Tracking Tag Health Auditor & Live DataLayer JSON Inspector</p>
+
+  <div class="lbl">DETECTED TAGS, CONTAINERS & PIXELS</div>
+  <div class="box" id="tagsBox">Auditing page tracking tags…</div>
+
+  <div class="lbl">LIVE DATALAYER EVENT STREAM</div>
+  <div class="box"><pre id="dlBox">[]</pre></div>
+
+  <button class="primary" id="copyAuditBtn">📋 Copy Tag & DataLayer Report (JSON)</button>
+  <script src="popup.js"></script>
+</body>
+</html>

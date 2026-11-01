@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BuiltStack — Website Tech Stack, Framework, CMS & CDN Fingerprinter</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 400px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  h2 { margin: 0; font-size: 16px; color: #818cf8; }
+  .badge { background: rgba(99,102,241,0.2); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  #stackContainer { display: flex; flex-direction: column; gap: 6px; max-height: 225px; overflow-y: auto; }
+  .cat-card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 7px 10px; }
+  .cat-title { font-size: 10px; font-weight: 800; color: #38bdf8; text-transform: uppercase; margin-bottom: 3px; }
+  .cat-items { font-size: 11.5px; color: #f1f5f9; font-weight: 600; }
+  .btns { display: flex; gap: 6px; margin-top: 8px; }
+  button.primary { flex: 1.4; background: #6366f1; color: #fff; border: none; border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 800; cursor: pointer; }
+  button.sec { flex: 1; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="hdr">
+    <h2>🧱 BuiltStack</h2>
+    <span class="badge">Wappalyzer + BuiltWith Unlocked</span>
+  </div>
+  <p class="sub">6-Category Deep Website Technology Fingerprinter & JSON/MD Exporter</p>
+
+  <div id="stackContainer">Fingerprinting active website stack…</div>
+
+  <div class="btns">
+    <button class="primary" id="copyMdBtn">📋 Copy Tech Stack (MD)</button>
+    <button class="sec" id="copyJsonBtn">⬇️ Copy JSON</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

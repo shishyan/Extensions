@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CamelTracker — 90-Day Price History & Drop Alerts</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #34d399; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(16,185,129,0.2); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 8px; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; text-align: center; }
+  .lbl { font-size: 10px; color: #94a3b8; }
+  .val { font-size: 13px; font-weight: 800; color: #34d399; margin-top: 2px; }
+  .verdict { background: #1e293b; border: 1px solid #10b981; border-radius: 8px; padding: 8px; text-align: center; font-size: 12px; font-weight: 800; color: #6ee7b7; margin-bottom: 8px; }
+  button.act { width: 100%; background: #10b981; color: #052e16; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <h2><span>🐪 CamelTracker</span><span class="badge">Camelizer Pro Free</span></h2>
+  <p class="sub">90-Day SVG Price Curve, Buy/Wait Engine & Price Drop Alerts</p>
+
+  <div id="verdictBox" class="verdict">🟢 BUY NOW (Below 90-Day Average)</div>
+
+  <div class="grid">
+    <div class="box"><div class="lbl">Current Price</div><div class="val" id="curVal">$49.99</div></div>
+    <div class="box"><div class="lbl">90-Day Avg</div><div class="val" id="avgVal">$54.93</div></div>
+    <div class="box"><div class="lbl">90-Day Low</div><div class="val" id="lowVal">$47.99</div></div>
+  </div>
+
+  <button id="alertBtn" class="act">🔔 Set 10% Price Drop Alert</button>
+  <script src="popup.js"></script>
+</body>
+</html>

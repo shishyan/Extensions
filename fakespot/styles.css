@@ -1,0 +1,21 @@
+#fakespot-badge {
+  background: linear-gradient(145deg, #0f172a 0%, #172554 100%);
+  color: #f8fafc;
+  border: 1px solid #3b82f6;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#fakespot-badge .fs-grade {
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 13px;
+  padding: 3px 10px;
+  border-radius: 6px;
+}

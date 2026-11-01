@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "BuiltStack \u2014 Free Website Tech Stack, Framework, CMS & CDN Detector",
+  "short_name": "BuiltStack",
+  "version": "1.0.0",
+  "description": "100% Free Wappalyzer Pro & BuiltWith alternative: Instant 6-category website technology fingerprinter (Frontend, CMS, Analytics, CDN, Payments, Fonts).",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "BuiltStack \u2014 Website Tech Stack & Framework Fingerprinter",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "builtstack@gurukuladesam.org",
+      "strict_min_version": "109.0"
+    }
+  }
+}
