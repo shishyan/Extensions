@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>HarpaAutomate — Web Monitor, Price Watcher & Structured Data Scraper</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 410px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  h2 { margin: 0; font-size: 16px; color: #f59e0b; }
+  .badge { background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .macros { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-bottom: 8px; }
+  .macro-btn { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; padding: 6px 4px; font-size: 10.5px; font-weight: 700; cursor: pointer; text-align: center; }
+  .macro-btn:hover, .macro-btn.active { background: #f59e0b; color: #0f172a; border-color: #f59e0b; }
+  .top-actions { display: flex; gap: 6px; margin-bottom: 8px; }
+  button.primary { flex: 2; background: #f59e0b; color: #0f172a; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11.5px; cursor: pointer; }
+  button.sec { flex: 1; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; padding: 8px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
+  .box-lbl { font-size: 10.5px; font-weight: 700; color: #94a3b8; margin: 6px 0 4px; display: flex; justify-content: space-between; }
+  .out-box { background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 8px; font-size: 11px; color: #e2e8f0; max-height: 125px; overflow-y: auto; white-space: pre-wrap; line-height: 1.4; }
+</style>
+</head>
+<body>
+  <div class="hdr">
+    <h2>⚙️ HarpaAutomate</h2>
+    <span class="badge">HARPA AI Paid Unlocked</span>
+  </div>
+  <p class="sub">DOM Element Price/Text Monitor + 1-Click Structured Data & SEO Scraper</p>
+
+  <div class="top-actions">
+    <button class="primary" id="pickElementBtn">🎯 Pick Element to Monitor</button>
+    <button class="sec" id="exportJsonBtn">⬇️ JSON</button>
+    <button class="sec" id="exportCsvBtn">⬇️ CSV</button>
+  </div>
+
+  <div class="macros">
+    <button class="macro-btn active" data-macro="seo">🔍 SEO Audit</button>
+    <button class="macro-btn" data-macro="prices">💲 Prices</button>
+    <button class="macro-btn" data-macro="tables">📊 Tables/LD</button>
+    <button class="macro-btn" data-macro="links">🔗 Links</button>
+  </div>
+
+  <div class="box-lbl"><span>EXTRACTED STRUCTURED DATA</span><span id="macroSummary">Ready</span></div>
+  <div class="out-box" id="scrapeOutput">Running macro on active page…</div>
+
+  <div class="box-lbl"><span>ACTIVE PAGE MONITORS</span><span id="clearMonitors" style="cursor:pointer;color:#fbbf24;">Clear All</span></div>
+  <div class="out-box" id="monitorsOutput">No watched selectors yet — click "Pick Element to Monitor".</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

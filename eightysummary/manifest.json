@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "EightySummary \u2014 Free YouTube 8-Point Timestamped Summary & Transcript Extractor",
+  "short_name": "EightySummary",
+  "version": "1.0.0",
+  "description": "100% Free Eightify Pro alternative: Instant 8-point timestamped YouTube video insights, clickable chapter seekers & 1-click full transcript / Markdown exporter.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "EightySummary \u2014 YouTube 8-Point Summary & Transcript Extractor",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

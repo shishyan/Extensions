@@ -1,0 +1,45 @@
+#deeptranslate-tooltip {
+  position: fixed;
+  display: none;
+  width: 310px;
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #0ea5e9;
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55);
+  z-index: 2147483647;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+#deeptranslate-tooltip .dt-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #38bdf8;
+}
+
+#deeptranslate-tooltip .dt-body {
+  font-size: 12px;
+  line-height: 1.45;
+  color: #e2e8f0;
+  background: #1e293b;
+  border-radius: 6px;
+  padding: 7px 8px;
+}
+
+.deeptranslate-bilingual-block {
+  display: block;
+  margin-top: 6px;
+  margin-bottom: 10px;
+  padding: 7px 11px;
+  background: rgba(14, 165, 233, 0.1);
+  border-left: 3px solid #0ea5e9;
+  border-radius: 5px;
+  color: inherit;
+  font-size: 0.95em;
+  line-height: 1.5;
+}

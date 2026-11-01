@@ -1,0 +1,18 @@
+#magicaltext-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%);
+  color: #ffffff;
+  border: 1px solid #a78bfa;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.45);
+  z-index: 2147483647;
+  display: none;
+  align-items: center;
+  gap: 6px;
+}

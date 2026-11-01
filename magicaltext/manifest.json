@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "MagicalText \u2014 Free // Trigger Text Expander, Variable Macros & Autofiller",
+  "short_name": "MagicalText",
+  "version": "1.0.0",
+  "description": "100% Free Magical Pro alternative: Real-time // shortcut text expander, dynamic variable macros ({date}, {time}, {domain}, {title}) & cross-tab autofiller.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "MagicalText \u2014 // Text Expander & Variable Macro Manager",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

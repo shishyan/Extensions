@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "WordRewrite \u2014 Free AI Sentence Rewriter, 5 Tone Variants & Shortener",
+  "short_name": "WordRewrite",
+  "version": "1.0.0",
+  "description": "100% Free Wordtune Premium alternative: Instant 5-way sentence rewrites (Casual, Formal, Shorten, Expand, Punchy Hook) with in-page floating Rewrite Bar.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "WordRewrite \u2014 Free AI Sentence Rewriter & 5 Tone Variants",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

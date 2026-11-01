@@ -1,0 +1,23 @@
+.harpa-hover-outline {
+  outline: 2px dashed #f59e0b !important;
+  background-color: rgba(245, 158, 11, 0.14) !important;
+  cursor: crosshair !important;
+}
+
+.harpa-floating-pill {
+  position: fixed;
+  right: 14px;
+  bottom: 112px;
+  z-index: 2147483645;
+  background: linear-gradient(135deg, #f59e0b, #ea580c);
+  color: #ffffff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 8px 13px;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(234, 88, 12, 0.45);
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}

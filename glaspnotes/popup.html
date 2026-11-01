@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GlaspNotes — Web Highlighter & Markdown Knowledge Exporter</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #34d399; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(16,185,129,0.2); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .stats { display: flex; justify-content: space-between; background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 6px 10px; margin-bottom: 8px; font-size: 11px; color: #cbd5e1; }
+  .list { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; max-height: 230px; overflow-y: auto; font-size: 12px; }
+  .hl-card { padding: 7px 8px; border-radius: 6px; background: rgba(15,23,42,0.7); margin-bottom: 6px; border-left: 4px solid #34d399; }
+  .hl-card[data-color="yellow"] { border-left-color: #eab308; }
+  .hl-card[data-color="emerald"] { border-left-color: #10b981; }
+  .hl-card[data-color="sky"] { border-left-color: #0ea5e9; }
+  .hl-card[data-color="rose"] { border-left-color: #f43f5e; }
+  .hl-quote { font-style: italic; color: #f1f5f9; line-height: 1.4; }
+  .hl-note { margin-top: 4px; font-size: 11px; color: #6ee7b7; }
+  .hl-meta { margin-top: 3px; font-size: 10px; color: #64748b; display: flex; justify-content: space-between; }
+  .btns { display: flex; gap: 6px; margin-top: 10px; }
+  button.act { flex: 1; background: #10b981; color: #052e16; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+  button.act.sec { background: #334155; color: #f8fafc; }
+</style>
+</head>
+<body>
+  <h2><span>🖍️ GlaspNotes</span><span class="badge">Glasp Pro Free</span></h2>
+  <p class="sub">4-Color Web Highlighter, Margin Note Taker & Obsidian/Notion Exporter</p>
+  <div class="stats">
+    <span id="countSpan">📌 Highlights: 0</span>
+    <span id="notesSpan">📝 Notes: 0</span>
+  </div>
+  <div id="list" class="list">Select any text on a webpage to highlight in Yellow, Emerald, Sky, or Rose!</div>
+  <div class="btns">
+    <button id="copyMdBtn" class="act">📋 Copy Markdown Digest</button>
+    <button id="exportMdBtn" class="act sec">⬇️ Export .MD</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

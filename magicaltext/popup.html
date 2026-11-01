@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MagicalText — // Text Expander & Variable Macro Manager</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #c4b5fd; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(139,92,246,0.22); color: #ddd6fe; border: 1px solid rgba(139,92,246,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .form-box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; margin-bottom: 8px; }
+  .row { display: flex; gap: 6px; margin-bottom: 6px; }
+  input, textarea { width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 6px 8px; font-size: 11px; }
+  textarea { height: 48px; resize: none; }
+  .list { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; max-height: 190px; overflow-y: auto; }
+  .snip-item { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 11px; }
+  .snip-item:last-child { border-bottom: none; }
+  .trig { background: rgba(139,92,246,0.22); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.4); border-radius: 4px; padding: 2px 6px; font-family: monospace; font-weight: 700; flex-shrink: 0; }
+  .del-btn { background: #334155; color: #fca5a5; border: none; border-radius: 4px; padding: 2px 6px; font-size: 10px; cursor: pointer; }
+  button.primary { width: 100%; background: #7c3aed; color: #fff; border: none; padding: 7px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
+  .vars-hint { font-size: 10px; color: #94a3b8; margin-bottom: 5px; }
+</style>
+</head>
+<body>
+  <h2><span>✨ MagicalText</span><span class="badge">Magical Pro Free</span></h2>
+  <p class="sub">Real-Time // Shortcut Expander & Dynamic Variable Engine</p>
+
+  <div class="form-box">
+    <div class="vars-hint">Variables: <code>{date}</code> <code>{time}</code> <code>{domain}</code> <code>{title}</code> <code>{url}</code></div>
+    <div class="row">
+      <input id="trigInput" placeholder="Trigger (e.g. //pitch)" />
+    </div>
+    <div class="row">
+      <textarea id="tplInput" placeholder="Expanded text template with {title} or {date}..."></textarea>
+    </div>
+    <button id="addBtn" class="primary">➕ Save // Shortcut Snippet</button>
+  </div>
+
+  <div id="snipList" class="list"></div>
+  <script src="popup.js"></script>
+</body>
+</html>

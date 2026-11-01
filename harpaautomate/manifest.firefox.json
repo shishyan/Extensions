@@ -1,0 +1,55 @@
+{
+  "manifest_version": 3,
+  "name": "HarpaAutomate \u2014 Free Web Monitor, Price Watcher & Structured Data Scraper",
+  "short_name": "HarpaAutomate",
+  "version": "1.0.0",
+  "description": "100% Free HARPA AI alternative: Visual DOM Element Picker to monitor price/text changes, 1-click Table/JSON-LD scraper & SEO/Price/Links automation macros.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "HarpaAutomate \u2014 Free Web Monitor, Price Watcher & Data Scraper",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "harpaautomate@gurukuladesam.org",
+      "strict_min_version": "109.0"
+    }
+  }
+}

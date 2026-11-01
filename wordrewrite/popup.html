@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WordRewrite — Free AI Sentence Companion & 5 Tone Variants</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 400px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  h2 { margin: 0; font-size: 16px; color: #a78bfa; }
+  .badge { background: rgba(139,92,246,0.2); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  textarea { width: 100%; height: 76px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: #fff; padding: 8px; font-size: 12px; resize: vertical; outline: none; line-height: 1.4; }
+  textarea:focus { border-color: #8b5cf6; }
+  .tone-strip { display: flex; justify-content: space-between; align-items: center; background: #1e1b4b; border: 1px solid #4c1d95; border-radius: 6px; padding: 6px 10px; margin: 8px 0; font-size: 11px; color: #ddd6fe; }
+  .cards { display: flex; flex-direction: column; gap: 6px; max-height: 230px; overflow-y: auto; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px 10px; cursor: pointer; transition: border-color 0.15s; }
+  .card:hover { border-color: #8b5cf6; }
+  .card-top { display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; font-weight: 700; color: #c4b5fd; margin-bottom: 3px; }
+  .card-txt { font-size: 11.5px; color: #f1f5f9; line-height: 1.4; }
+  .btn-row { display: flex; gap: 6px; margin-top: 8px; }
+  button { flex: 1; background: #8b5cf6; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; font-size: 11.5px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="hdr">
+    <h2>✨ WordRewrite</h2>
+    <span class="badge">Wordtune Premium Unlocked</span>
+  </div>
+  <p class="sub">Instant 5-Way Sentence Rewriter • Click any card to copy & replace</p>
+
+  <textarea id="sentenceInput" placeholder="Type or paste a sentence to generate 5 instant rewrites...">In order to make sure our project launches on schedule, we really need to check the final metrics at this point in time.</textarea>
+
+  <div class="tone-strip" id="toneStrip">
+    <span>🎯 Detected Tone: <strong id="toneLabel">Analyzing…</strong></span>
+    <span>Clarity Score: <strong id="clarityScore">92%</strong></span>
+  </div>
+
+  <div class="cards" id="cardsContainer"></div>
+
+  <div class="btn-row">
+    <button id="rewriteBtn">⚡ Generate 5 Rewrites</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

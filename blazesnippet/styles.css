@@ -1,0 +1,74 @@
+#blazesnippet-palette {
+  position: fixed;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 420px;
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #f59e0b;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+  z-index: 2147483647;
+  display: none;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+#blazesnippet-palette .bs-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #fbbf24;
+}
+
+#blazesnippet-palette input.bs-search {
+  width: 100%;
+  background: #1e293b;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  border-radius: 7px;
+  padding: 7px 10px;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+#blazesnippet-palette .bs-list {
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+#blazesnippet-palette .bs-item {
+  padding: 7px 9px;
+  border-radius: 7px;
+  background: #1e293b;
+  margin-bottom: 5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+#blazesnippet-palette .bs-item:hover {
+  border-color: #f59e0b;
+}
+
+#blazesnippet-palette .bs-cmd {
+  color: #fbbf24;
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+#blazesnippet-palette .bs-cat {
+  float: right;
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+#blazesnippet-palette .bs-preview {
+  font-size: 11px;
+  color: #cbd5e1;
+  margin-top: 3px;
+}

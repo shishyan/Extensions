@@ -1,0 +1,40 @@
+.wordrewrite-bar {
+  position: absolute;
+  z-index: 2147483646;
+  background: #1e1b4b;
+  color: #f8fafc;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  padding: 5px 8px;
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(139, 92, 246, 0.45);
+  border: 1px solid rgba(167, 139, 250, 0.45);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  user-select: none;
+}
+
+.wordrewrite-bar .wr-brand {
+  font-weight: 800;
+  color: #c4b5fd;
+  padding: 0 4px;
+  font-size: 11px;
+}
+
+.wordrewrite-bar button.wr-chip {
+  background: rgba(139, 92, 246, 0.22);
+  color: #ede9fe;
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  border-radius: 6px;
+  padding: 3px 7px;
+  font-size: 10.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.wordrewrite-bar button.wr-chip:hover {
+  background: #8b5cf6;
+  color: #ffffff;
+}

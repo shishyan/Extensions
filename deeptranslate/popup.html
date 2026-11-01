@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>DeepTranslate — Bilingual Selection & Immersive Page Translator</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #38bdf8; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(14,165,233,0.2); color: #7dd3fc; border: 1px solid rgba(14,165,233,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .controls { display: flex; gap: 6px; margin-bottom: 8px; }
+  select, textarea { width: 100%; background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 7px 8px; font-size: 12px; }
+  textarea { height: 68px; resize: none; margin-bottom: 8px; }
+  .out-box { background: #1e293b; border: 1px solid #0ea5e9; border-radius: 8px; padding: 9px; font-size: 12px; min-height: 68px; color: #e2e8f0; line-height: 1.45; }
+  .btns { display: flex; gap: 6px; margin-top: 9px; }
+  button.act { flex: 1; background: #0ea5e9; color: #082f49; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+  button.act.sec { background: #334155; color: #f8fafc; }
+</style>
+</head>
+<body>
+  <h2><span>🌐 DeepTranslate</span><span class="badge">DeepL + Immersive Free</span></h2>
+  <p class="sub">Selection Tooltip Translator & Side-by-Side Bilingual Page Reader</p>
+
+  <div class="controls">
+    <select id="langSelect">
+      <option value="es">Spanish (Español)</option>
+      <option value="ta">Tamil (தமிழ்)</option>
+      <option value="hi">Hindi (हिन्दी)</option>
+      <option value="fr">French (Français)</option>
+      <option value="de">German (Deutsch)</option>
+      <option value="ja">Japanese (日本語)</option>
+    </select>
+  </div>
+
+  <textarea id="srcText" placeholder="Enter or paste text to translate...">Hello world! Welcome to our artificial intelligence research summary and knowledge guide.</textarea>
+  <div id="outBox" class="out-box">Click Translate or toggle Bilingual Page Mode below.</div>
+
+  <div class="btns">
+    <button id="transBtn" class="act">⚡ Translate Text</button>
+    <button id="bilingualBtn" class="act sec">📖 Bilingual Page Mode</button>
+    <button id="copyBtn" class="act sec">📋 Copy</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

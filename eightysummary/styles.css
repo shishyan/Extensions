@@ -1,0 +1,140 @@
+#eightysummary-card {
+  background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 100%);
+  color: #f8fafc;
+  border: 1px solid rgba(239, 68, 68, 0.45);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  z-index: 9999;
+}
+
+#eightysummary-card .es-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
+}
+
+#eightysummary-card .es-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #fca5a5;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#eightysummary-card .es-badge {
+  background: rgba(239, 68, 68, 0.22);
+  color: #fecaca;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+#eightysummary-card .es-modes {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+#eightysummary-card .es-mode-btn {
+  background: #1e293b;
+  color: #cbd5e1;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 4px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+#eightysummary-card .es-mode-btn.active {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+#eightysummary-card .es-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 290px;
+  overflow-y: auto;
+}
+
+#eightysummary-card .es-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 7px;
+  margin-bottom: 5px;
+  background: rgba(30, 41, 59, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+#eightysummary-card .es-ts {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 5px;
+  padding: 2px 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+#eightysummary-card .es-ts:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+#eightysummary-card .es-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+#eightysummary-card .es-btn {
+  flex: 1;
+  background: #dc2626;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#eightysummary-card .es-btn.secondary {
+  background: #334155;
+  color: #f8fafc;
+}
+
+#eightysummary-card .es-transcript-drawer {
+  display: none;
+  margin-top: 10px;
+  background: #090d16;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 8px;
+  max-height: 180px;
+  overflow-y: auto;
+  font-size: 11px;
+  color: #cbd5e1;
+  white-space: pre-wrap;
+}

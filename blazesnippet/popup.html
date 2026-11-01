@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BlazeSnippet — /cmd Template Studio & Date Math Engine</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 385px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #fbbf24; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(245,158,11,0.2); color: #fde68a; border: 1px solid rgba(245,158,11,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .studio { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; margin-bottom: 8px; }
+  .row { display: flex; gap: 6px; margin-bottom: 6px; }
+  input, textarea { width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 6px 8px; font-size: 11px; }
+  textarea { height: 48px; resize: none; }
+  .hint { font-size: 10px; color: #94a3b8; margin-bottom: 5px; }
+  .list { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; max-height: 185px; overflow-y: auto; }
+  .tpl-card { padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 11px; }
+  .tpl-card:last-child { border-bottom: none; }
+  .cmd-pill { background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.45); border-radius: 4px; padding: 1px 6px; font-family: monospace; font-weight: 700; }
+  .cat-pill { float: right; color: #94a3b8; font-size: 10px; }
+  .btns { display: flex; gap: 6px; margin-top: 8px; }
+  button.act { flex: 1; background: #f59e0b; color: #0f172a; border: none; padding: 7px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+  button.act.sec { background: #334155; color: #f8fafc; }
+</style>
+</head>
+<body>
+  <h2><span>🔥 BlazeSnippet</span><span class="badge">Text Blaze Pro Free</span></h2>
+  <p class="sub">/cmd Templates, Date Math (<code>{+3d}</code>, <code>{next monday}</code>) & Alt+B Palette</p>
+
+  <div class="studio">
+    <div class="hint">Date Math: <code>{today}</code> <code>{+3d}</code> <code>{+2w}</code> <code>{next monday}</code> <code>{form:Name=Default}</code></div>
+    <div class="row">
+      <input id="cmdInput" placeholder="/cmd (e.g. /refund)" style="width:45%;" />
+      <input id="catInput" placeholder="Category (e.g. Support)" style="width:55%;" />
+    </div>
+    <div class="row">
+      <textarea id="bodyInput" placeholder="Hi {form:Name=Client}, your refund will process by {+3d}..."></textarea>
+    </div>
+    <div class="btns">
+      <button id="saveTplBtn" class="act">➕ Save /cmd Template</button>
+      <button id="openBarBtn" class="act sec">⚡ Open Alt+B Bar</button>
+    </div>
+  </div>
+
+  <div id="tplList" class="list"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
