@@ -1,0 +1,39 @@
+#everclipper-bar {
+  position: fixed;
+  top: 10px;
+  left: 14px;
+  z-index: 2147483645;
+  background: rgba(6, 78, 59, 0.96);
+  color: #ecfdf5;
+  border: 1px solid #10b981;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+#everclipper-bar select {
+  background: #022c22;
+  color: #a7f3d0;
+  border: 1px solid #059669;
+  border-radius: 5px;
+  padding: 2px 5px;
+  font-size: 10px;
+}
+#everclipper-bar button {
+  background: #10b981;
+  color: #022c22;
+  border: none;
+  border-radius: 5px;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+#everclipper-bar button:hover {
+  background: #34d399;
+}

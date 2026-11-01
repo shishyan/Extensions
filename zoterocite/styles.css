@@ -1,0 +1,43 @@
+#zoterocite-bar {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  z-index: 2147483640;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #ef4444;
+  border-radius: 999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.55);
+}
+#zoterocite-bar .zc-badge {
+  font-weight: 700;
+  color: #f87171;
+}
+#zoterocite-bar .zc-meta {
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #cbd5e1;
+}
+#zoterocite-bar button {
+  background: #dc2626;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+#zoterocite-bar button#zoterocite-bib-btn {
+  background: #1e293b;
+  border: 1px solid #475569;
+  color: #e2e8f0;
+}

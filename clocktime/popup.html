@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ClockTime — Billable Project Tracker</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 14px;
+      width: 380px;
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 12px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #334155;
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .big-timer {
+      font-size: 20px;
+      font-weight: 800;
+      color: #f8fafc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .earned {
+      color: #4ade80;
+      font-size: 16px;
+    }
+    .field-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    input, select {
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 12px;
+    }
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      height: 85px;
+      background: #0f172a;
+      color: #e2e8f0;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      resize: none;
+    }
+    .btn-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    button {
+      flex: 1;
+      background: #0284c7;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.secondary {
+      background: #334155;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="title">⏱️ ClockTime Billable Pro</div>
+      <div style="font-size:11px;color:#94a3b8;">Hourly Rate Earnings & Client Invoice Exporter</div>
+    </div>
+    <span id="rateBadge" style="background:#0c4a6e;color:#7dd3fc;padding:3px 8px;border-radius:999px;font-weight:700;">$120/hr</span>
+  </div>
+
+  <div class="card">
+    <div class="big-timer">
+      <span id="timerDisplay">00:25:00</span>
+      <span class="earned" id="earningsDisplay">$50.00 Billable</span>
+    </div>
+    <div class="field-row">
+      <input type="text" id="projectInput" value="Client Core Architecture" style="flex:1;" placeholder="Project / Client Name">
+      <select id="rateSelect">
+        <option value="50">$50/hr</option>
+        <option value="85">$85/hr</option>
+        <option value="120" selected>$120/hr</option>
+        <option value="175">$175/hr</option>
+        <option value="250">$250/hr</option>
+      </select>
+    </div>
+    <div class="btn-row">
+      <button id="toggleTimerBtn">▶ Start / Stop Timer</button>
+      <button class="secondary" id="add15mBtn">+15m Billable Block</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:6px;color:#7dd3fc;">Billable Client Timesheet & Invoice Summary</div>
+    <textarea id="invoiceOutput" readonly></textarea>
+    <div class="btn-row">
+      <button id="copyMarkdownBtn">Copy Markdown Invoice</button>
+      <button class="secondary" id="copyCsvBtn">Copy CSV Timesheet</button>
+    </div>
+    <div id="statusMsg" style="font-size:11px;color:#4ade80;min-height:14px;margin-top:4px;"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

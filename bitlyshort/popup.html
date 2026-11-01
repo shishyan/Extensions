@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BitlyShort — Clean URL, UTM Builder & Offline QR</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 14px;
+      width: 380px;
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 12px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #334155;
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fb923c;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 11px;
+      margin-bottom: 6px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+    }
+    .btn-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    button {
+      flex: 1;
+      background: #ea580c;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.secondary {
+      background: #334155;
+    }
+    .qr-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="title">🔗 BitlyShort Studio</div>
+      <div style="font-size:11px;color:#94a3b8;">Canonical URL Sanitizer, UTM Builder & SVG QR</div>
+    </div>
+    <span id="strippedBadge" style="background:#7c2d12;color:#fed7aa;padding:3px 8px;border-radius:999px;font-weight:700;">Clean URL</span>
+  </div>
+
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:4px;color:#fdba74;">Sanitized Canonical URL</div>
+    <input type="text" id="cleanUrlInput" value="https://gurukuladesam.org/articles/ai-engineering">
+    <div class="grid-3">
+      <input type="text" id="utmSource" placeholder="utm_source" value="newsletter">
+      <input type="text" id="utmMedium" placeholder="utm_medium" value="social">
+      <input type="text" id="utmCampaign" placeholder="utm_campaign" value="q4_launch">
+    </div>
+    <input type="text" id="utmResultInput" readonly>
+    <div class="btn-row">
+      <button id="copyCleanBtn">Copy Clean URL</button>
+      <button class="secondary" id="copyUtmBtn">Copy UTM Campaign Link</button>
+    </div>
+  </div>
+
+  <div class="card qr-box">
+    <div id="qrContainer"></div>
+    <div style="flex:1;">
+      <div style="font-weight:700;color:#fb923c;margin-bottom:4px;">100% Client-Side SVG QR</div>
+      <div style="font-size:11px;color:#cbd5e1;margin-bottom:8px;">Instant zero-network QR matrix for mobile scanning or slide decks.</div>
+      <button id="copySvgBtn" style="width:100%;">Copy Raw SVG Code</button>
+      <div id="statusMsg" style="font-size:11px;color:#4ade80;min-height:14px;margin-top:4px;"></div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

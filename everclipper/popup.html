@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EverClipper Notebook Studio</title>
+  <style>
+    body {
+      width: 380px;
+      margin: 0;
+      padding: 14px;
+      background: #064e3b;
+      color: #ecfdf5;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 12px;
+    }
+    h2 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      color: #34d399;
+    }
+    .row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    select, button {
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    select {
+      background: #022c22;
+      color: #a7f3d0;
+      border: 1px solid #059669;
+      flex: 1;
+    }
+    button {
+      background: #10b981;
+      color: #022c22;
+      border: none;
+      cursor: pointer;
+    }
+    button.secondary {
+      background: #047857;
+      color: #ecfdf5;
+    }
+    pre {
+      background: #022c22;
+      border: 1px solid #059669;
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 10px;
+      max-height: 170px;
+      overflow: auto;
+      color: #a7f3d0;
+      white-space: pre-wrap;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <h2>🐘 EverClipper — 4-Mode Web Clipper</h2>
+  <div class="row">
+    <select id="ec-mode">
+      <option value="Simplified Article">Simplified Article</option>
+      <option value="Full Page HTML">Full Page HTML</option>
+      <option value="Selection Quote">Selection Quote</option>
+      <option value="Bookmark Card">Bookmark Card</option>
+    </select>
+    <select id="ec-notebook">
+      <option value="Research">📁 Research</option>
+      <option value="Engineering">📁 Engineering</option>
+      <option value="Finance">📁 Finance</option>
+      <option value="Ideas">📁 Ideas</option>
+    </select>
+  </div>
+  <div class="row">
+    <button id="ec-clip-btn" style="flex:1.2">🐘 Clip Active Tab</button>
+    <button id="ec-export-md" class="secondary">Export .MD</button>
+    <button id="ec-export-html" class="secondary">Export .HTML</button>
+  </div>
+  <pre id="ec-list">Loading offline notebook clips...</pre>
+  <script src="popup.js"></script>
+</body>
+</html>
