@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "GrammFix \u2014 Free AI Grammar Checker, Tone Rewriter & Proofreader",
+  "short_name": "GrammFix",
+  "version": "1.0.0",
+  "description": "100% Free Grammarly & Wordtune alternative: Real-time grammar & spell checker, passive voice fixer, conciseness engine & executive tone rewriter.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "GrammFix \u2014 Free AI Grammar Checker, Tone Rewriter & Proofreader",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://api.languagetool.org/*"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "grammfix@gurukuladesam.org",
+      "strict_min_version": "109.0"
+    }
+  }
+}

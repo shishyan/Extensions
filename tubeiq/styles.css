@@ -1,0 +1,160 @@
+/* TubeIQ — On-Page Overlay & Sidebar Styles */
+:root {
+  --tubeiq-bg: #0f172a;
+  --tubeiq-card: #1e293b;
+  --tubeiq-border: #334155;
+  --tubeiq-accent: #10b981;
+  --tubeiq-gold: #f59e0b;
+  --tubeiq-hot: #ef4444;
+  --tubeiq-blue: #38bdf8;
+  --tubeiq-text: #f8fafc;
+  --tubeiq-muted: #94a3b8;
+}
+
+.tubeiq-thumb-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 25;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-family: "Inter", "Roboto", system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #ffffff;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+.tubeiq-thumb-badge.tubeiq-mega-outlier {
+  background: linear-gradient(135deg, #dc2626 0%, #d97706 100%);
+  border-color: #fde047;
+}
+
+.tubeiq-thumb-badge.tubeiq-strong-outlier {
+  background: linear-gradient(135deg, #059669 0%, #0284c7 100%);
+  border-color: #6ee7b7;
+}
+
+.tubeiq-watch-panel {
+  margin: 12px 0 16px 0;
+  padding: 16px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+  border: 1px solid #334155;
+  color: var(--tubeiq-text);
+  font-family: "Inter", "Roboto", system-ui, sans-serif;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+.tubeiq-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #334155;
+}
+
+.tubeiq-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #38bdf8;
+}
+
+.tubeiq-pill {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(16, 185, 129, 0.18);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.tubeiq-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tubeiq-metric-box {
+  background: rgba(30, 41, 59, 0.85);
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 8px 10px;
+  text-align: center;
+}
+
+.tubeiq-metric-val {
+  font-size: 16px;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.tubeiq-metric-lbl {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+.tubeiq-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+  max-height: 115px;
+  overflow-y: auto;
+}
+
+.tubeiq-tag {
+  background: #1e293b;
+  border: 1px solid #475569;
+  color: #e2e8f0;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tubeiq-tag:hover {
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+.tubeiq-btn {
+  background: linear-gradient(135deg, #0284c7 0%, #10b981 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tubeiq-btn:hover {
+  opacity: 0.92;
+}
+
+.tubeiq-checklist {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #334155;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #cbd5e1;
+}

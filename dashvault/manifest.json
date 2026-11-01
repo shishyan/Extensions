@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "DashVault \u2014 Free Zero-Knowledge Password Generator, Local Vault & Breach Auditor",
+  "short_name": "DashVault",
+  "version": "1.0.0",
+  "description": "100% Free 1Password & Dashlane alternative: WebCrypto 24-char password generator, 1-click password field auto-filler & k-Anonymity breach exposure checker.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "DashVault \u2014 Free Zero-Knowledge Password Generator, Local Vault & Breach Auditor",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://api.pwnedpasswords.com/*",
+    "<all_urls>"
+  ]
+}

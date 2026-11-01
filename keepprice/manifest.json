@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "KeepPrice \u2014 Free Amazon Price History Tracker, Deal Alert & Coupon Finder",
+  "short_name": "KeepPrice",
+  "version": "1.0.0",
+  "description": "100% Free Keepa & Honey alternative: Local price drop watchlist, Amazon ASIN detector, universal promo code tester & zero affiliate cookie hijacking.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "KeepPrice \u2014 Free Amazon Price History Tracker, Deal Alert & Coupon Finder",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { width: 350px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 16px; color: #60a5fa; display: flex; justify-content: space-between; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  select, textarea, input { width: 100%; box-sizing: border-box; background: #1e293b; border: 1px solid #334155; color: #fff; padding: 7px; border-radius: 6px; font-size: 11px; margin-bottom: 6px; }
+  textarea { height: 95px; resize: vertical; }
+  .btns { display: flex; gap: 6px; }
+  button { flex: 1; background: #3b82f6; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 11px; }
+  button.sec { background: #334155; }
+</style>
+</head>
+<body>
+  <h2><span>✉️ MassMail</span><span style="font-size:11px;color:#93c5fd;">Zero Watermark</span></h2>
+  <p class="sub">Free GMass & Mailtrack Alternative • Merge Templates & Follow-Up Composer</p>
+  <select id="tplSelect">
+    <option value="founder">Template 1: Cold B2B Founder Intro</option>
+    <option value="followup">Template 2: 3-Day Gentle Follow-Up</option>
+    <option value="collab">Template 3: Creator / Channel Collaboration</option>
+  </select>
+  <input id="vars" placeholder="Variables: FirstName=Arun, Company=Acme">
+  <textarea id="bodyBox"></textarea>
+  <div class="btns">
+    <button id="insertBtn">⚡ Insert into Gmail / Compose</button>
+    <button id="mailtoBtn" class="sec">📤 Launch Batch Mailto</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
