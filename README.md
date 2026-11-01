@@ -136,3 +136,5 @@
 ## 🔒 Privacy & Open Source License
 - **Privacy Policy**: [https://influenzian-group.gitlab.io/Extensions/privacy.html](https://influenzian-group.gitlab.io/Extensions/privacy.html)
 - **License**: MIT — Free for the entire world forever.
+
+- **Optional Community Support**: All 100 extensions are 100% free forever with zero paywalls. If you'd like to optionally support maintenance: [☕ Support Free Open Tools](https://influenzian-group.gitlab.io/Extensions/donate.html)
