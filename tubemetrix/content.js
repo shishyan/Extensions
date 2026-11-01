@@ -1,5 +1,5 @@
 /**
- * VidOutlier — Complete Replacement for vidIQ Vision + Boost/Max + TubeBuddy Legend + 1of10
+ * TubeMetrix — Complete Replacement for vidIQ Vision + Boost/Max + TubeBuddy Legend + 1of10
  * Features:
  * 1. Top-Right Real-Time Telemetry Bar in YouTube Masthead (Feed Median Views, Avg VPH, Mega Outliers, Quick Keyword Modal)
  * 2. 1of10 + vidIQ Outlier & VPH Badges + Instant HD Thumbnail Download button on every video/Short card
@@ -77,7 +77,7 @@
       endButtons.prepend(bar);
     }
     bar.innerHTML = `
-      <span class="tiq-logo">⚡ VidOutlier</span>
+      <span class="tiq-logo">⚡ TubeMetrix</span>
       <span class="tiq-stat" title="Median Views on Current Page">📊 Med: <strong>${lastFeedSummary.medianViews.toLocaleString()}</strong></span>
       <span class="tiq-stat" title="Average Views Per Hour on Page">🚀 VPH: <strong>${lastFeedSummary.avgVph.toLocaleString()}</strong></span>
       <span class="tiq-stat tiq-hot" title="Viral Outliers (3x+ Median) on Page">🔥 Outliers: <strong>${lastFeedSummary.outliers}</strong></span>
@@ -158,7 +158,7 @@
         dlBtn.className = "tubeiq-thumb-dl";
         dlBtn.href = `https://i.ytimg.com/vi/${vid}/maxresdefault.jpg`;
         dlBtn.target = "_blank";
-        dlBtn.title = "Open 4K/HD Thumbnail (VidOutlier)";
+        dlBtn.title = "Open 4K/HD Thumbnail (TubeMetrix)";
         dlBtn.textContent = "🖼️ HD";
         dlBtn.addEventListener("click", (e) => e.stopPropagation());
         badge.appendChild(dlBtn);
@@ -202,7 +202,7 @@
     const banner = document.createElement("div");
     banner.id = "tubeiq-search-banner";
     banner.className = "tubeiq-search-banner";
-    banner.innerHTML = `<div style="color:#94a3b8;font-size:12px;">⚡ VidOutlier: Analyzing live search volume, competition & related viral tags for "<strong>${q}</strong>"...</div>`;
+    banner.innerHTML = `<div style="color:#94a3b8;font-size:12px;">⚡ TubeMetrix: Analyzing live search volume, competition & related viral tags for "<strong>${q}</strong>"...</div>`;
     primary.prepend(banner);
 
     chrome.runtime.sendMessage({ type: "TUBEIQ_KEYWORD_RESEARCH", query: q }, (resp) => {
@@ -213,7 +213,7 @@
 
       banner.innerHTML = `
         <div class="tubeiq-header">
-          <div class="tubeiq-brand">⚡ VidOutlier — Search Keyword Intelligence: "${q}"</div>
+          <div class="tubeiq-brand">⚡ TubeMetrix — Search Keyword Intelligence: "${q}"</div>
           <div style="display:flex;gap:8px;align-items:center;">
             <span class="tubeiq-pill">vidIQ Max + 1of10 Unlocked</span>
             <button id="tubeiq-copy-search-tags" class="tubeiq-btn">📋 Copy All ${topTags.length} High-Rank Tags</button>
@@ -388,7 +388,7 @@
 
     panel.innerHTML = `
       <div class="tubeiq-header">
-        <div class="tubeiq-brand">⚡ VidOutlier — All-in-One Studio</div>
+        <div class="tubeiq-brand">⚡ TubeMetrix — All-in-One Studio</div>
         <span class="tubeiq-pill">vidIQ Max Unlocked</span>
       </div>
       <div class="tubeiq-grid" style="grid-template-columns:repeat(4,1fr);">
@@ -479,7 +479,7 @@
       document.body.appendChild(pill);
     }
     pill.innerHTML = `
-      <span class="tiq-logo">⚡ VidOutlier Shorts</span>
+      <span class="tiq-logo">⚡ TubeMetrix Shorts</span>
       <span class="tiq-stat">🔥 Viral Hook Score: <strong>92/100</strong></span>
       <a href="https://i.ytimg.com/vi/${vid}/maxresdefault.jpg" target="_blank" class="tubeiq-thumb-dl" style="margin-left:6px;">🖼️ 4K Frame</a>
     `;
@@ -495,7 +495,7 @@
     bar.id = "tubeiq-studio-bar";
     bar.className = "tubeiq-masthead-bar";
     bar.innerHTML = `
-      <span class="tiq-logo">⚡ VidOutlier Studio Max</span>
+      <span class="tiq-logo">⚡ TubeMetrix Studio Max</span>
       <span class="tiq-stat" title="Best Peak Upload Slots (IST)">⏰ Peak Slots: <strong>6 AM • 11 AM • 4 PM • 8 PM IST</strong></span>
       <button id="tubeiq-studio-gen" class="tubeiq-btn" style="padding:3px 8px;font-size:11px;">🚀 Generate 500-Char Viral Tags</button>
     `;

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "VidOutlier \u2014 Free YouTube SEO, Outlier Finder & Studio AI Suite",
-  "short_name": "VidOutlier",
+  "name": "TubeMetrix \u2014 Free YouTube SEO, Outlier Finder & Studio AI Suite",
+  "short_name": "TubeMetrix",
   "version": "99.0.0",
   "description": "Surpasses vidIQ Max, TubeBuddy Legend & 1of10: Top-bar Live VPH, Search Keyword Inspector, 100-pt SEO Scorecard, Tag Generator, AI Title Studio & Thumbnail Downloader.",
   "icons": {
@@ -11,7 +11,7 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "VidOutlier \u2014 Free YouTube SEO & Outlier Suite",
+    "default_title": "TubeMetrix \u2014 Free YouTube SEO & Outlier Suite",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
@@ -19,6 +19,9 @@
     }
   },
   "background": {
+    "scripts": [
+      "background.js"
+    ],
     "service_worker": "background.js"
   },
   "content_scripts": [
@@ -44,5 +47,11 @@
     "https://suggestqueries.google.com/*",
     "https://www.youtube.com/*",
     "https://studio.youtube.com/*"
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "tubemetrix@influenzian.org",
+      "strict_min_version": "109.0"
+    }
+  }
 }

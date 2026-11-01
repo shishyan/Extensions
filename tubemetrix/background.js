@@ -1,5 +1,5 @@
 /**
- * VidOutlier — Background Service Worker (Manifest V3)
+ * TubeMetrix — Background Service Worker (Manifest V3)
  * Live YouTube Autocomplete & Multi-Region Keyword Intelligence (Zero API Keys / 100% Free)
  */
 
@@ -17,7 +17,7 @@ async function fetchYouTubeSuggestions(query, hl = "en", gl = "US") {
       }
     }
   } catch (err) {
-    console.warn("[VidOutlier] Autocomplete fetch error:", err);
+    console.warn("[TubeMetrix] Autocomplete fetch error:", err);
   }
   return [];
 }

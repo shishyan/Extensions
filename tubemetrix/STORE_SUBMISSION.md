@@ -1,6 +1,6 @@
-# VidOutlier — Free YouTube SEO, Outlier Finder & Studio Toolkit (Chrome & Edge Manifest V3)
+# TubeMetrix — Free YouTube SEO, Outlier Finder & Studio Toolkit (Chrome & Edge Manifest V3)
 
-**VidOutlier** is a 100% free, zero-paywall, zero-telemetry Manifest V3 browser extension for **Google Chrome** and **Microsoft Edge** that combines the best features of **vidIQ**, **TubeBuddy**, and **1of10**:
+**TubeMetrix** is a 100% free, zero-paywall, zero-telemetry Manifest V3 browser extension for **Google Chrome** and **Microsoft Edge** that combines the best features of **vidIQ**, **TubeBuddy**, and **1of10**:
 
 1. **Outlier Multiplier & VPH Thumbnail Badges (1of10 + vidIQ style)**:
    - Automatically calculates the median views across any YouTube Home feed, Search results page, Channel page, or Shorts shelf and overlays a live badge (`🔥 4.8x Outlier • 142 VPH`) on every thumbnail.
@@ -28,7 +28,7 @@ The store-ready ZIP archive is pre-built at:
 1. Sign in to the [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole) (requires a one-time $5 Google developer registration fee if not already registered).
 2. Click **New Item** → Upload `extensions/tubeiq-store-package.zip`.
 3. **Store Listing Fields**:
-   - **Title**: `VidOutlier — Free YouTube SEO, Outlier Finder & Studio Toolkit`
+   - **Title**: `TubeMetrix — Free YouTube SEO, Outlier Finder & Studio Toolkit`
    - **Summary**: `100% Free vidIQ, TubeBuddy & 1of10 alternative: Outlier Multiplier & VPH badges, Live Keyword Explorer, Tag Extractor & 100-pt SEO Scorecard.`
    - **Category**: `Productivity` / `Tools`
    - **Language**: `English`
