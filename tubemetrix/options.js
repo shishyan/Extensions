@@ -131,7 +131,7 @@ function renderCompetitors() {
             <div class="stat-card"><div class="stat-val">${fmt(s.medianViews)}</div><div class="stat-lbl">Median Views</div></div>
             <div class="stat-card"><div class="stat-val">${fmt(s.avgViews)}</div><div class="stat-lbl">Average Views</div></div>
             <div class="stat-card"><div class="stat-val" style="color:#10b981">${fmt(s.avgVph)}</div><div class="stat-lbl">Avg VPH</div></div>
-            <div class="stat-card"><div class="stat-val" style="color:#f59e0b">${s.uploadsLast30d}</div><div class="stat-lbl">Uploads (30d)</div></div>
+            <div class="stat-card"><div class="stat-val" style="color:#34d399">${s.estMonthlyRevLow ? `$${fmt(s.estMonthlyRevLow)}–$${fmt(s.estMonthlyRevHigh)}` : s.uploadsLast30d}</div><div class="stat-lbl">${s.estMonthlyRevLow ? `Est. Monthly Rev (${s.uploadsLast30d} in 30d)` : "Uploads (30d)"}</div></div>
           </div>
           ${
             s.breakoutVideo

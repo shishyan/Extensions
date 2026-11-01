@@ -1,10 +1,10 @@
 /**
- * TubeMetrix v100.0.0 — Background Service Worker (Manifest V3)
+ * TubeMetrix v100.3.0 — Background Service Worker (Manifest V3)
  * Real Data Engines (Zero API Keys, Zero Paywalls, 100% Free):
  *  1. Multi-Intent YouTube Autocomplete Engine (Related, Questions, Prepositions, Shorts, Regional)
- *  2. Live YouTube SERP Parser (Scrapes real `/results` ytInitialData to compute real Highest Views, Avg Views, Median Views, Avg Age, Title Match %, Top Channels & Competition Score)
+ *  2. Live YouTube SERP Parser (Scrapes real `/results` ytInitialData — both 2026 `lockupViewModel` and classic `videoRenderer` — to compute real Highest Views, Avg Views, Median Views, Avg Age, Title Match %, Top Channels & Competition Score)
  *  3. Real Tag Search Rank Checker (Checks exact `#1–#20` search rank of a videoId for its tags on YouTube Search)
- *  4. Real Competitor Channel Scraper (Fetches `/@handle/videos` ytInitialData to extract subscriber count, recent uploads, median views, avg VPH & breakout outliers)
+ *  4. Real Competitor Channel Scraper (Fetches `/@handle/videos` ytInitialData to extract subscriber count, total videos, channel keywords, recent 30 uploads via `lockupViewModel`/`videoRenderer`, median views, avg VPH & breakout outliers)
  *  5. Daily Viral Ideas Generator (Combines tracked niche topics + breakout question/comparison patterns)
  */
 
@@ -13,14 +13,16 @@ const SERP_CACHE = new Map();
 function parseCompactNum(str) {
   if (!str) return 0;
   const s = String(str).replace(/,/g, "").trim();
-  const m = s.match(/([\d.]+)\s*([KMBkmb]|கோடி|லட்சம்|ஆயிரம்)?/);
+  if (/^\d+:\d+(:\d+)?$/.test(s)) return 0;
+  if (/\bago\b|முன்/i.test(s) || /^\d+\s*(s|m|h|d|w|mo|y)\b/i.test(s)) return 0;
+  const m = s.match(/([\d.]+)\s*(million|billion|thousand|[KMBkmb]|கோடி|லட்சம்|ஆயிரம்)?/i);
   if (!m) return 0;
   let v = parseFloat(m[1]);
   if (isNaN(v)) return 0;
   const u = (m[2] || "").toUpperCase();
-  if (u === "K" || m[2] === "ஆயிரம்") v *= 1e3;
-  else if (u === "M") v *= 1e6;
-  else if (u === "B") v *= 1e9;
+  if (u === "K" || u === "THOUSAND" || m[2] === "ஆயிரம்") v *= 1e3;
+  else if (u === "M" || u === "MILLION") v *= 1e6;
+  else if (u === "B" || u === "BILLION") v *= 1e9;
   else if (m[2] === "லட்சம்") v *= 1e5;
   else if (m[2] === "கோடி") v *= 1e7;
   return Math.round(v);
@@ -29,7 +31,6 @@ function parseCompactNum(str) {
 function parseAgeHours(str) {
   if (!str) return 72;
   const s = String(str).toLowerCase().trim();
-  // Match both "3y ago", "4d ago", "5h ago", "12m ago" AND "3 years ago", "4 days ago"
   const shortMatch = s.match(/(\d+)\s*(s|sec|m|min|h|hr|d|w|wk|mo|y|yr)\b/);
   if (shortMatch && (s.includes("ago") || shortMatch[2])) {
     const n = parseInt(shortMatch[1], 10) || 1;
@@ -74,7 +75,70 @@ async function fetchAutocomplete(query, hl = "en", gl = "US") {
   return [];
 }
 
-function extractVideosFromInitialData(obj, out = []) {
+function parseLockupViewModel(lvm) {
+  if (!lvm || typeof lvm !== "object") return null;
+  const vid = lvm.contentId || "";
+  if (!vid || lvm.contentType === "LOCKUP_CONTENT_TYPE_PLAYLIST") return null;
+  const md = (lvm.metadata && lvm.metadata.lockupMetadataViewModel) || {};
+  const title = (md.title && md.title.content) || "";
+  if (!title) return null;
+
+  let views = 0;
+  let ageHours = 72;
+  let pubText = "";
+  let channelName = "";
+  let lengthText = "";
+
+  const rows =
+    (md.metadata &&
+      md.metadata.contentMetadataViewModel &&
+      md.metadata.contentMetadataViewModel.metadataRows) ||
+    [];
+  for (const row of rows) {
+    const parts = row.metadataParts || [];
+    for (const part of parts) {
+      const txt = (part.text && part.text.content) || "";
+      const aria = part.accessibilityLabel || "";
+      if (!txt) continue;
+      if (/\bago\b/i.test(txt) || /\bago\b/i.test(aria) || /^\d+\s*(s|m|h|d|w|mo|y)\s*ago/i.test(txt)) {
+        pubText = txt;
+        ageHours = parseAgeHours(aria || txt);
+      } else if (/views/i.test(aria) || part.leadingIcon?.name === "PLAY_ARROW_OUTLINED" || /^[\d.,]+\s*[KMB]$/i.test(txt)) {
+        const parsed = parseCompactNum(txt) || parseCompactNum(aria);
+        if (parsed > 0) views = parsed;
+      } else if (!channelName && !/views|ago/i.test(txt)) {
+        channelName = txt;
+      }
+    }
+  }
+
+  const overlays =
+    (lvm.contentImage &&
+      lvm.contentImage.thumbnailViewModel &&
+      lvm.contentImage.thumbnailViewModel.overlays) ||
+    [];
+  for (const ov of overlays) {
+    const badges =
+      (ov.thumbnailBottomOverlayViewModel && ov.thumbnailBottomOverlayViewModel.badges) || [];
+    for (const b of badges) {
+      const t = b.thumbnailBadgeViewModel && b.thumbnailBadgeViewModel.text;
+      if (t && /^\d+:\d+/.test(t)) lengthText = t;
+    }
+  }
+
+  return {
+    videoId: vid,
+    title,
+    views,
+    ageHours,
+    vph: Math.max(1, Math.round(views / Math.max(1, ageHours))),
+    pubText,
+    channelName,
+    lengthText
+  };
+}
+
+function extractVideosFromInitialData(obj, out = [], seenIds = new Set()) {
   if (!obj || typeof obj !== "object") return out;
   if (obj.videoRenderer) {
     const vr = obj.videoRenderer;
@@ -96,7 +160,8 @@ function extractVideosFromInitialData(obj, out = []) {
     const lengthText = (vr.lengthText && vr.lengthText.simpleText) || "";
     const views = parseCompactNum(viewText);
     const ageHours = parseAgeHours(pubText);
-    if (vid && title) {
+    if (vid && title && !seenIds.has(vid)) {
+      seenIds.add(vid);
       out.push({
         videoId: vid,
         title,
@@ -108,16 +173,23 @@ function extractVideosFromInitialData(obj, out = []) {
         lengthText
       });
     }
+  } else if (obj.lockupViewModel) {
+    const parsedLockup = parseLockupViewModel(obj.lockupViewModel);
+    if (parsedLockup && !seenIds.has(parsedLockup.videoId)) {
+      seenIds.add(parsedLockup.videoId);
+      out.push(parsedLockup);
+    }
+    return out;
   } else if (obj.richItemRenderer && obj.richItemRenderer.content) {
-    extractVideosFromInitialData(obj.richItemRenderer.content, out);
+    extractVideosFromInitialData(obj.richItemRenderer.content, out, seenIds);
     return out;
   }
   for (const k of Object.keys(obj)) {
     const v = obj[k];
     if (Array.isArray(v)) {
-      for (const item of v) extractVideosFromInitialData(item, out);
+      for (const item of v) extractVideosFromInitialData(item, out, seenIds);
     } else if (v && typeof v === "object") {
-      extractVideosFromInitialData(v, out);
+      extractVideosFromInitialData(v, out, seenIds);
     }
   }
   return out;
@@ -337,7 +409,16 @@ async function fetchCompetitorChannel(handleOrUrl) {
   const titleMatch = html.match(/<meta property="og:title" content="([^"]+)"/);
   const avatarMatch = html.match(/<meta property="og:image" content="([^"]+)"/);
   const subMatch = html.match(/"subscriberCountText":\{"simpleText":"([^"]+)"\}/) ||
-                   html.match(/([\d.,]+\s*[KMB]?\s*subscribers)/i);
+                   html.match(/([\d.,]+\s*(?:[KMB]|million|thousand)?\s*subscribers)/i);
+  const videoCountMatch = html.match(/([\d.,]+\s*[KMB]?\s*videos)/i);
+  const chanKwMatch = html.match(/"channelMetadataRenderer":\{[^}]*"keywords":"([^"]+)"/);
+  const channelKeywords = chanKwMatch && chanKwMatch[1]
+    ? chanKwMatch[1]
+        .split(/\s+|,/)
+        .map((s) => s.replace(/"/g, "").trim())
+        .filter((s) => s.length > 2)
+        .slice(0, 18)
+    : [];
 
   let videos = [];
   const idMatch = html.match(/var\s+ytInitialData\s*=\s*(\{.+?\});\s*<\/script>/s) ||
@@ -345,42 +426,14 @@ async function fetchCompetitorChannel(handleOrUrl) {
   if (idMatch) {
     try {
       const parsed = JSON.parse(idMatch[1]);
-      // Extract richGridRenderer video items
-      const walkChannelVideos = (node) => {
-        if (!node || typeof node !== "object") return;
-        if (node.videoRenderer) {
-          const vr = node.videoRenderer;
-          const vid = vr.videoId;
-          const title = (vr.title && vr.title.runs && vr.title.runs.map((r) => r.text).join("")) || (vr.title && vr.title.simpleText) || "";
-          const vTxt = (vr.viewCountText && vr.viewCountText.simpleText) || "";
-          const pTxt = (vr.publishedTimeText && vr.publishedTimeText.simpleText) || "";
-          const views = parseCompactNum(vTxt);
-          const ageHours = parseAgeHours(pTxt);
-          if (vid && title) {
-            videos.push({
-              videoId: vid,
-              title,
-              views,
-              ageHours,
-              pubText: pTxt,
-              vph: Math.max(1, Math.round(views / Math.max(1, ageHours)))
-            });
-          }
-          return;
-        }
-        for (const k of Object.keys(node)) {
-          const v = node[k];
-          if (Array.isArray(v)) v.forEach(walkChannelVideos);
-          else if (v && typeof v === "object") walkChannelVideos(v);
-        }
-      };
-      walkChannelVideos(parsed);
+      videos = extractVideosFromInitialData(parsed, [], new Set());
     } catch (e) {}
   }
 
-  const topVids = videos.slice(0, 20);
+  const topVids = videos.slice(0, 30);
   const sorted = topVids.map((v) => v.views).filter((n) => n > 0).sort((a, b) => a - b);
   const medianViews = sorted.length ? sorted[Math.floor(sorted.length / 2)] : 0;
+  const highestViews = sorted.length ? sorted[sorted.length - 1] : 0;
   const avgViews = sorted.length ? Math.round(sorted.reduce((a, b) => a + b, 0) / sorted.length) : 0;
   const avgVph = topVids.length ? Math.round(topVids.reduce((a, v) => a + v.vph, 0) / topVids.length) : 0;
   const uploadsLast30d = topVids.filter((v) => v.ageHours <= 24 * 30).length;
@@ -390,6 +443,9 @@ async function fetchCompetitorChannel(handleOrUrl) {
     outlierScore: medianViews > 0 ? +(v.views / medianViews).toFixed(1) : 1.0
   }));
   const breakout = [...enriched].sort((a, b) => b.outlierScore - a.outlierScore)[0] || null;
+  const estMonthlyViews = uploadsLast30d > 0 ? Math.round(avgViews * uploadsLast30d * 1.4) : Math.round(avgVph * 24 * 30);
+  const estMonthlyRevLow = Math.max(10, Math.round((estMonthlyViews / 1000) * 1.8));
+  const estMonthlyRevHigh = Math.max(30, Math.round((estMonthlyViews / 1000) * 4.8));
 
   return {
     url: target,
@@ -397,12 +453,18 @@ async function fetchCompetitorChannel(handleOrUrl) {
     avatar: avatarMatch ? avatarMatch[1] : "",
     subscribersText: subMatch ? subMatch[1] : "Active Creator",
     subscribersNum: subMatch ? parseCompactNum(subMatch[1]) : 0,
+    totalVideosText: videoCountMatch ? videoCountMatch[1] : `${topVids.length}+ videos`,
+    channelKeywords,
     medianViews,
+    highestViews,
     avgViews,
     avgVph,
     uploadsLast30d,
+    estMonthlyViews,
+    estMonthlyRevLow,
+    estMonthlyRevHigh,
     breakoutVideo: breakout,
-    recentVideos: enriched.slice(0, 10)
+    recentVideos: enriched.slice(0, 12)
   };
 }
 

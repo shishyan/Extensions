@@ -1,17 +1,17 @@
 /**
- * TubeMetrix v100.0.0 — Full-Featured Content Script for YouTube (2026 DOM) & YouTube Studio
+ * TubeMetrix v100.3.0 — Full-Featured Content Script for YouTube (2026 DOM) & YouTube Studio
  * Complete 8-Suite Parity + Beyond vs vidIQ Max + TubeBuddy Legend + 1of10:
  *  1. Universal 2026 Lockup & Classic Card Outlier + VPH + HD Thumbnail + Swipe-File Save Badges
  *  2. Interactive Top Masthead Bar + Clickable Feed Control Drawer (Sort Feed by Outlier/VPH/Views, Filter 2x+ Outliers, Export Page CSV, Open Command Center)
  *  3. Search Results Page ("/results") Full SERP Companion (Real Demand/Comp/Opp, Highest/Avg/Median Views, Avg Age, Title Match %, Top Creators, 4 Keyword Tabs: Related, Questions, Comparisons, Hidden Gems + CSV Export)
  *  4. Watch Page ("/watch") 5-Tab Complete Inspector:
- *      - Overview & 12-Point Optimization Audit (Actionable 0-50 + Performance 0-50 = 100, Engagement %, Likes, Subs, Views/Sub Ratio, Est. Revenue)
- *      - Tags & Live Search Rank Badges (#1-#20 rank check + Channel Tags + 1-Click 20 Viral Tag Generator)
- *      - Transcript & Auto-Chapter Generator (Pulls YouTube TimedText captions, clickable seek timestamps, 1-click Auto-Generate Chapters for Description)
+ *      - Overview & 12-Point Optimization Audit (Actionable 0-50 + Performance 0-50 = 100, Engagement %, Exact Likes, Comments, Subs, Views/Sub Ratio, Creator Suggested X/20, Words/Min, Est. Revenue)
+ *      - Tags & Live Search Rank Badges (#1-#20 rank check + Channel Tags + Tripled Keywords + Controversial/Ad-Safety Check + 1-Click 20 Viral Tag Generator)
+ *      - Transcript & Auto-Chapter Generator (Pulls YouTube TimedText captions, Words/Min pacing, clickable seek timestamps, 1-click Auto-Generate Chapters for Description)
  *      - AI Title, Hook & Description Studio (6 proven high-CTR title angles + SEO description template + Thumbnail Multi-Device Previewer Modal)
- *      - Channel & Competitor Card (Track channel as Competitor in 1 click)
+ *      - Channel & Monetization Audit (Subscribers, Total Videos, Est. Monthly Views & Revenue, Monetization Readiness 1K Subs + 4K Watch Hours progress, Channel Tags, 1-Click Competitor Spy)
  *  5. Watch Page Comment Insights & Filter Bar (Filter live comments by All, Questions ?, Positive, Negative/Critique, Long Stories, Creator Replies + 1-Click Canned Reply Templates)
- *  6. Channel Page ("/@.../videos") Inline Channel Audit & Sort Toolbar (Channel Health Score, Median Views, Avg VPH, Breakout Video, Sort Grid Inline by Outlier / VPH / Views, Export CSV, Track Competitor)
+ *  6. Channel Page ("/@.../videos") Inline Channel Audit & vidIQ Preset Toolbar (Outliers, Top Hits, Blowing Up VPH, Recent Hits 30d, Evergreens, Sort Grid Inline, Export CSV, Track Competitor)
  *  7. Shorts Player ("/shorts/*") Real-Time Metadata, Outlier/Engagement Pill & 4K Frame Extractor
  *  8. YouTube Studio ("studio.youtube.com") Live Upload & Edit SEO Optimizer Dock (Live Title/Desc/Tag Actionable Score, 1-Click Direct Tag Injection into Studio Tag Input, Chapter Builder, Best Time to Post)
  */
@@ -34,20 +34,19 @@
   function parseCompactNumber(str) {
     if (!str) return 0;
     const clean = String(str).replace(/,/g, "").trim();
-    // Ignore pure durations like "9:38:04" or "12:05"
     if (/^\d+:\d+(:\d+)?$/.test(clean)) return 0;
-    // Ignore age strings like "3y ago" or "4 days ago"
     if (/\bago\b|முன்/i.test(clean) || /^\d+\s*(s|m|h|d|w|mo|y)\b/i.test(clean)) return 0;
 
-    const match = clean.match(/^([\d.]+)\s*([KMBkmb]|கோடி|லட்சம்|ஆயிரம்)?(?:\s*(?:views?|subscribers?|subs?|காட்சிகள்)?)?$/i) ||
-                  clean.match(/([\d.]+)\s*([KMBkmb]|கோடி|லட்சம்|ஆயிரம்)?\s*(?:views?|subscribers?|காட்சி)/i);
+    const match =
+      clean.match(/^([\d.]+)\s*(million|billion|thousand|[KMBkmb]|கோடி|லட்சம்|ஆயிரம்)?(?:\s*(?:views?|subscribers?|subs?|காட்சிகள்)?)?$/i) ||
+      clean.match(/([\d.]+)\s*(million|billion|thousand|[KMBkmb]|கோடி|லட்சம்|ஆயிரம்)?\s*(?:views?|subscribers?|காட்சி)/i);
     if (!match) return 0;
     let val = parseFloat(match[1]);
     if (isNaN(val)) return 0;
     const unit = (match[2] || "").toUpperCase();
-    if (unit === "K" || match[2] === "ஆயிரம்") val *= 1e3;
-    else if (unit === "M") val *= 1e6;
-    else if (unit === "B") val *= 1e9;
+    if (unit === "K" || unit === "THOUSAND" || match[2] === "ஆயிரம்") val *= 1e3;
+    else if (unit === "M" || unit === "MILLION") val *= 1e6;
+    else if (unit === "B" || unit === "BILLION") val *= 1e9;
     else if (match[2] === "லட்சம்") val *= 1e5;
     else if (match[2] === "கோடி") val *= 1e7;
     return Math.round(val);
@@ -182,14 +181,19 @@
 
     let views = 0;
     let hours = 48;
+    let channel = "";
     for (const el of metaEls) {
       const txt = (el.textContent || "").trim();
       if (!txt) continue;
       if (isAgeText(txt)) {
         hours = parseAgeHours(txt);
-      } else if (views === 0) {
+      } else {
         const parsedV = parseCompactNumber(txt);
-        if (parsedV > 0) views = parsedV;
+        if (parsedV > 0 && views === 0) {
+          views = parsedV;
+        } else if (!channel && !/\bviews?\b|\bago\b/i.test(txt) && txt.length >= 2) {
+          channel = txt;
+        }
       }
     }
 
@@ -204,8 +208,10 @@
     );
     const title = titleEl ? (titleEl.getAttribute("title") || titleEl.textContent || "").trim() : "YouTube Video";
 
-    const chanEl = card.querySelector("ytd-channel-name a, a[href^='/@']");
-    const channel = chanEl ? chanEl.textContent.trim() : "";
+    if (!channel) {
+      const chanEl = card.querySelector("ytd-channel-name a, a[href^='/@']");
+      if (chanEl) channel = chanEl.textContent.trim();
+    }
 
     return { card, videoId, title, channel, views, hours, href };
   }
@@ -213,9 +219,16 @@
   function annotateAllVideoCards() {
     const cards = Array.from(
       document.querySelectorAll(
-        "ytd-rich-item-renderer, ytd-video-renderer, ytd-grid-video-renderer, ytd-compact-video-renderer, ytm-shorts-lockup-view-model, ytd-reel-item-renderer"
+        "ytd-rich-item-renderer, ytd-video-renderer, ytd-grid-video-renderer, ytd-compact-video-renderer, yt-lockup-view-model, ytm-shorts-lockup-view-model, ytd-reel-item-renderer"
       )
-    );
+    ).filter((el) => {
+      // Avoid double-counting a yt-lockup-view-model that is already inside a ytd-rich-item-renderer
+      if (el.tagName.toLowerCase() === "yt-lockup-view-model" && el.closest("ytd-rich-item-renderer, ytd-video-renderer")) {
+        return false;
+      }
+      return true;
+    });
+
     if (!cards.length) {
       injectMastheadBar();
       return;
@@ -241,12 +254,13 @@
       item.outlier = mult;
       item.vph = vph;
       totalVph += vph;
-      if (mult >= 2.5) outlierCount++;
+      if (mult >= 2.0) outlierCount++;
 
       // Store metrics on DOM node so Feed/Channel Sort & Filter work instantaneously
       item.card.dataset.tmViews = String(item.views);
       item.card.dataset.tmVph = String(vph);
       item.card.dataset.tmOutlier = String(mult);
+      item.card.dataset.tmHours = String(item.hours);
 
       const existingBadge = item.card.querySelector(".tm-thumb-badge");
       if (existingBadge && item.card.dataset.tmVid === (item.videoId || "")) continue;
@@ -254,7 +268,7 @@
 
       const thumbContainer =
         item.card.querySelector(
-          "ytd-thumbnail, yt-thumbnail-view-model, .yt-lockup-view-model-wiz__content-image, .shortsLockupViewModelHostThumbnailContainer"
+          "ytd-thumbnail, yt-thumbnail-view-model, .yt-lockup-view-model-wiz__content-image, .ytLockupViewModelContentImage, .shortsLockupViewModelHostThumbnailContainer"
         ) || item.card;
 
       const badge = document.createElement("div");
@@ -318,13 +332,20 @@
   }
 
   // --- 2. INTERACTIVE TOP MASTHEAD BAR + FEED COMMAND DRAWER ---
-  function sortVisibleFeed(byKey) {
-    const cards = Array.from(
-      document.querySelectorAll("ytd-rich-item-renderer[data-tm-views], ytd-video-renderer[data-tm-views]")
+  function getSortableFeedCards() {
+    return Array.from(
+      document.querySelectorAll(
+        "ytd-rich-item-renderer[data-tm-views], ytd-video-renderer[data-tm-views], yt-lockup-view-model[data-tm-views]"
+      )
     );
+  }
+
+  function sortVisibleFeed(byKey) {
+    const cards = getSortableFeedCards();
     if (cards.length < 2) return;
     const parent = cards[0].parentElement;
     if (!parent) return;
+    for (const el of cards) el.style.display = "";
     const sorted = [...cards].sort((a, b) => {
       const va = parseFloat(a.dataset[byKey] || "0");
       const vb = parseFloat(b.dataset[byKey] || "0");
@@ -333,10 +354,33 @@
     for (const el of sorted) parent.appendChild(el);
   }
 
+  function applyChannelPreset(preset) {
+    const cards = getSortableFeedCards();
+    if (!cards.length) return;
+    const parent = cards[0].parentElement;
+    for (const el of cards) {
+      const mult = parseFloat(el.dataset.tmOutlier || "0");
+      const hours = parseFloat(el.dataset.tmHours || "48");
+      let show = true;
+      if (preset === "outliers") show = mult >= 1.5;
+      else if (preset === "recent30d") show = hours <= 24 * 30;
+      else if (preset === "evergreens") show = hours >= 24 * 180 && mult >= 1.0;
+      el.style.display = show ? "" : "none";
+    }
+    if (parent) {
+      const sortKey =
+        preset === "outliers"
+          ? "tmOutlier"
+          : preset === "velocity" || preset === "evergreens"
+          ? "tmVph"
+          : "tmViews";
+      const sorted = [...cards].sort((a, b) => parseFloat(b.dataset[sortKey] || "0") - parseFloat(a.dataset[sortKey] || "0"));
+      for (const el of sorted) parent.appendChild(el);
+    }
+  }
+
   function filterOutliersOnly(minOutlier) {
-    const cards = Array.from(
-      document.querySelectorAll("ytd-rich-item-renderer[data-tm-views], ytd-video-renderer[data-tm-views]")
-    );
+    const cards = getSortableFeedCards();
     for (const el of cards) {
       const mult = parseFloat(el.dataset.tmOutlier || "0");
       el.style.display = mult >= minOutlier ? "" : "none";
@@ -379,13 +423,13 @@
         <div class="tm-metric"><div class="tm-metric-val">${feedSummary.count}</div><div class="tm-metric-lbl">Videos</div></div>
         <div class="tm-metric"><div class="tm-metric-val">${formatCompact(feedSummary.medianViews)}</div><div class="tm-metric-lbl">Median</div></div>
         <div class="tm-metric"><div class="tm-metric-val" style="color:#38bdf8">${formatCompact(feedSummary.avgVph)}</div><div class="tm-metric-lbl">Avg VPH</div></div>
-        <div class="tm-metric"><div class="tm-metric-val" style="color:#fb7185">${feedSummary.outliers}</div><div class="tm-metric-lbl">2.5x+ Hits</div></div>
+        <div class="tm-metric"><div class="tm-metric-val" style="color:#fb7185">${feedSummary.outliers}</div><div class="tm-metric-lbl">2x+ Hits</div></div>
       </div>
-      <div style="font-size:11px;font-weight:800;color:#94a3b8;margin-top:6px;">Re-Sort & Filter Current Page Videos (1of10 + vidIQ Max):</div>
+      <div style="font-size:11px;font-weight:800;color:#94a3b8;margin-top:6px;">Re-Sort & Filter Current Page Videos (vidIQ Presets):</div>
       <div class="tm-drawer-row">
         <button class="tm-btn" data-sort="tmOutlier">🔥 Sort by Outlier</button>
-        <button class="tm-btn" data-sort="tmVph">🚀 Sort by VPH</button>
-        <button class="tm-btn" data-sort="tmViews">📊 Sort by Views</button>
+        <button class="tm-btn" data-sort="tmVph">🚀 Blowing Up (VPH)</button>
+        <button class="tm-btn" data-sort="tmViews">📊 Top Hits (Views)</button>
         <button class="tm-btn tm-btn-amber" id="tm-filter-2x">⚡ Only 2x+ Outliers</button>
         <button class="tm-btn tm-btn-secondary" id="tm-filter-reset">↺ Show All</button>
       </div>
@@ -593,6 +637,8 @@
       channelHandle: "",
       viewCount: 0,
       likeCount: 0,
+      commentCount: 0,
+      commentCountText: "0",
       subscriberCount: 0,
       subscribersText: "",
       lengthSeconds: 0,
@@ -600,6 +646,10 @@
       category: "",
       isFamilySafe: true,
       hasManualCaptions: false,
+      cardsCount: 0,
+      hasEndscreen: false,
+      creatorSuggestedCount: 0,
+      totalSuggestedCount: 20,
       captionTracks: [],
       channelKeywords: [],
       shortDescription: "",
@@ -620,6 +670,8 @@
             pr.captions.playerCaptionsTracklistRenderer &&
             pr.captions.playerCaptionsTracklistRenderer.captionTracks) ||
           [];
+        const cardsArr = (pr.cards && pr.cards.cardCollectionRenderer && pr.cards.cardCollectionRenderer.cards) || [];
+        const endscreenEls = (pr.endscreen && pr.endscreen.endscreenRenderer && pr.endscreen.endscreenRenderer.elements) || [];
 
         meta.videoId = vd.videoId || vid;
         meta.title = vd.title || meta.title;
@@ -634,17 +686,42 @@
         meta.keywords = Array.isArray(vd.keywords) ? vd.keywords : [];
         meta.captionTracks = tracks;
         meta.hasManualCaptions = tracks.some((t) => t.kind !== "asr");
+        meta.cardsCount = cardsArr.length;
+        meta.hasEndscreen = endscreenEls.length > 0;
         if (micro.ownerProfileUrl) {
           const hm = micro.ownerProfileUrl.match(/\/(@[^/]+)$/);
           if (hm) meta.channelHandle = hm[1];
         }
       }
 
-      // Extract Like Count & Channel Keywords from HTML
-      const likeAriaMatch = html.match(/"label":"([\d,]+)\s+likes"/i) || html.match(/along with ([\d,]+) other people/i);
-      if (likeAriaMatch) {
-        meta.likeCount = parseInt(likeAriaMatch[1].replace(/,/g, ""), 10) || 0;
+      // Extract Exact Like Count from 2026 accessibilityText or factoidRenderer
+      const exactLikeMatch =
+        html.match(/along with ([\d,]+) other people/i) ||
+        html.match(/"label":"([\d,]+)\s+likes"/i);
+      if (exactLikeMatch) {
+        meta.likeCount = parseInt(exactLikeMatch[1].replace(/,/g, ""), 10) || 0;
+      } else {
+        const factoidLike = html.match(/"factoidRenderer":\{"value":\{"simpleText":"([^"]+)"\},"label":\{"simpleText":"Likes"\}/i);
+        if (factoidLike) meta.likeCount = parseCompactNumber(factoidLike[1]);
       }
+
+      // Extract Comment Count from 2026 engagementPanelTitleHeaderRenderer contextualInfo
+      const commMatch = html.match(/"engagement-panel-comments-section".*?"contextualInfo":\{"runs":\[\{"text":"([^"]+)"\}\]/);
+      if (commMatch && commMatch[1]) {
+        meta.commentCountText = commMatch[1];
+        meta.commentCount = parseCompactNumber(commMatch[1]);
+      }
+
+      // Extract Subscriber Count from HTML
+      const subHtmlMatch =
+        html.match(/"subscriberCountText":\{"simpleText":"([^"]+)"\}/) ||
+        html.match(/([\d.,]+\s*(?:[KMB]|million|thousand)?\s*subscribers)/i);
+      if (subHtmlMatch && subHtmlMatch[1]) {
+        meta.subscribersText = subHtmlMatch[1].replace(/subscribers?/i, "").trim();
+        meta.subscriberCount = parseCompactNumber(subHtmlMatch[1]);
+      }
+
+      // Extract Channel Keywords from HTML
       const chanKwMatch = html.match(/"channelMetadataRenderer":\{[^}]*"keywords":"([^"]+)"/);
       if (chanKwMatch && chanKwMatch[1]) {
         meta.channelKeywords = chanKwMatch[1]
@@ -652,6 +729,41 @@
           .map((s) => s.replace(/"/g, "").trim())
           .filter((s) => s.length > 2)
           .slice(0, 20);
+      }
+
+      // Extract Creator Suggested Count from Watch Next secondaryResults
+      const idMatch =
+        html.match(/var\s+ytInitialData\s*=\s*(\{.+?\});\s*<\/script>/s) ||
+        html.match(/ytInitialData\s*=\s*(\{.+?\});/s);
+      if (idMatch && meta.author) {
+        const initData = JSON.parse(idMatch[1]);
+        const secResults =
+          initData?.contents?.twoColumnWatchNextResults?.secondaryResults?.secondaryResults?.results || [];
+        let totalUpNext = 0;
+        let sameCreator = 0;
+        const authorLower = meta.author.toLowerCase();
+        const checkItem = (it) => {
+          if (it.lockupViewModel) {
+            totalUpNext++;
+            const str = JSON.stringify(it.lockupViewModel.metadata || {}).toLowerCase();
+            if (str.includes(`"${authorLower}"`)) sameCreator++;
+          } else if (it.compactVideoRenderer) {
+            totalUpNext++;
+            const byline = JSON.stringify(it.compactVideoRenderer.longBylineText || {}).toLowerCase();
+            if (byline.includes(authorLower)) sameCreator++;
+          }
+        };
+        for (const r of secResults) {
+          if (r.itemSectionRenderer && Array.isArray(r.itemSectionRenderer.contents)) {
+            r.itemSectionRenderer.contents.forEach(checkItem);
+          } else {
+            checkItem(r);
+          }
+        }
+        if (totalUpNext > 0) {
+          meta.totalSuggestedCount = totalUpNext;
+          meta.creatorSuggestedCount = sameCreator;
+        }
       }
     } catch (e) {}
 
@@ -663,9 +775,9 @@
       if (m) meta.likeCount = parseCompactNumber(m[1]);
     }
     const subEl = document.querySelector("#owner-sub-count");
-    if (subEl) {
-      meta.subscribersText = subEl.textContent.trim();
-      meta.subscriberCount = parseCompactNumber(meta.subscribersText);
+    if (subEl && subEl.textContent.trim()) {
+      meta.subscribersText = subEl.textContent.replace(/subscribers?/i, "").trim();
+      meta.subscriberCount = parseCompactNumber(subEl.textContent);
     }
     if (!meta.channelHandle) {
       const ownerLink = document.querySelector("#owner a[href^='/@']");
@@ -675,46 +787,72 @@
     return meta;
   }
 
+  function computeTripledAndControversialKeywords(meta) {
+    const titleLower = (meta.title || "").toLowerCase();
+    const descLower = (meta.shortDescription || "").toLowerCase();
+    const tags = meta.keywords || [];
+    const tripled = tags.filter((t) => {
+      const k = t.toLowerCase().trim();
+      return k.length > 2 && titleLower.includes(k) && descLower.includes(k);
+    });
+
+    const demonetizeDictionary = [
+      "hack", "crack", "pirate", "torrent", "nsfw", "18+", "gambling", "casino",
+      "betting", "kill", "murder", "suicide", "bomb", "terror", "weapon", "gun",
+      "drug", "cocaine", "weed", "scam", "fraud", "stolen", "leaked", "gore", "hate"
+    ];
+    const combinedText = `${titleLower} ${descLower} ${tags.join(" ").toLowerCase()}`;
+    const flagged = demonetizeDictionary.filter((word) => new RegExp(`\\b${word}\\b`, "i").test(combinedText));
+
+    return { tripled, flagged };
+  }
+
   function evaluate12PointChecklist(meta, rankedTagCount) {
     const desc = meta.shortDescription || "";
+    const descWords = desc.trim() ? desc.trim().split(/\s+/).length : 0;
+    const descLinks = (desc.match(/https?:\/\/[^\s)]+/g) || []).length;
     const tags = meta.keywords || [];
     const totalTagChars = tags.join(", ").length;
     const hasTimestamps = /\b\d{1,2}:\d{2}\b/.test(desc);
-    const hasLinks = /https?:\/\//.test(desc);
     const hasHashtags = /#\w+/.test(desc);
-    const firstKw = (tags[0] || meta.title.split(/\s+/)[0] || "").toLowerCase();
-    const kwInFirst200 = firstKw ? desc.slice(0, 220).toLowerCase().includes(firstKw) : false;
+    const { tripled, flagged } = computeTripledAndControversialKeywords(meta);
 
     const items = [
-      { ok: meta.title.length >= 40 && meta.title.length <= 75, label: `Title length (${meta.title.length}/70)` },
-      { ok: desc.length >= 300, label: `Description 300+ chars (${desc.length})` },
+      { ok: meta.title.length >= 20 && meta.title.length <= 65, label: `Title 20–60 chars (${meta.title.length})` },
+      { ok: desc.length >= 300, label: `Desc ${descWords} words / ${desc.length} chars` },
       { ok: tags.length >= 10, label: `10+ Video tags (${tags.length})` },
-      { ok: totalTagChars >= 200, label: `Tag char volume (${totalTagChars}/500)` },
-      { ok: kwInFirst200, label: "Target keyword in first 200c" },
-      { ok: hasTimestamps, label: "Video chapters (0:00 timestamps)" },
+      { ok: totalTagChars >= 200, label: `Tag volume (${totalTagChars}/500c)` },
+      { ok: tripled.length > 0, label: `Tripled keywords (${tripled.length})` },
+      { ok: hasTimestamps, label: "Chapters (00:00 timestamps)" },
       { ok: meta.captionTracks.length > 0, label: meta.hasManualCaptions ? "Manual CC captions" : `Captions (${meta.captionTracks.length})` },
-      { ok: hasLinks, label: "External / Playlist links" },
-      { ok: hasHashtags, label: "Topic #hashtags in desc" },
-      { ok: /[|—\-:?!]/.test(meta.title), label: "CTR hook punctuation in title" },
-      { ok: meta.lengthSeconds >= 480 || meta.lengthSeconds <= 65, label: meta.lengthSeconds >= 480 ? "Mid-roll ad eligible (8m+)" : "Shorts / Tight pacing" },
-      { ok: rankedTagCount > 0, label: `Ranked top-20 tags (${rankedTagCount})` }
+      { ok: descLinks > 0, label: `Description links (${descLinks})` },
+      { ok: meta.cardsCount > 0 || hasHashtags, label: `Info cards (${meta.cardsCount}) & #tags` },
+      { ok: /[|—\-:?!]/.test(meta.title), label: "High-CTR hook punctuation" },
+      { ok: flagged.length === 0, label: flagged.length === 0 ? "Ad-Safe (0 demonetize words)" : `⚠️ Flagged: ${flagged.join(", ")}` },
+      { ok: rankedTagCount > 0, label: `Ranked Top-20 tags (${rankedTagCount})` }
     ];
 
     const actionable = Math.round((items.slice(0, 10).filter((i) => i.ok).length / 10) * 50);
-    const engRatio = meta.viewCount > 0 ? meta.likeCount / meta.viewCount : 0;
-    const perfRaw = Math.min(50, Math.round(engRatio * 750) + (rankedTagCount * 5) + (meta.viewCount > 10000 ? 12 : 5));
+    const engRatio = meta.viewCount > 0 ? (meta.likeCount + meta.commentCount) / meta.viewCount : 0;
+    const perfRaw = Math.min(
+      50,
+      Math.round(engRatio * 650) + rankedTagCount * 5 + (meta.creatorSuggestedCount >= 3 ? 8 : 3) + (meta.viewCount > 10000 ? 10 : 4)
+    );
     const performance = Math.max(8, Math.min(50, perfRaw));
 
     return {
       actionable,
       performance,
       total: actionable + performance,
+      tripled,
+      flagged,
+      descWords,
+      descLinks,
       items
     };
   }
 
   async function fetchTranscriptSegments(videoId, captionTracks) {
-    // 1. Direct same-origin YouTube IOS InnerTube call right from the youtube.com content script!
     try {
       const r = await fetch("https://www.youtube.com/youtubei/v1/player?prettyPrint=false", {
         method: "POST",
@@ -743,7 +881,6 @@
       }
     } catch (e) {}
 
-    // 2. Fallback via background service worker
     const fromBg = await new Promise((resolve) => {
       chrome.runtime.sendMessage({ type: "TM_FETCH_TRANSCRIPT", videoId }, (resp) => {
         if (!chrome.runtime.lastError && resp && resp.ok && Array.isArray(resp.segments) && resp.segments.length > 0) {
@@ -887,13 +1024,14 @@
     const meta = await extractRichWatchData();
     const pubAgeHours = meta.publishDate ? Math.max(1, (Date.now() - new Date(meta.publishDate).getTime()) / 3600000) : 48;
     const liveVph = Math.max(1, Math.round(meta.viewCount / pubAgeHours));
-    const engRate = meta.viewCount > 0 ? +((meta.likeCount / meta.viewCount) * 100).toFixed(2) : 0;
+    const engRate = meta.viewCount > 0 ? +(((meta.likeCount + meta.commentCount) / meta.viewCount) * 100).toFixed(2) : 0;
     const viewSubRatio = meta.subscriberCount > 0 ? +((meta.viewCount / meta.subscriberCount) * 100).toFixed(1) : 0;
     const estRevLow = Math.max(1, Math.round((meta.viewCount / 1000) * 1.8));
     const estRevHigh = Math.max(3, Math.round((meta.viewCount / 1000) * 4.8));
 
     let tagRanks = {};
     let transcriptSegs = null;
+    let channelSpyData = null;
     let activeTab = "overview";
 
     const renderWatchPanel = () => {
@@ -925,19 +1063,25 @@
             </div>
             <div class="tm-metric">
               <div class="tm-metric-val" style="color:#a78bfa">${engRate}%</div>
-              <div class="tm-metric-lbl">Like/View %</div>
+              <div class="tm-metric-lbl">Engagement ER</div>
             </div>
             <div class="tm-metric">
               <div class="tm-metric-val" style="color:#34d399">$${formatCompact(estRevLow)}–$${formatCompact(estRevHigh)}</div>
-              <div class="tm-metric-lbl">Est. Revenue</div>
+              <div class="tm-metric-lbl">Est. Earnings</div>
             </div>
           </div>
 
           <div class="tm-grid-4">
             <div class="tm-metric"><div class="tm-metric-val">${formatCompact(meta.viewCount)}</div><div class="tm-metric-lbl">Exact Views</div></div>
             <div class="tm-metric"><div class="tm-metric-val">${formatCompact(meta.likeCount)}</div><div class="tm-metric-lbl">Likes</div></div>
-            <div class="tm-metric"><div class="tm-metric-val">${meta.subscribersText ? meta.subscribersText.replace(/subscribers/i, "").trim() : "—"}</div><div class="tm-metric-lbl">Subscribers</div></div>
-            <div class="tm-metric"><div class="tm-metric-val">${viewSubRatio ? viewSubRatio + "%" : "—"}</div><div class="tm-metric-lbl">Views/Subs</div></div>
+            <div class="tm-metric"><div class="tm-metric-val">${meta.commentCountText || formatCompact(meta.commentCount)}</div><div class="tm-metric-lbl">Comments</div></div>
+            <div class="tm-metric"><div class="tm-metric-val">${meta.creatorSuggestedCount}/${meta.totalSuggestedCount}</div><div class="tm-metric-lbl">Creator Suggested</div></div>
+          </div>
+
+          <div class="tm-grid-3" style="margin-bottom:8px;">
+            <div class="tm-metric"><div class="tm-metric-val">${meta.subscribersText || "—"}</div><div class="tm-metric-lbl">Subscribers</div></div>
+            <div class="tm-metric"><div class="tm-metric-val">${viewSubRatio ? viewSubRatio + "%" : "—"}</div><div class="tm-metric-lbl">Views / Subs</div></div>
+            <div class="tm-metric"><div class="tm-metric-val">${audit.descWords}w · ${audit.descLinks}🔗</div><div class="tm-metric-lbl">Desc Words & Links</div></div>
           </div>
 
           <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
@@ -964,6 +1108,11 @@
             <button class="tm-btn tm-btn-emerald" id="tm-gen-20-tags">🚀 Generate 20 High-Rank Tags</button>
             <button class="tm-btn tm-btn-secondary" id="tm-recheck-ranks">🔍 Check #Ranks</button>
           </div>
+          ${
+            audit.tripled.length
+              ? `<div style="font-size:11px;color:#34d399;margin-bottom:6px;">🎯 <strong>Tripled Keywords (Title + Desc + Tags):</strong> ${audit.tripled.join(", ")}</div>`
+              : `<div style="font-size:11px;color:#f59e0b;margin-bottom:6px;">💡 <strong>Tip:</strong> Repeat your #1 target keyword in Title, Description & Tags for a Tripled Keyword boost.</div>`
+          }
           <div style="font-size:11px;font-weight:700;color:#94a3b8;">Video Tags (Green badge = Live YouTube Search Top-20 Rank):</div>
           <div id="tm-vtags-container" class="tm-tags-box">
             ${
@@ -989,11 +1138,14 @@
           </div>
         `;
       } else if (activeTab === "transcript") {
+        const totalWords = (transcriptSegs || []).reduce((acc, s) => acc + s.text.split(/\s+/).length, 0);
+        const wpm = meta.lengthSeconds > 0 && totalWords > 0 ? Math.round((totalWords / meta.lengthSeconds) * 60) : 0;
         tabBody = `
-          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;align-items:center;">
             <button class="tm-btn" id="tm-copy-transcript">📋 Copy Full Transcript</button>
             <button class="tm-btn tm-btn-emerald" id="tm-gen-chapters">⏱️ Auto-Generate Chapters</button>
             <button class="tm-btn tm-btn-secondary" id="tm-export-srt">📥 Export .TXT</button>
+            ${wpm > 0 ? `<span class="tm-badge-pill" title="Words Per Minute Pacing">🗣️ ${wpm} WPM (${totalWords} words)</span>` : ""}
           </div>
           <div id="tm-transcript-area" class="tm-scroll-box">
             ${
@@ -1029,6 +1181,45 @@
             <button class="tm-btn" id="tm-ai-preview-btn">🖼️ Test in SERP Simulator</button>
           </div>
         `;
+      } else if (activeTab === "channel") {
+        const subProgress = Math.min(100, Math.round(((meta.subscriberCount || 0) / 1000) * 100));
+        const estWatchHours = Math.round(((meta.viewCount || 0) * Math.min(300, Math.max(60, meta.lengthSeconds * 0.45))) / 3600);
+        const watchProgress = Math.min(100, Math.round((estWatchHours / 4000) * 100));
+        tabBody = `
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <div>
+              <div style="font-size:13px;font-weight:800;color:#f8fafc;">${meta.author || "Channel Overview"}</div>
+              <div style="font-size:11px;color:#38bdf8;">${meta.channelHandle || ""} · ${meta.subscribersText || "Active"} Subscribers</div>
+            </div>
+            <button class="tm-btn tm-btn-emerald" id="tm-spy-chan-now">🔍 Deep Audit Channel</button>
+          </div>
+          <div class="tm-grid-3" style="margin-bottom:8px;">
+            <div class="tm-metric"><div class="tm-metric-val" style="color:${subProgress >= 100 ? "#10b981" : "#f59e0b"}">${subProgress}%</div><div class="tm-metric-lbl">1K Subs YPP Goal</div></div>
+            <div class="tm-metric"><div class="tm-metric-val" style="color:${watchProgress >= 100 ? "#10b981" : "#38bdf8"}">${watchProgress}%</div><div class="tm-metric-lbl">4K Watch Hrs (Video)</div></div>
+            <div class="tm-metric"><div class="tm-metric-val" style="color:#34d399">${subProgress >= 100 && watchProgress >= 100 ? "✅ Monetized" : "⏳ Growing"}</div><div class="tm-metric-lbl">YPP Status</div></div>
+          </div>
+          ${
+            channelSpyData
+              ? `
+              <div class="tm-grid-4" style="margin-bottom:8px;">
+                <div class="tm-metric"><div class="tm-metric-val">${formatCompact(channelSpyData.medianViews)}</div><div class="tm-metric-lbl">Channel Median</div></div>
+                <div class="tm-metric"><div class="tm-metric-val" style="color:#38bdf8">${formatCompact(channelSpyData.avgVph)}</div><div class="tm-metric-lbl">Channel Avg VPH</div></div>
+                <div class="tm-metric"><div class="tm-metric-val">${channelSpyData.uploadsLast30d}</div><div class="tm-metric-lbl">30d Uploads</div></div>
+                <div class="tm-metric"><div class="tm-metric-val" style="color:#34d399">$${formatCompact(channelSpyData.estMonthlyRevLow)}–$${formatCompact(channelSpyData.estMonthlyRevHigh)}</div><div class="tm-metric-lbl">Est. Monthly Rev</div></div>
+              </div>
+              ${
+                channelSpyData.breakoutVideo
+                  ? `<div style="padding:7px;background:#090d16;border:1px solid #1e293b;border-radius:8px;font-size:11px;">
+                      🔥 <strong>#1 Channel Outlier (${channelSpyData.breakoutVideo.outlierScore}x):</strong>
+                      <a href="/watch?v=${channelSpyData.breakoutVideo.videoId}" style="color:#38bdf8;font-weight:700;text-decoration:none;">${channelSpyData.breakoutVideo.title}</a>
+                      (${formatCompact(channelSpyData.breakoutVideo.views)} views)
+                    </div>`
+                  : ""
+              }
+            `
+              : `<div style="font-size:11px;color:#94a3b8;">Click <strong>🔍 Deep Audit Channel</strong> above to pull ${meta.author || "this creator"}'s last 30 uploads, median views, monthly revenue & #1 breakout outlier.</div>`
+          }
+        `;
       }
 
       panel.innerHTML = `
@@ -1039,8 +1230,9 @@
         <div class="tm-tabs">
           <button class="tm-tab-btn ${activeTab === "overview" ? "active" : ""}" data-wtab="overview">📊 Audit (${audit.total})</button>
           <button class="tm-tab-btn ${activeTab === "tags" ? "active" : ""}" data-wtab="tags">🏷️ Tags (${meta.keywords.length})</button>
-          <button class="tm-tab-btn ${activeTab === "transcript" ? "active" : ""}" data-wtab="transcript">📜 Transcript & Chapters</button>
-          <button class="tm-tab-btn ${activeTab === "ai" ? "active" : ""}" data-wtab="ai">✨ AI Titles & Desc</button>
+          <button class="tm-tab-btn ${activeTab === "transcript" ? "active" : ""}" data-wtab="transcript">📜 Transcript</button>
+          <button class="tm-tab-btn ${activeTab === "ai" ? "active" : ""}" data-wtab="ai">✨ AI Studio</button>
+          <button class="tm-tab-btn ${activeTab === "channel" ? "active" : ""}" data-wtab="channel">📈 Channel</button>
         </div>
         ${tabBody}
         <div style="margin-top:8px;text-align:right;">
@@ -1056,8 +1248,29 @@
             transcriptSegs = await fetchTranscriptSegments(meta.videoId, meta.captionTracks);
             renderWatchPanel();
           }
+          if (activeTab === "channel" && !channelSpyData && (meta.channelHandle || meta.author)) {
+            chrome.runtime.sendMessage({ type: "TM_FETCH_COMPETITOR", channel: meta.channelHandle || meta.author }, (r) => {
+              if (!chrome.runtime.lastError && r && r.ok && r.data) {
+                channelSpyData = r.data;
+                renderWatchPanel();
+              }
+            });
+          }
         };
       });
+
+      const spyNowBtn = panel.querySelector("#tm-spy-chan-now");
+      if (spyNowBtn) {
+        spyNowBtn.onclick = () => {
+          spyNowBtn.textContent = "⏳ Auditing...";
+          chrome.runtime.sendMessage({ type: "TM_FETCH_COMPETITOR", channel: meta.channelHandle || meta.author }, (r) => {
+            if (!chrome.runtime.lastError && r && r.ok && r.data) {
+              channelSpyData = r.data;
+              renderWatchPanel();
+            }
+          });
+        };
+      }
 
       const prevBtn = panel.querySelector("#tm-open-preview") || panel.querySelector("#tm-ai-preview-btn");
       if (prevBtn) prevBtn.onclick = () => openThumbnailPreviewModal(meta);
@@ -1168,11 +1381,22 @@
 
     renderWatchPanel();
 
-    // Automatically check top tag ranks in background
     if (meta.keywords.length > 0) {
       chrome.runtime.sendMessage({ type: "TM_TAG_RANKS", videoId: meta.videoId, tags: meta.keywords }, (r) => {
         if (!chrome.runtime.lastError && r && r.ok && r.ranks) {
           tagRanks = r.ranks;
+          if (currentWatchVid === vid) renderWatchPanel();
+        }
+      });
+    }
+
+    if (meta.channelHandle || meta.author) {
+      chrome.runtime.sendMessage({ type: "TM_FETCH_COMPETITOR", channel: meta.channelHandle || meta.author }, (r) => {
+        if (!chrome.runtime.lastError && r && r.ok && r.data) {
+          channelSpyData = r.data;
+          if (Array.isArray(r.data.channelKeywords) && r.data.channelKeywords.length > 0 && meta.channelKeywords.length === 0) {
+            meta.channelKeywords = r.data.channelKeywords;
+          }
           if (currentWatchVid === vid) renderWatchPanel();
         }
       });
@@ -1249,7 +1473,7 @@
     });
   }
 
-  // --- 6. CHANNEL PAGE ("/@handle" / "/channel/") INLINE CHANNEL AUDIT & FILTER BAR ---
+  // --- 6. CHANNEL PAGE ("/@handle" / "/channel/") INLINE CHANNEL AUDIT & VIDIQ PRESET BAR ---
   let lastChannelPath = null;
   function injectChannelAuditBar() {
     const p = window.location.pathname;
@@ -1260,11 +1484,12 @@
     if (!primary) return;
 
     if (p === lastChannelPath && document.getElementById("tm-channel-audit-bar") && feedSummary.count > 0) {
-      // Update dynamic numbers if feed loaded more cards
       const medEl = document.getElementById("tm-chan-med");
+      const peakEl = document.getElementById("tm-chan-peak");
       const vphEl = document.getElementById("tm-chan-vph");
       const outEl = document.getElementById("tm-chan-out");
       if (medEl) medEl.textContent = formatCompact(feedSummary.medianViews);
+      if (peakEl) peakEl.textContent = formatCompact(feedSummary.highestViews);
       if (vphEl) vphEl.textContent = formatCompact(feedSummary.avgVph);
       if (outEl) outEl.textContent = String(feedSummary.outliers);
       return;
@@ -1284,7 +1509,7 @@
     bar.style.margin = "12px 16px";
     bar.innerHTML = `
       <div class="tm-card-header">
-        <div class="tm-brand">📈 TubeMetrix Channel Audit & Inline Video Sorter — ${chanTitle}</div>
+        <div class="tm-brand">📈 TubeMetrix Channel Audit & vidIQ Preset Filters — ${chanTitle}</div>
         <div style="display:flex;gap:6px;">
           <button class="tm-btn tm-btn-emerald" id="tm-chan-track">➕ Add to Competitors</button>
           <button class="tm-btn tm-btn-secondary" id="tm-chan-csv">📥 Export Channel CSV</button>
@@ -1292,25 +1517,25 @@
       </div>
       <div class="tm-grid-4">
         <div class="tm-metric"><div id="tm-chan-med" class="tm-metric-val">${formatCompact(feedSummary.medianViews)}</div><div class="tm-metric-lbl">Median Views</div></div>
-        <div class="tm-metric"><div class="tm-metric-val">${formatCompact(feedSummary.highestViews)}</div><div class="tm-metric-lbl">Breakout Peak</div></div>
+        <div class="tm-metric"><div id="tm-chan-peak" class="tm-metric-val">${formatCompact(feedSummary.highestViews)}</div><div class="tm-metric-lbl">Breakout Peak</div></div>
         <div class="tm-metric"><div id="tm-chan-vph" class="tm-metric-val" style="color:#38bdf8">${formatCompact(feedSummary.avgVph)}</div><div class="tm-metric-lbl">Avg VPH</div></div>
-        <div class="tm-metric"><div id="tm-chan-out" class="tm-metric-val" style="color:#fb7185">${feedSummary.outliers}</div><div class="tm-metric-lbl">2.5x+ Outliers</div></div>
+        <div class="tm-metric"><div id="tm-chan-out" class="tm-metric-val" style="color:#fb7185">${feedSummary.outliers}</div><div class="tm-metric-lbl">2x+ Outliers</div></div>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
-        <span style="font-size:11px;font-weight:800;color:#94a3b8;">Inline Channel Filters:</span>
-        <button class="tm-btn" data-csort="tmOutlier">🔥 Sort by Outlier Score</button>
-        <button class="tm-btn" data-csort="tmVph">🚀 Sort by Highest VPH</button>
-        <button class="tm-btn" data-csort="tmViews">📊 Sort by Most Views</button>
-        <button class="tm-btn tm-btn-amber" id="tm-chan-only-outliers">⚡ Show Only 2x+ Winners</button>
+        <span style="font-size:11px;font-weight:800;color:#94a3b8;">Presets:</span>
+        <button class="tm-btn" data-cpreset="outliers">🔥 Channel Outliers (1.5x+)</button>
+        <button class="tm-btn" data-cpreset="velocity">🚀 Blowing Up (VPH)</button>
+        <button class="tm-btn" data-cpreset="tophits">🏆 Top Hits (Most Viewed)</button>
+        <button class="tm-btn tm-btn-amber" data-cpreset="recent30d">📅 Recent Hits (30d)</button>
+        <button class="tm-btn tm-btn-emerald" data-cpreset="evergreens">🌲 Evergreens (6m+ Still Hot)</button>
         <button class="tm-btn tm-btn-secondary" id="tm-chan-show-all">↺ Reset</button>
       </div>
     `;
     primary.prepend(bar);
 
-    bar.querySelectorAll("[data-csort]").forEach((btn) => {
-      btn.onclick = () => sortVisibleFeed(btn.dataset.csort);
+    bar.querySelectorAll("[data-cpreset]").forEach((btn) => {
+      btn.onclick = () => applyChannelPreset(btn.dataset.cpreset);
     });
-    bar.querySelector("#tm-chan-only-outliers").onclick = () => filterOutliersOnly(2.0);
     bar.querySelector("#tm-chan-show-all").onclick = () => filterOutliersOnly(0);
     bar.querySelector("#tm-chan-csv").onclick = () => exportCurrentFeedCsv();
     bar.querySelector("#tm-chan-track").onclick = async (e) => {
@@ -1357,7 +1582,6 @@
   function injectStudioOptimizer() {
     if (window.location.hostname !== "studio.youtube.com") return;
 
-    // A. Top Studio Quick Bar
     const header = document.querySelector("ytcp-header #right-section, header");
     if (header && !document.getElementById("tm-studio-bar")) {
       const bar = document.createElement("div");
@@ -1374,7 +1598,6 @@
       };
     }
 
-    // B. Upload / Video Edit Dialog Live SEO Optimizer Dock
     const titleBox = document.querySelector("ytcp-video-title #textbox, #title-textarea #textbox");
     const descBox = document.querySelector("ytcp-video-description #textbox, #description-textarea #textbox");
     if (!titleBox || document.getElementById("tm-studio-edit-dock")) return;
@@ -1424,7 +1647,6 @@
         if (!chrome.runtime.lastError && resp && resp.ok && resp.data) {
           const tagStr = resp.data.suggestions.map((s) => s.keyword).join(", ").slice(0, 495);
           copyText(tagStr);
-          // Also try injecting into Studio tag input if expanded
           const tagInput = document.querySelector("ytcp-form-input-tag input, #text-input");
           if (tagInput) {
             tagInput.focus();

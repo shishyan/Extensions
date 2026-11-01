@@ -158,10 +158,11 @@ function renderCompetitorCard(d) {
         <strong style="font-size:13px;color:#38bdf8;">${d.name}</strong>
         <span class="pill">${d.subscribersText}</span>
       </div>
-      <div style="display:flex;gap:12px;font-size:11px;color:#cbd5e1;margin-top:3px;">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:#cbd5e1;margin-top:3px;">
         <span>📊 Median: <strong>${fmtCompact(d.medianViews)}</strong></span>
         <span>🚀 Avg VPH: <strong style="color:#38bdf8">${fmtCompact(d.avgVph)}</strong></span>
-        <span>📅 30d Uploads: <strong>${d.uploadsLast30d}</strong></span>
+        <span>📅 30d: <strong>${d.uploadsLast30d}</strong></span>
+        ${d.estMonthlyRevLow ? `<span>💰 Est. Rev: <strong style="color:#34d399">$${fmtCompact(d.estMonthlyRevLow)}–$${fmtCompact(d.estMonthlyRevHigh)}/mo</strong></span>` : ""}
       </div>
       ${
         d.breakoutVideo

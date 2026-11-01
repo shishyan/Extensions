@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "TubeMetrix — Full YouTube SEO, Outlier, Competitor & Studio Suite",
   "short_name": "TubeMetrix",
-  "version": "100.2.0",
+  "version": "100.3.0",
   "update_url": "file:///opt/google/chrome/tubemetrix-store/updates.xml",
   "description": "100% Free Full-Featured Replacement for vidIQ Max, TubeBuddy Legend & 1of10: Real SERP Keyword Engine, Tag Ranks, Outliers, Transcript/Chapters, Comment Insights, Channel Audit & Studio AI.",
   "icons": {
