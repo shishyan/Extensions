@@ -137,4 +137,4 @@
 - **Privacy Policy**: [https://influenzian-group.gitlab.io/Extensions/privacy.html](https://influenzian-group.gitlab.io/Extensions/privacy.html)
 - **License**: MIT — Free for the entire world forever.
 
-- [Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=nagaraj957%40gmail.com&item_name=Support+Free+Open+Extensions&currency_code=USD)
+- [Donate](https://paypal.me/influenzian)
