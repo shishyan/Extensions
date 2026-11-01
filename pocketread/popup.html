@@ -2,68 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PocketRead Offline Reader</title>
+  <title>PocketRead Offline Reader & TTS</title>
   <style>
-    body {
-      width: 380px;
-      margin: 0;
-      padding: 14px;
-      background: #1c1917;
-      color: #f5f5f4;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 12px;
-      transition: background 0.2s, color 0.2s;
-    }
-    body.sepia {
-      background: #f5ebe0;
-      color: #3d2c1e;
-    }
-    h2 {
-      margin: 0 0 8px;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 15px;
-      color: #f87171;
-    }
-    body.sepia h2 {
-      color: #b91c1c;
-    }
-    .toolbar {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 10px;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-    button {
-      background: #ef4444;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 6px 10px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      flex: 1;
-    }
-    button.secondary {
-      background: #44403c;
-    }
-    .reader-box {
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid #57534e;
-      border-radius: 8px;
-      padding: 10px;
-      max-height: 200px;
-      overflow: auto;
-      line-height: 1.5;
-      white-space: pre-wrap;
-    }
+    body { width: 390px; margin: 0; padding: 14px; background: #1c1917; color: #f5f5f4; font-family: Georgia, "Times New Roman", serif; font-size: 12px; transition: background 0.2s, color 0.2s; }
+    body.sepia { background: #f5ebe0; color: #3d2c1e; }
+    h2 { margin: 0 0 8px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; color: #f87171; }
+    body.sepia h2 { color: #b91c1c; }
+    .toolbar { display: flex; gap: 5px; margin-bottom: 8px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+    button { background: #ef4444; color: #fff; border: none; border-radius: 6px; padding: 6px 8px; font-size: 10.5px; font-weight: 700; cursor: pointer; flex: 1; }
+    button.secondary { background: #44403c; }
+    .reader-box { background: rgba(0, 0, 0, 0.25); border: 1px solid #57534e; border-radius: 8px; padding: 10px; max-height: 195px; overflow: auto; line-height: 1.5; white-space: pre-wrap; }
   </style>
 </head>
 <body>
-  <h2>📥 PocketRead — Offline Reader</h2>
+  <h2>📥 PocketRead — Reader Mode, TTS & Library</h2>
   <div class="toolbar">
-    <button id="pr-save">+Save Active Page</button>
-    <button id="pr-theme" class="secondary">Toggle Sepia / Dark</button>
+    <button id="pr-save">+Save Offline</button>
+    <button id="pr-reader-btn" class="secondary">📖 Reader Overlay</button>
+    <button id="pr-tts-btn" class="secondary">🔊 Listen (TTS)</button>
+    <button id="pr-theme" class="secondary">Sepia</button>
   </div>
   <div class="reader-box" id="pr-reader">Loading offline reading queue...</div>
 

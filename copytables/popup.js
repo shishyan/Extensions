@@ -38,11 +38,22 @@ document.addEventListener("DOMContentLoaded", () => {
       const idx = Number(tableSelect.value) || 0;
       const current = tables[idx] || tables[0];
       if (current) {
-        tableOutput.value = current[activeFormat];
+        const content = current[activeFormat];
+        tableOutput.value = content;
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(current[activeFormat]).catch(() => {});
+          navigator.clipboard.writeText(content).catch(() => {});
         }
-        statusMsg.textContent = `✓ Copied Table #${current.index} as ${activeFormat.toUpperCase()}!`;
+        const extMap = { csv: "csv", tsv: "tsv", markdown: "md", json: "json" };
+        try {
+          const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `table-${current.index}.${extMap[activeFormat] || "txt"}`;
+          a.click();
+          URL.revokeObjectURL(url);
+        } catch (_) {}
+        statusMsg.textContent = `✓ Copied & Exported Table #${current.index} as ${activeFormat.toUpperCase()}!`;
       }
     });
   });

@@ -1,65 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
+<title>KeepPrice — 90-Day Price History & Drop Alert</title>
 <style>
-  body { width: 370px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
-  h2 { margin: 0 0 2px; font-size: 16px; color: #eab308; display: flex; justify-content: space-between; align-items: center; }
-  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px; margin-bottom: 8px; font-size: 12px; }
-  .row { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
-  .badge { background: #16a34a; color: #fff; padding: 2px 7px; border-radius: 99px; font-size: 10px; font-weight: 700; }
-  .code { display: inline-block; background: #ca8a04; color: #fff; padding: 3px 7px; border-radius: 4px; margin: 2px; font-family: monospace; font-weight: 700; cursor: pointer; font-size: 11px; }
-  .code:hover { background: #eab308; color: #422006; }
-  .input-row { display: flex; gap: 6px; margin-top: 6px; }
-  input { flex: 1; background: #0f172a; border: 1px solid #475569; color: #f8fafc; padding: 6px 8px; border-radius: 6px; font-size: 11px; }
-  button { width: 100%; background: #eab308; color: #422006; border: none; padding: 8px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 11px; margin-bottom: 6px; }
-  button.sec { background: #334155; color: #f8fafc; }
-  .watchlist { max-height: 115px; overflow-y: auto; font-size: 11px; }
-  .wl-item { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #334155; }
-  .wl-item:last-child { border-bottom: none; }
-  .del-btn { background: transparent; color: #f87171; width: auto; padding: 2px 5px; margin: 0; font-size: 11px; }
-  svg.spark { width: 100%; height: 42px; margin-top: 6px; background: #0f172a; border-radius: 6px; border: 1px solid #334155; }
+  * { box-sizing: border-box; }
+  body { width: 390px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #38bdf8; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(56,189,248,0.2); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  .deal-banner { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 6px 10px; margin-bottom: 8px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 8px; }
+  .stat { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 7px; text-align: center; }
+  .stat .v { font-size: 13px; font-weight: 800; color: #34d399; }
+  .stat .k { font-size: 9.5px; color: #94a3b8; }
+  .chart-box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px; margin-bottom: 8px; }
+  .alert-box { display: flex; gap: 6px; align-items: center; background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; font-size: 11px; }
+  input { flex: 1; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 6px; font-size: 12px; }
+  button.act { background: #0284c7; color: #fff; border: none; padding: 7px 11px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
 </style>
 </head>
 <body>
-  <h2><span>🏷️ KeepPrice Pro</span><span style="font-size:11px;color:#fde047;">Zero Affiliate Hijack</span></h2>
-  <p class="sub">Free Keepa, CamelCamelCamel & Honey Alternative</p>
+  <h2><span>📉 KeepPrice Pro</span><span class="badge">90-Day Tracker</span></h2>
+  <p class="sub" id="prodTitle">Scanning product price & 90-day historical trend...</p>
 
-  <div id="info" class="card">Scanning active product tab...</div>
-
-  <div class="card">
-    <div class="row">
-      <strong>📈 30-Day Price History & Deal Score</strong>
-      <span id="dealBadge" class="badge">Deal 88/100</span>
-    </div>
-    <svg id="sparkline" class="spark" viewBox="0 0 240 42" preserveAspectRatio="none">
-      <polyline id="sparkPoly" fill="none" stroke="#eab308" stroke-width="2.2" points="8,14 65,20 120,34 175,18 232,24" />
-    </svg>
-    <div id="historyMeta" style="font-size:10px;color:#94a3b8;margin-top:4px;display:flex;justify-content:space-between;">
-      <span>30d Low: <strong id="lowVal">$44.99</strong></span>
-      <span>30d Avg: <strong id="avgVal">$54.99</strong></span>
-      <span>30d High: <strong id="highVal">$59.99</strong></span>
-    </div>
+  <div class="deal-banner">
+    <span>Buy Recommendation:</span>
+    <strong id="dealVal" style="color:#34d399;">A+ (Near 90D Low)</strong>
   </div>
 
-  <div class="card">
-    <div class="row" style="margin-bottom:4px;">
-      <strong>🎟️ Universal Auto-Coupon Tester</strong>
-      <span id="couponStatus" style="font-size:10px;color:#fde047;">8 Promo Codes Ready</span>
-    </div>
-    <div id="coupons"></div>
-    <button id="autoTestBtn" class="sec" style="margin-top:6px;margin-bottom:0;">⚡ 1-Click Auto-Test & Apply Best Coupon</button>
+  <div class="grid">
+    <div class="stat"><div class="v" id="curVal">$--</div><div class="k">Current</div></div>
+    <div class="stat"><div class="v" id="lowVal">$--</div><div class="k">90D Low</div></div>
+    <div class="stat"><div class="v" id="avgVal">$--</div><div class="k">90D Avg</div></div>
+    <div class="stat"><div class="v" id="highVal" style="color:#f87171;">$--</div><div class="k">90D High</div></div>
   </div>
 
-  <div class="card">
-    <strong>🔔 Local Price Drop Watchlist & Target Alert</strong>
-    <div class="input-row">
-      <input id="targetPriceInput" type="number" step="0.01" placeholder="Target Alert Price (e.g. 39.99)">
-      <button id="trackBtn" style="width:auto;margin:0;padding:6px 10px;">+ Watch Drop</button>
+  <div class="chart-box">
+    <div style="font-size:10px;color:#94a3b8;margin-bottom:4px;display:flex;justify-content:space-between;">
+      <span>90-Day Price Trajectory (Day -90 → Today)</span>
+      <span id="ptsCount">8 snapshots</span>
     </div>
-    <div id="watchlistBox" class="watchlist" style="margin-top:6px;"></div>
+    <svg id="sparkline" width="100%" height="68" viewBox="0 0 330 68"></svg>
   </div>
+
+  <div class="alert-box">
+    <span>Target $</span>
+    <input type="number" id="targetInput" placeholder="39.99" step="0.01">
+    <button id="saveAlertBtn" class="act">🔔 Watch Drop</button>
+  </div>
+  <div id="statusMsg" style="font-size:10.5px;color:#34d399;margin-top:5px;"></div>
 
   <div id="tm-subtle-donate" style="margin-top:8px;text-align:right;">
     <a href="https://paypal.me/influenzian" target="_blank" rel="noopener" style="display:inline-block;padding:3px 9px;border-radius:6px;background:rgba(30,41,59,0.7);border:1px solid rgba(148,163,184,0.2);color:#94a3b8;font-size:10.5px;font-weight:600;text-decoration:none;">Donate</a>

@@ -2,43 +2,55 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>DeepTranslate — Bilingual Selection & Immersive Page Translator</title>
+<title>DeepTranslate — Instant Neural Translator</title>
 <style>
   * { box-sizing: border-box; }
-  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  body { width: 390px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
   h2 { margin: 0 0 4px; font-size: 15px; color: #38bdf8; display: flex; justify-content: space-between; align-items: center; }
-  .badge { background: rgba(14,165,233,0.2); color: #7dd3fc; border: 1px solid rgba(14,165,233,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  .badge { background: rgba(56,189,248,0.2); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
   p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  .controls { display: flex; gap: 6px; margin-bottom: 8px; }
-  select, textarea { width: 100%; background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 7px 8px; font-size: 12px; }
-  textarea { height: 68px; resize: none; margin-bottom: 8px; }
-  .out-box { background: #1e293b; border: 1px solid #0ea5e9; border-radius: 8px; padding: 9px; font-size: 12px; min-height: 68px; color: #e2e8f0; line-height: 1.45; }
-  .btns { display: flex; gap: 6px; margin-top: 9px; }
-  button.act { flex: 1; background: #0ea5e9; color: #082f49; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
-  button.act.sec { background: #334155; color: #f8fafc; }
+  select, textarea { width: 100%; background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 8px; padding: 8px; font-size: 12px; margin-bottom: 8px; font-family: inherit; }
+  textarea { height: 78px; resize: vertical; }
+  .btns { display: flex; gap: 6px; }
+  button.act { flex: 1; background: #0284c7; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; font-size: 11.5px; cursor: pointer; }
+  button.act.sec { background: #334155; }
+  .meta { font-size: 10px; color: #94a3b8; margin-bottom: 6px; display: flex; justify-content: space-between; }
 </style>
 </head>
 <body>
-  <h2><span>🌐 DeepTranslate</span><span class="badge">DeepL + Immersive Free</span></h2>
-  <p class="sub">Selection Tooltip Translator & Side-by-Side Bilingual Page Reader</p>
+  <h2><span>🌐 DeepTranslate Pro</span><span class="badge">Neural + Offline</span></h2>
+  <p class="sub">15+ Languages • Real-Time Neural Translation & Full-Page Bilingual View</p>
 
-  <div class="controls">
-    <select id="langSelect">
-      <option value="es">Spanish (Español)</option>
-      <option value="ta">Tamil (தமிழ்)</option>
-      <option value="hi">Hindi (हिन्दी)</option>
-      <option value="fr">French (Français)</option>
-      <option value="de">German (Deutsch)</option>
-      <option value="ja">Japanese (日本語)</option>
-    </select>
+  <select id="langSelect">
+    <option value="es">🇪🇸 Spanish (Español)</option>
+    <option value="fr">🇫🇷 French (Français)</option>
+    <option value="de">🇩🇪 German (Deutsch)</option>
+    <option value="ja">🇯🇵 Japanese (日本語)</option>
+    <option value="zh-CN">🇨🇳 Chinese Simplified (简体中文)</option>
+    <option value="ko">🇰🇷 Korean (한국어)</option>
+    <option value="pt">🇵🇹 Portuguese (Português)</option>
+    <option value="it">🇮🇹 Italian (Italiano)</option>
+    <option value="ru">🇷🇺 Russian (Русский)</option>
+    <option value="ar">🇸🇦 Arabic (العربية)</option>
+    <option value="hi">🇮🇳 Hindi (हिन्दी)</option>
+    <option value="ta">🇮🇳 Tamil (தமிழ்)</option>
+    <option value="nl">🇳🇱 Dutch (Nederlands)</option>
+    <option value="tr">🇹🇷 Turkish (Türkçe)</option>
+    <option value="pl">🇵🇱 Polish (Polski)</option>
+    <option value="vi">🇻🇳 Vietnamese (Tiếng Việt)</option>
+  </select>
+
+  <textarea id="srcText" placeholder="Enter text to translate...">Hello friend, thank you for using this fast free software today.</textarea>
+  <textarea id="outText" readonly placeholder="Translated output..."></textarea>
+
+  <div class="meta">
+    <span id="engineStatus">Engine: Ready</span>
+    <span id="copyConfirm"></span>
   </div>
 
-  <textarea id="srcText" placeholder="Enter or paste text to translate...">Hello world! Welcome to our artificial intelligence research summary and knowledge guide.</textarea>
-  <div id="outBox" class="out-box">Click Translate or toggle Bilingual Page Mode below.</div>
-
   <div class="btns">
-    <button id="transBtn" class="act">⚡ Translate Text</button>
-    <button id="bilingualBtn" class="act sec">📖 Bilingual Page Mode</button>
+    <button id="transBtn" class="act">⚡ Translate</button>
+    <button id="pageBtn" class="act sec">📄 Bilingual Page</button>
     <button id="copyBtn" class="act sec">📋 Copy</button>
   </div>
 

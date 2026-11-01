@@ -1,32 +1,25 @@
-const vIn = document.getElementById("vIn");
-const lIn = document.getElementById("lIn");
-const cIn = document.getElementById("cIn");
-const sIn = document.getElementById("sIn");
-const erVal = document.getElementById("erVal");
-const erTier = document.getElementById("erTier");
-const topicIn = document.getElementById("topicIn");
-const hooksBox = document.getElementById("hooksBox");
+let lastData = null;
 
-function calcER() {
-  const v = Math.max(1, Number(vIn.value || 1));
-  const l = Number(lIn.value || 0);
-  const c = Number(cIn.value || 0);
-  const s = Number(sIn.value || 0);
-  const er = (((l + c + s) / v) * 100).toFixed(2);
-  erVal.textContent = `${er}%`;
-  erTier.textContent = Number(er) >= 8 ? "🔥 S-Tier Viral" : Number(er) >= 4.5 ? "⚡ Above Benchmark" : "📊 Standard";
-}
-
-function loadHooks() {
-  chrome.runtime.sendMessage({ type: "TOKTREND_HOOKS", topic: topicIn.value }, (res) => {
-    if (!chrome.runtime.lastError && res && res.ok) {
-      hooksBox.textContent = (res.hooks || []).join("\n\n");
+if (chrome.tabs && chrome.tabs.query) {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs && tabs[0]) {
+      chrome.tabs.sendMessage(tabs[0].id, { type: "TOKTREND_SCAN" }, (res) => {
+        if (chrome.runtime.lastError || !res) return;
+        lastData = res;
+        document.getElementById("engVal").textContent = res.engagementRate;
+        document.getElementById("velVal").textContent = res.viralScore + "/100";
+        document.getElementById("tagCount").textContent = res.tags.length;
+        document.getElementById("tagsBox").innerHTML = res.tags
+          .map((t) => `<span class="tag">${t}</span>`)
+          .join("");
+      });
     }
   });
 }
 
-[vIn, lIn, cIn, sIn].forEach((el) => el.addEventListener("input", calcER));
-document.getElementById("genHooksBtn").addEventListener("click", loadHooks);
-
-calcER();
-loadHooks();
+document.getElementById("copyBtn").addEventListener("click", () => {
+  if (!lastData) return;
+  navigator.clipboard.writeText(lastData.tags.join(" "));
+  document.getElementById("copyBtn").textContent = "✅ Hashtags Copied to Clipboard!";
+  setTimeout(() => (document.getElementById("copyBtn").textContent = "📋 Copy All Trending Hashtags"), 1300);
+});

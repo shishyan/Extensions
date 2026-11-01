@@ -2,59 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>VideoSpeed 0.1x–16x Controller & PiP</title>
+  <title>VideoSpeed 0.25x–16x, Skip ±10s, PiP & Frame Capture</title>
   <style>
-    body {
-      width: 360px;
-      margin: 0;
-      padding: 14px;
-      background: #064e3b;
-      color: #ecfdf5;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 12px;
-    }
-    h2 {
-      margin: 0 0 8px;
-      font-size: 15px;
-      color: #34d399;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      margin-bottom: 10px;
-    }
-    button {
-      background: #10b981;
-      color: #022c22;
-      border: none;
-      border-radius: 6px;
-      padding: 7px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .status {
-      background: #022c22;
-      border: 1px solid #059669;
-      border-radius: 6px;
-      padding: 9px;
-      color: #a7f3d0;
-    }
+    body { width: 380px; margin: 0; padding: 14px; background: #064e3b; color: #ecfdf5; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; }
+    h2 { margin: 0 0 8px; font-size: 15px; color: #34d399; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-bottom: 8px; }
+    .actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-bottom: 8px; }
+    button { background: #10b981; color: #022c22; border: none; border-radius: 6px; padding: 6px 4px; font-size: 10.5px; font-weight: 700; cursor: pointer; }
+    button.sec { background: #047857; color: #ecfdf5; }
+    .status { background: #022c22; border: 1px solid #059669; border-radius: 6px; padding: 8px; color: #a7f3d0; font-size: 11px; }
   </style>
 </head>
 <body>
-  <h2>⏩ VideoSpeed — 0.1x–16x & PiP</h2>
+  <h2>⏩ VideoSpeed — 0.25x–16x, PiP & Frame PNG</h2>
   <div class="grid">
-    <button data-r="1.0">1.00x Reset</button>
+    <button data-r="0.25">0.25x</button>
+    <button data-r="0.5">0.50x</button>
+    <button data-r="1.0">1.00x</button>
     <button data-r="1.25">1.25x</button>
     <button data-r="1.5">1.50x</button>
     <button data-r="2.0">2.00x</button>
-    <button data-r="3.0">3.00x</button>
     <button data-r="4.0">4.00x</button>
+    <button data-r="16.0">16.0x</button>
+  </div>
+  <div class="actions">
+    <button class="sec" id="vs-rew">⏪ -10s</button>
+    <button class="sec" id="vs-fwd">⏩ +10s</button>
+    <button class="sec" id="vs-pip">📺 PiP</button>
+    <button class="sec" id="vs-frame">📸 Frame PNG</button>
   </div>
   <div class="status" id="vs-status">
-    Shortcuts: [D] +0.25x · [S] -0.25x · [R] 1.0x Reset
+    Shortcuts: [D] +0.25x · [S] -0.25x · [R] 1.0x · [Z/X] ±10s
   </div>
 
   <div id="tm-subtle-donate" style="margin-top:8px;text-align:right;">

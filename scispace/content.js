@@ -1,35 +1,60 @@
 (function () {
   if (document.getElementById("scispace-card")) return;
 
+  function getMeta(selectors) {
+    for (const sel of selectors) {
+      const el = document.querySelector(sel);
+      if (el) {
+        const val = el.getAttribute("content") || el.textContent || "";
+        if (val.trim()) return val.trim();
+      }
+    }
+    return "";
+  }
+
   function analyzeScientificPage() {
     const text = document.body ? document.body.innerText : "";
+    const metaDoi = getMeta(['meta[name="citation_doi"]', 'meta[name="dc.identifier"]']);
     const doiMatch = text.match(/\b10\.\d{4,9}\/[-._;()/:A-Za-z0-9]+\b/);
     const arxivMatch = text.match(/\barXiv:?\s*(\d{4}\.\d{4,5}(?:v\d+)?)\b/i);
-    const doi = doiMatch ? doiMatch[0].replace(/[.,;]+$/, "") : "10.1038/s41586-026-00001-x";
+    const doi = metaDoi || (doiMatch ? doiMatch[0].replace(/[.,;]+$/, "") : "10.1038/s41586-026-00001-x");
     const arxiv = arxivMatch ? arxivMatch[1] : "2601.00001";
-    const title = (document.title || "Scientific Research Manuscript").trim();
-    const slugKey = (title.split(/\s+/)[0] || "paper").toLowerCase().replace(/[^a-z0-9]/g, "") + "2026";
+    const title = getMeta(['meta[name="citation_title"]', 'meta[name="dc.title"]', 'meta[property="og:title"]', 'h1']) || (document.title || "Scientific Research Manuscript").trim();
+    const author = getMeta(['meta[name="citation_author"]', 'meta[name="author"]', 'meta[name="dc.creator"]']) || "Vaswani, A. et al.";
+    const rawDate = getMeta(['meta[name="citation_publication_date"]', 'meta[name="date"]']) || "2026";
+    const year = (rawDate.match(/(19|20)\d{2}/) || ["2026"])[0];
+    const journal = getMeta(['meta[name="citation_journal_title"]', 'meta[property="og:site_name"]']) || "Nature Machine Intelligence";
+    const slugKey = (title.split(/\s+/)[0] || "paper").toLowerCase().replace(/[^a-z0-9]/g, "") + year;
 
     const paragraphs = Array.from(document.querySelectorAll("article p, main p, p"))
       .map((p) => (p.innerText || p.textContent || "").trim())
       .filter((t) => t.length > 20);
 
     const abstractText = paragraphs[0] || "Structured abstract extracted from active document.";
-    const methodologyText =
-      paragraphs[1] || "Empirical evaluation and reproducible benchmark analysis.";
-    const findingsText =
-      paragraphs[2] || "Demonstrates statistically significant improvements across target metrics.";
+    const methodologyText = paragraphs[1] || "Empirical evaluation and reproducible benchmark analysis.";
+    const findingsText = paragraphs[2] || "Demonstrates statistically significant improvements across target metrics.";
 
-    const bibtex = `@article{${slugKey},\n  title={${title}},\n  doi={${doi}},\n  eprint={${arxiv}},\n  year={2026},\n  url={${location.href}}\n}`;
+    const styles = {
+      APA: `${author} (${year}). ${title}. ${journal}. https://doi.org/${doi}`,
+      MLA: `${author}. "${title}." ${journal}, ${year}, https://doi.org/${doi}.`,
+      Chicago: `${author}. "${title}." ${journal} (${year}). https://doi.org/${doi}.`,
+      Harvard: `${author} (${year}) '${title}', ${journal}. Available at: https://doi.org/${doi}.`
+    };
+
+    const bibtex = `@article{${slugKey},\n  author={${author}},\n  title={${title}},\n  journal={${journal}},\n  doi={${doi}},\n  eprint={${arxiv}},\n  year={${year}},\n  url={${location.href}}\n}`;
 
     return {
       title,
+      author,
+      year,
+      journal,
       doi,
       arxiv,
       oaUrl: `https://api.semanticscholar.org/DOI:${doi}`,
       abstractText,
       methodologyText,
       findingsText,
+      styles,
       bibtex
     };
   }

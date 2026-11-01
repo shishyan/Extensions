@@ -1,70 +1,48 @@
-/**
- * TagAssistant — Content Script
- * Audits GA4, GTM, Meta Pixel, LinkedIn Insight, TikTok Pixel & dataLayer events
- */
+(function () {
+  if (window.__tagAssistantLoaded) return;
+  window.__tagAssistantLoaded = true;
 
-(() => {
-  "use strict";
-
-  if (!document.body) return;
-
-  function auditTagsAndPixels() {
+  function auditTags() {
     const html = document.documentElement.outerHTML || "";
-    const scripts = Array.from(document.querySelectorAll("script")).map((s) => s.src || s.textContent || "").join(" ");
+    const cookies = (document.cookie || "").split(";").map((c) => c.trim()).filter(Boolean);
 
-    const gtmMatches = html.match(/GTM-[A-Z0-9]{4,10}/g) || [];
-    const ga4Matches = html.match(/G-[A-Z0-9]{6,12}/g) || [];
-    const uaMatches = html.match(/UA-\d{4,10}-\d{1,4}/g) || [];
-    const fbMatches = /fbevents\.js|fbq\(/i.test(scripts) ? ["Meta Pixel Active"] : [];
-    const ttMatches = /analytics\.tiktok\.com|ttq\./i.test(scripts) ? ["TikTok Pixel Active"] : [];
-    const liMatches = /snap\.licdn\.com|_linkedin_partner_id/i.test(scripts) ? ["LinkedIn Insight Tag"] : [];
+    const ga4Ids = Array.from(new Set(html.match(/G-[A-Z0-9]{6,12}/g) || []));
+    const gtmIds = Array.from(new Set(html.match(/GTM-[A-Z0-9]{4,10}/g) || []));
+    const uaIds = Array.from(new Set(html.match(/UA-\d{4,10}-\d{1,4}/g) || []));
+    const awIds = Array.from(new Set(html.match(/AW-\d{6,12}/g) || []));
 
-    const tags = [];
-    gtmMatches.forEach((id) => tags.push({ type: "Google Tag Manager", id, status: "✅ Firing Healthy" }));
-    ga4Matches.forEach((id) => tags.push({ type: "Google Analytics 4", id, status: "✅ Firing Healthy" }));
-    uaMatches.forEach((id) => tags.push({ type: "Legacy UA Property", id, status: "⚠️ Deprecated" }));
-    fbMatches.forEach((id) => tags.push({ type: "Meta Pixel", id, status: "✅ Firing Healthy" }));
-    ttMatches.forEach((id) => tags.push({ type: "TikTok Pixel", id, status: "✅ Firing Healthy" }));
-    liMatches.forEach((id) => tags.push({ type: "LinkedIn Insight", id, status: "✅ Firing Healthy" }));
+    const pixels = [];
+    if (/connect\.facebook\.net|fbq\(/i.test(html)) pixels.push("Meta / Facebook Pixel");
+    if (/analytics\.tiktok\.com|ttq\./i.test(html)) pixels.push("TikTok Pixel");
+    if (/snap\.licdn\.com|_linkedin_partner_id/i.test(html)) pixels.push("LinkedIn Insight Tag");
+    if (/ct\.pinterest\.com|pintrk\(/i.test(html)) pixels.push("Pinterest Tag");
+    if (/static\.ads-twitter\.com|twq\(/i.test(html)) pixels.push("X / Twitter Pixel");
+    if (/clarity\.ms/i.test(html)) pixels.push("Microsoft Clarity");
+    if (/static\.hotjar\.com/i.test(html)) pixels.push("Hotjar Recording");
 
-    if (tags.length === 0) {
-      tags.push({
-        type: "First-Party PageView Beacon",
-        id: location.hostname || "local-origin",
-        status: "✅ Clean (0 Third-Party Trackers)"
-      });
-    }
+    const trackingCookies = cookies
+      .map((c) => c.split("=")[0])
+      .filter((name) => /^(_ga|_gid|_gat|_fbp|_fbc|_ttp|_gcl_|_hj|__hstc|__utma)/i.test(name));
 
-    const sampleEvents = [
-      { event: "gtm.js", timestamp: Date.now() - 1200, page: location.pathname || "/index.html" },
-      { event: "page_view", title: document.title || "Document", tagsCount: tags.length }
-    ];
+    const dlCalls = (html.match(/dataLayer\.push/g) || []).length;
 
     return {
-      tags,
-      events: sampleEvents
+      domain: location.hostname,
+      ga4Ids,
+      gtmIds,
+      uaIds,
+      awIds,
+      pixels,
+      trackingCookies,
+      dlCalls,
+      status: (ga4Ids.length + gtmIds.length + pixels.length) > 0 ? "Healthy Firing" : "No Marketing Tags"
     };
   }
 
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-    if (msg && msg.type === "TAGASSISTANT_AUDIT") {
-      sendResponse({ ok: true, ...auditTagsAndPixels() });
-      return false;
+    if (msg && msg.type === "TAG_AUDIT") {
+      sendResponse(auditTags());
+      return true;
     }
   });
-
-  let badge = document.getElementById("tagassistant-badge");
-  if (!badge) {
-    const audit = auditTagsAndPixels();
-    badge = document.createElement("div");
-    badge.id = "tagassistant-badge";
-    badge.className = "tagassistant-badge";
-    badge.title = "TagAssistant: GA4, GTM, Pixel & DataLayer Health Monitor";
-    badge.textContent = `🏷️ TagAssistant: ${audit.tags.length} Tag(s)`;
-    badge.addEventListener("click", () => {
-      const fresh = auditTagsAndPixels();
-      badge.textContent = `🏷️ ${fresh.tags[0].type} (${fresh.tags[0].status}) ✓`;
-    });
-    document.body.appendChild(badge);
-  }
 })();

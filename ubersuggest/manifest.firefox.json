@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "UberSuggest \u2014 Free Multi-Engine Keyword Multiplier, CPC & SEO Difficulty Scorer",
+  "name": "UberSuggest — Free Multi-Engine Keyword Multiplier, CPC & SEO Difficulty Scorer",
   "short_name": "UberSuggest",
   "version": "1.0.0",
   "description": "100% Free Ubersuggest Paid alternative: Multi-engine autocomplete keyword multiplier (Google, YouTube, Shopping, Questions), CPC ($) & SEO Difficulty (SD) scorer.",
@@ -11,7 +11,7 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "UberSuggest \u2014 Keyword Multiplier & CPC/SD Scorer",
+    "default_title": "UberSuggest — Keyword Multiplier & CPC/SD Scorer",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
@@ -43,7 +43,8 @@
     "storage"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "<all_urls>",
+    "https://suggestqueries.google.com/*"
   ],
   "browser_specific_settings": {
     "gecko": {

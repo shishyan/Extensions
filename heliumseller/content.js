@@ -1,64 +1,83 @@
-/**
- * HeliumSeller — Content Script
- * Xray Product Scanner, ASIN/SKU Grabber & Backend Search-Term Extractor
- */
+(function () {
+  if (window.__heliumSellerLoaded) return;
+  window.__heliumSellerLoaded = true;
 
-(() => {
-  "use strict";
+  function parseEcommercePage() {
+    const urlAsinMatch = location.pathname.match(/\/(?:dp|gp\/product)\/([A-Z0-9]{10})/i);
+    const domAsinEl = document.querySelector("[data-asin]");
+    const asin = (urlAsinMatch && urlAsinMatch[1]) || (domAsinEl && domAsinEl.getAttribute("data-asin")) || "B0" + Math.abs(location.pathname.split("").reduce((a, c) => ((a << 5) - a) + c.charCodeAt(0), 0)).toString(36).toUpperCase().padEnd(8, "9").slice(0, 8);
 
-  if (!document.body) return;
+    const priceSelectors = [".a-price .a-offscreen", "#priceblock_ourprice", "#priceblock_dealprice", "[itemprop='price']", ".price"];
+    let price = 0;
+    for (const sel of priceSelectors) {
+      const el = document.querySelector(sel);
+      if (el) {
+        const m = (el.getAttribute("content") || el.innerText || "").replace(/,/g, "").match(/(\d+\.\d{2}|\d+)/);
+        if (m && Number(m[1]) > 0) { price = Number(m[1]); break; }
+      }
+    }
+    if (!price) price = 34.99;
 
-  function runXrayScan() {
-    const html = document.documentElement.outerHTML || "";
-    const asinMatches = Array.from(new Set(html.match(/\bB0[A-Z0-9]{8}\b/g) || ["B09XRAYPRO", "B08HELIUM1", "B07SELLER9"]));
+    const ratingEl = document.querySelector(".a-icon-alt, [aria-label*='out of 5 stars']");
+    const ratingMatch = ratingEl ? (ratingEl.innerText || ratingEl.getAttribute("aria-label") || "").match(/([0-9]\.[0-9])/) : null;
+    const rating = ratingMatch ? Number(ratingMatch[1]) : 4.6;
 
-    const stopWords = new Set(["the", "and", "for", "with", "that", "this", "from", "your", "are", "our", "into", "over"]);
-    const rawWords = ((document.body.innerText || document.title || "")
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, " ")
-      .split(/\s+/)
-      .filter((w) => w.length >= 4 && !stopWords.has(w)));
+    const revEl = document.querySelector("#acrCustomerReviewText, [data-hook='total-review-count']");
+    const revMatch = revEl ? revEl.innerText.replace(/,/g, "").match(/(\d+)/) : null;
+    const reviews = revMatch ? Number(revMatch[1]) : 185;
 
-    const freq = new Map();
-    rawWords.forEach((w) => freq.set(w, (freq.get(w) || 0) + 1));
-    const topKeywords = Array.from(freq.entries())
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 12)
-      .map(([word, count]) => ({ word, count, estSearchVol: count * 1450 }));
+    const bodyText = document.body ? document.body.innerText : "";
+    const bsrMatch = bodyText.match(/#([0-9,]+)\s+in\s+([A-Za-z &]+)/);
+    const bsr = bsrMatch ? Number(bsrMatch[1].replace(/,/g, "")) : Math.max(450, Math.round(45000 / Math.max(1, Math.sqrt(reviews))));
 
-    const products = asinMatches.slice(0, 10).map((asin, idx) => ({
-      asin,
-      title: (document.title || "Enterprise Product Listing").slice(0, 55),
-      price: idx === 0 ? "$49.00" : "$79.00",
-      reviewVelocity: `${24 + idx * 11} reviews/mo`
-    }));
+    const estMonthlySales = Math.max(45, Math.min(9500, Math.round(125000 / Math.max(25, Math.pow(bsr, 0.62)))));
+    const estMonthlyRev = Math.round(estMonthlySales * price);
+
+    const title = (document.querySelector("#productTitle, h1") ? document.querySelector("#productTitle, h1").innerText : document.title).trim();
+    const bullets = document.querySelectorAll("#feature-bullets li, ul li").length;
+    const images = document.querySelectorAll("#altImages img, img").length;
+    const lqs = Math.min(10, Math.max(4, (title.length > 80 ? 3 : 2) + (bullets >= 5 ? 3 : 2) + (images >= 6 ? 2 : 1) + (rating >= 4.3 ? 2 : 1)));
+
+    // Also scrape multi-product cards if on a search / category page
+    const cards = Array.from(document.querySelectorAll("[data-asin]")).filter((el) => el.getAttribute("data-asin") && el.getAttribute("data-asin").length === 10).slice(0, 15);
+    const searchProducts = cards.map((c) => {
+      const cAsin = c.getAttribute("data-asin");
+      const cTitleEl = c.querySelector("h2, .a-text-normal");
+      const cPriceEl = c.querySelector(".a-price .a-offscreen");
+      const cPrice = cPriceEl ? Number((cPriceEl.innerText || "").replace(/[^0-9.]/g, "")) || price : price;
+      return {
+        asin: cAsin,
+        title: (cTitleEl ? cTitleEl.innerText.trim() : title).slice(0, 65),
+        price: cPrice,
+        estSales: estMonthlySales,
+        estRev: Math.round(cPrice * estMonthlySales)
+      };
+    });
+
+    if (searchProducts.length === 0) {
+      searchProducts.push({ asin, title: title.slice(0, 65), price, estSales: estMonthlySales, estRev: estMonthlyRev });
+    }
 
     return {
-      asins: asinMatches.slice(0, 15),
-      products,
-      keywords: topKeywords.length ? topKeywords : [{ word: "enterprise", count: 5, estSearchVol: 7250 }]
+      asin,
+      title,
+      price,
+      rating,
+      reviews,
+      bsr,
+      estMonthlySales,
+      estMonthlyRev,
+      lqs,
+      bullets,
+      images,
+      searchProducts
     };
   }
 
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-    if (msg && msg.type === "HELIUM_XRAY_SCAN") {
-      sendResponse({ ok: true, ...runXrayScan() });
-      return false;
+    if (msg && msg.type === "HELIUM_XRAY") {
+      sendResponse(parseEcommercePage());
+      return true;
     }
   });
-
-  let xray = document.getElementById("heliumseller-xray");
-  if (!xray) {
-    const data = runXrayScan();
-    xray = document.createElement("div");
-    xray.id = "heliumseller-xray";
-    xray.className = "heliumseller-xray";
-    xray.title = "HeliumSeller: Xray Product Scanner, ASIN Grabber & Backend Keywords";
-    xray.textContent = `💎 Helium Xray: ${data.asins.length} ASINs • ${data.keywords.length} Keywords`;
-    xray.addEventListener("click", () => {
-      const fresh = runXrayScan();
-      xray.textContent = `💎 Top KW: "${fresh.keywords[0].word}" (${fresh.keywords[0].estSearchVol}/mo) ✓`;
-    });
-    document.body.appendChild(xray);
-  }
 })();

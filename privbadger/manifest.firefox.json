@@ -1,10 +1,15 @@
 {
   "manifest_version": 3,
-  "name": "PrivBadger — Anti-Fingerprint & Tracking URL Cleaner",
+  "name": "PrivBadger \u2014 Anti-Fingerprint & Tracking URL Cleaner",
   "version": "1.0.0",
   "description": "Audits browser fingerprinting surfaces, automatically strips UTM/fbclid/gclid tracking parameters & grades site privacy.",
-  "permissions": ["storage", "activeTab"],
-  "host_permissions": ["<all_urls>"],
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -14,13 +19,21 @@
     }
   },
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "background.js"
+    ]
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["styles.css"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "styles.css"
+      ],
       "run_at": "document_idle"
     }
   ],

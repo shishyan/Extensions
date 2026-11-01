@@ -5,6 +5,18 @@ document.addEventListener("DOMContentLoaded", () => {
     { index: 2, type: "table-row", values: ["Product B", "$49.00"] }
   ];
 
+  function downloadFile(content, filename, mime) {
+    try {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (_) {}
+  }
+
   function toCSV(rows) {
     const header = "index,type,col1,col2";
     const lines = rows.map((r) => {
@@ -39,12 +51,14 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("ws-csv").addEventListener("click", () => {
     const csv = toCSV(extractedRows);
     if (navigator.clipboard) navigator.clipboard.writeText(csv).catch(() => {});
+    downloadFile(csv, "webscraper-data.csv", "text/csv;charset=utf-8");
     out.textContent = csv;
   });
 
   document.getElementById("ws-json").addEventListener("click", () => {
     const json = JSON.stringify(extractedRows, null, 2);
     if (navigator.clipboard) navigator.clipboard.writeText(json).catch(() => {});
+    downloadFile(json, "webscraper-data.json", "application/json");
     out.textContent = json;
   });
 

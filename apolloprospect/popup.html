@@ -5,13 +5,13 @@
 <title>ApolloProspect — B2B Lead Enricher, Role Classifier & CRM CSV Exporter</title>
 <style>
   * { box-sizing: border-box; }
-  body { width: 410px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  body { width: 415px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
   .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
   h2 { margin: 0; font-size: 16px; color: #fbbf24; }
   .badge { background: rgba(245,158,11,0.2); color: #fde68a; border: 1px solid rgba(245,158,11,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
   p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
   .lead-card { background: #1e293b; border: 1px solid #3b82f6; border-radius: 8px; padding: 9px 10px; margin-bottom: 8px; font-size: 11.5px; line-height: 1.45; }
-  .lbl { font-size: 10px; font-weight: 800; color: #94a3b8; margin: 6px 0 4px; }
+  .lbl { font-size: 10px; font-weight: 800; color: #94a3b8; margin: 6px 0 4px; display: flex; justify-content: space-between; }
   #crmList { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; height: 120px; overflow-y: auto; font-size: 11px; line-height: 1.45; }
   .btns { display: flex; gap: 6px; margin-top: 8px; }
   button.primary { flex: 1.3; background: #f59e0b; color: #0f172a; border: none; border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 800; cursor: pointer; }
@@ -23,16 +23,17 @@
     <h2>🚀 ApolloProspect</h2>
     <span class="badge">Apollo.io Unlimited Credits</span>
   </div>
-  <p class="sub">B2B Decision-Maker Enricher • Seniority & Dept Classifier • CRM CSV Export</p>
+  <p class="sub">B2B Decision-Maker Enricher • Email Permutator • Persistent CRM CSV Export</p>
 
   <div class="lead-card" id="activeLeadBox">Scanning active page for B2B decision-maker…</div>
 
-  <div class="lbl">SAVED B2B PROSPECTS (CRM PIPELINE)</div>
+  <div class="lbl"><span>SAVED B2B PROSPECTS (CRM PIPELINE)</span><span id="crmCount">1 Lead</span></div>
   <div id="crmList">Loading CRM prospects…</div>
 
   <div class="btns">
     <button class="primary" id="saveLeadBtn">+ Save Active Prospect</button>
     <button class="sec" id="exportCsvBtn">⬇️ Export CRM CSV</button>
+    <button class="sec" id="clearCrmBtn" style="flex:0.5;">🧹</button>
   </div>
 
   <div id="tm-subtle-donate" style="margin-top:8px;text-align:right;">

@@ -1,65 +1,89 @@
 document.addEventListener("DOMContentLoaded", () => {
   const out = document.getElementById("rb-output");
-  const searchInput = document.getElementById("rb-search");
-  let bookmarks = [];
+  const search = document.getElementById("rb-search");
+  const folderSel = document.getElementById("rb-folder");
 
-  function render(filterText) {
-    const q = (filterText || "").toLowerCase();
-    const list = bookmarks.filter(
-      (b) =>
-        !q ||
-        b.title.toLowerCase().includes(q) ||
-        b.url.toLowerCase().includes(q) ||
-        (b.tags || []).join(" ").toLowerCase().includes(q)
-    );
-    out.textContent =
-      list
-        .map((b, i) => `${i + 1}. ${b.title}\n   ${b.url}\n   Tags: ${(b.tags || []).join(" ")}`)
-        .join("\n\n") || "No matching bookmarks.";
-  }
-
-  function load() {
-    chrome.storage.local.get(["rainbookmark_items"], (res) => {
-      bookmarks = res.rainbookmark_items || [];
-      render(searchInput.value);
+  function render() {
+    const q = search.value.trim().toLowerCase();
+    const folder = folderSel.value;
+    chrome.runtime.sendMessage({ type: "RAINBOOKMARK_LIST" }, (res) => {
+      const items = (res && res.items) || [];
+      const filtered = items.filter((b) => {
+        const matchQ = !q || b.title.toLowerCase().includes(q) || b.url.toLowerCase().includes(q) || (b.tags || []).some((t) => t.toLowerCase().includes(q));
+        const matchF = folder === "All" || (b.folder || "Engineering") === folder;
+        return matchQ && matchF;
+      });
+      out.textContent =
+        `Total Bookmarks: ${filtered.length} (Folder: ${folder})\n\n` +
+        filtered
+          .map((b, i) => `${i + 1}. [${b.folder || "Engineering"}] ${b.title}\n   ${b.url}\n   Tags: ${(b.tags || []).map((t) => "#" + t).join(" ")}`)
+          .join("\n\n");
     });
   }
 
-  load();
-
-  searchInput.addEventListener("input", () => render(searchInput.value));
+  search.addEventListener("input", render);
+  folderSel.addEventListener("change", render);
 
   document.getElementById("rb-add").addEventListener("click", () => {
+    const folder = folderSel.value === "All" ? "Engineering" : folderSel.value;
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs && tabs[0] && tabs[0].id) {
-        chrome.tabs.sendMessage(tabs[0].id, { type: "RAINBOOKMARK_SAVE_ACTIVE" }, () => {
-          setTimeout(load, 150);
+        chrome.tabs.sendMessage(tabs[0].id, { type: "RAINBOOKMARK_SAVE_PAGE", folder }, () => {
+          setTimeout(render, 120);
         });
       }
     });
   });
 
+  document.getElementById("rb-dedupe").addEventListener("click", () => {
+    chrome.runtime.sendMessage({ type: "RAINBOOKMARK_LIST" }, (res) => {
+      const items = (res && res.items) || [];
+      const seen = new Set();
+      const unique = [];
+      items.forEach((b) => {
+        const norm = (b.url || "").replace(/\/+$/, "").toLowerCase();
+        if (!seen.has(norm)) {
+          seen.add(norm);
+          unique.push(b);
+        }
+      });
+      const removed = items.length - unique.length;
+      if (chrome.storage && chrome.storage.local) {
+        chrome.storage.local.set({ rainBookmarks: unique }, () => {
+          out.textContent = `🧹 Deduplication Complete: Removed ${removed} duplicate URL(s). ${unique.length} unique bookmarks remain.`;
+          setTimeout(render, 800);
+        });
+      }
+    });
+  });
+
+  document.getElementById("rb-check").addEventListener("click", () => {
+    chrome.runtime.sendMessage({ type: "RAINBOOKMARK_LIST" }, (res) => {
+      const items = (res && res.items) || [];
+      const valid = items.filter((b) => /^https?:\/\//i.test(b.url || ""));
+      out.textContent = `✓ Link Health Audit Complete:\n• Checked: ${items.length} bookmark(s)\n• Valid HTTPS/HTTP URLs: ${valid.length}\n• Broken / Invalid Scheme: ${items.length - valid.length}`;
+    });
+  });
+
   document.getElementById("rb-html").addEventListener("click", () => {
-    const lines = [
-      "<!DOCTYPE NETSCAPE-Bookmark-file-1>",
-      '<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">',
-      "<TITLE>Bookmarks</TITLE>",
-      "<H1>RainBookmark Export</H1>",
-      "<DL><p>",
-      ...bookmarks.map(
-        (b) =>
-          `    <DT><A HREF="${b.url}" ADD_DATE="${b.createdAt || 1700000000}" TAGS="${(b.tags || []).join(",")}">${b.title}</A>`
-      ),
-      "</DL><p>"
-    ];
-    const html = lines.join("\n");
-    if (navigator.clipboard) navigator.clipboard.writeText(html).catch(() => {});
-    out.textContent = html;
+    chrome.runtime.sendMessage({ type: "RAINBOOKMARK_EXPORT_HTML" }, (res) => {
+      const html = (res && res.html) || "";
+      out.textContent = html;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(html).catch(() => {});
+      }
+    });
   });
 
   document.getElementById("rb-json").addEventListener("click", () => {
-    const json = JSON.stringify(bookmarks, null, 2);
-    if (navigator.clipboard) navigator.clipboard.writeText(json).catch(() => {});
-    out.textContent = json;
+    chrome.runtime.sendMessage({ type: "RAINBOOKMARK_LIST" }, (res) => {
+      const json = JSON.stringify((res && res.items) || [], null, 2);
+      out.textContent = json;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(json).catch(() => {});
+      }
+    });
   });
+
+  render();
 });

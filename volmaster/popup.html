@@ -4,46 +4,13 @@
   <meta charset="UTF-8" />
   <title>VolMaster 600% Audio Booster & EQ</title>
   <style>
-    body {
-      width: 360px;
-      margin: 0;
-      padding: 14px;
-      background: #2e1065;
-      color: #f3e8ff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 12px;
-    }
-    h2 {
-      margin: 0 0 8px;
-      font-size: 15px;
-      color: #d8b4fe;
-    }
-    .card {
-      background: #1e1b4b;
-      border: 1px solid #6b21a8;
-      border-radius: 8px;
-      padding: 10px;
-      margin-bottom: 10px;
-    }
-    input[type="range"] {
-      width: 100%;
-    }
-    .row {
-      display: flex;
-      gap: 6px;
-      margin-top: 6px;
-    }
-    button {
-      flex: 1;
-      background: #9333ea;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 6px 8px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-    }
+    body { width: 380px; margin: 0; padding: 14px; background: #2e1065; color: #f3e8ff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; }
+    h2 { margin: 0 0 8px; font-size: 15px; color: #d8b4fe; }
+    .card { background: #1e1b4b; border: 1px solid #6b21a8; border-radius: 8px; padding: 10px; margin-bottom: 10px; }
+    input[type="range"] { width: 100%; }
+    .row { display: flex; gap: 6px; margin-top: 6px; }
+    button { flex: 1; background: #9333ea; color: #fff; border: none; border-radius: 6px; padding: 6px 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
+    .eq-row { display: grid; grid-template-columns: 70px 1fr 42px; align-items: center; gap: 6px; margin-top: 4px; font-size: 11px; }
   </style>
 </head>
 <body>
@@ -56,6 +23,16 @@
       <button data-v="200" data-p="Bass Boost">200% Bass</button>
       <button data-v="400" data-p="Vocal Clarity">400% Vocal</button>
       <button data-v="600" data-p="Max 600%">600% Max</button>
+    </div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;color:#d8b4fe;margin-bottom:4px;">3-Band BiquadFilter Equalizer (-12dB to +12dB)</div>
+    <div class="eq-row"><span>Bass 100Hz</span><input type="range" id="eq-bass" min="-12" max="12" step="1" value="0" /><span id="lbl-bass">0dB</span></div>
+    <div class="eq-row"><span>Mid 1kHz</span><input type="range" id="eq-mid" min="-12" max="12" step="1" value="0" /><span id="lbl-mid">0dB</span></div>
+    <div class="eq-row"><span>Treble 8kHz</span><input type="range" id="eq-treble" min="-12" max="12" step="1" value="0" /><span id="lbl-treble">0dB</span></div>
+    <div class="row" style="margin-top:8px;">
+      <button id="vm-mono" style="background:#4c1d95;">Stereo / Mono Toggle</button>
+      <button id="vm-save-host" style="background:#0284c7;">Save Domain Preset</button>
     </div>
   </div>
   <div class="card" id="vm-status">

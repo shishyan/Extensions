@@ -2,40 +2,43 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>MozAuthority — DA/PA Estimator & Link Highlighter</title>
+<title>MozAuthority — DA/PA, Meta Pixel Grader & Link Highlighter</title>
 <style>
   * { box-sizing: border-box; }
-  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  body { width: 400px; margin: 0; padding: 13px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
   h2 { margin: 0 0 4px; font-size: 15px; color: #38bdf8; display: flex; justify-content: space-between; align-items: center; }
-  .badge { background: rgba(2,132,199,0.2); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
-  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 8px; }
-  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; text-align: center; }
-  .lbl { font-size: 10px; color: #94a3b8; }
-  .val { font-size: 15px; font-weight: 800; color: #38bdf8; margin-top: 2px; }
-  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 9px; margin-bottom: 8px; font-size: 11px; }
-  .row { display: flex; justify-content: space-between; margin-bottom: 4px; }
-  button.act { width: 100%; background: #0284c7; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+  .badge { background: rgba(56,189,248,0.2); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 8px; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 6px; text-align: center; }
+  .box .v { font-size: 14px; font-weight: 800; color: #38bdf8; }
+  .box .k { font-size: 9.5px; color: #94a3b8; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; margin-bottom: 7px; font-size: 11px; max-height: 165px; overflow-y: auto; }
+  .row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #334155; }
+  .row:last-child { border-bottom: none; }
+  .btns { display: flex; gap: 6px; }
+  button.act { flex: 1; background: #0284c7; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
+  button.act.sec { background: #334155; }
 </style>
 </head>
 <body>
-  <h2><span>👑 MozAuthority</span><span class="badge">MozBar Pro Free</span></h2>
-  <p class="sub">Domain/Page Authority (DA/PA) Scorer & Link Type Highlighter</p>
+  <h2><span>📊 MozAuthority Pro</span><span class="badge">MozBar Pro Free</span></h2>
+  <p class="sub">DA/PA Score, Title/Desc Pixel Width, Schema.org & Nofollow Highlighter</p>
 
   <div class="grid">
-    <div class="box"><div class="lbl">Domain Auth (DA)</div><div class="val" id="daVal">64</div></div>
-    <div class="box"><div class="lbl">Page Auth (PA)</div><div class="val" id="paVal">58</div></div>
-    <div class="box"><div class="lbl">Spam Score</div><div class="val" id="spamVal" style="color:#4ade80;">1%</div></div>
+    <div class="box"><div class="v" id="daVal">--</div><div class="k">Domain Auth</div></div>
+    <div class="box"><div class="v" id="paVal">--</div><div class="k">Page Auth</div></div>
+    <div class="box"><div class="v" id="spamVal" style="color:#34d399;">--</div><div class="k">Spam Score</div></div>
+    <div class="box"><div class="v" id="schemaVal">--</div><div class="k">Schema JSON</div></div>
   </div>
 
-  <div class="card">
-    <div class="row"><span>🟢 Dofollow Links:</span><strong id="dfVal">0</strong></div>
-    <div class="row"><span>🟠 Nofollow Links:</span><strong id="nfVal">0</strong></div>
-    <div class="row"><span>🟣 Sponsored / UGC:</span><strong id="spVal">0</strong></div>
-    <div class="row" style="margin-bottom:0;"><span>🔵 Internal vs External:</span><strong id="ieVal">0 / 0</strong></div>
-  </div>
+  <div class="card" id="metaCard">Auditing on-page SEO tags, canonical & pixel widths...</div>
 
-  <button id="hlBtn" class="act">🖍️ Toggle On-Page Link Highlighter</button>
+  <div class="btns">
+    <button id="hlBtn" class="act">🖍️ Highlight Links</button>
+    <button id="csvBtn" class="act sec">📥 Export CSV</button>
+    <button id="mdBtn" class="act sec">📋 Copy MD</button>
+  </div>
 
   <div id="tm-subtle-donate" style="margin-top:8px;text-align:right;">
     <a href="https://paypal.me/influenzian" target="_blank" rel="noopener" style="display:inline-block;padding:3px 9px;border-radius:6px;background:rgba(30,41,59,0.7);border:1px solid rgba(148,163,184,0.2);color:#94a3b8;font-size:10.5px;font-weight:600;text-decoration:none;">Donate</a>

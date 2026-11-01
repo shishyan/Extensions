@@ -1,70 +1,78 @@
-function renderAudit(res) {
-  const box = document.getElementById("audit");
-  if (!res) {
-    box.textContent = "Reload the tab to inspect 100-pt on-page SEO metrics.";
-    return;
-  }
-  const badge = document.getElementById("scoreBadge");
-  badge.textContent = `SEO: ${res.score}/100`;
-  badge.style.color = res.score >= 75 ? "#34d399" : "#fbbf24";
+let lastAudit = null;
 
-  const kws1 = (res.topKeywords || [])
-    .map(([w, c, pct]) => `<span class="kw" title="Click to copy">${w} (${c} • ${pct || 0}%)</span>`)
-    .join("");
-  const kws2 = (res.topBigrams || [])
-    .map(([w, c]) => `<span class="kw bg2" title="Click to copy">${w} (${c})</span>`)
-    .join("");
+function runAudit() {
+  const targets = document.getElementById("targetKws").value || "";
+  if (chrome.tabs && chrome.tabs.query) {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs && tabs[0]) {
+        chrome.tabs.sendMessage(tabs[0].id, { type: "SURFSEO_AUDIT", targets }, (res) => {
+          if (chrome.runtime.lastError || !res) return;
+          lastAudit = res;
+          document.getElementById("scoreVal").textContent = res.score + "/100";
+          document.getElementById("wordsVal").textContent = res.wordCount;
+          document.getElementById("headsVal").textContent = `${res.h1}/${res.h2}/${res.h3}`;
+          document.getElementById("linksVal").textContent = `${res.internalLinks}/${res.externalLinks}`;
 
-  box.innerHTML = `
-    <div><strong>Title (${(res.title || "").length}c):</strong> ${(res.title || "Missing").slice(0, 68)}</div>
-    <div><strong>Meta Desc (${(res.desc || "").length}c):</strong> ${res.desc ? res.desc.slice(0, 80) + "…" : '<span style="color:#f87171">Missing</span>'}</div>
-    <div><strong>Canonical:</strong> ${res.canonical ? "✅ Set" : "⚠️ Missing"} • <strong>Robots:</strong> ${res.robots || "index, follow"} • <strong>OG:</strong> ${res.hasOpenGraph ? "✅" : "⚠️"}</div>
-    <div><strong>Headings:</strong> H1: ${res.h1Count} | H2: ${res.h2Count} | H3: ${res.h3Count} | H4-H6: ${res.h456Count || 0} • <strong>Words:</strong> ${res.wordCount}</div>
-    <div><strong>Links:</strong> ${res.internal} int / ${res.external} ext / ${res.nofollow || 0} nofollow • <strong>Img Missing Alt:</strong> ${res.imgsMissingAlt || 0}/${res.imgTotal || 0}</div>
-    <div style="margin-top:4px;"><strong>1-Word NLP Density:</strong><br>${kws1 || "None"}</div>
-    <div style="margin-top:4px;"><strong>2-Word NLP Phrases:</strong><br>${kws2 || "None"}</div>
-  `;
-}
+          let targetHtml = "";
+          if (res.targetAudit && res.targetAudit.length) {
+            targetHtml = "<div style='margin-top:6px;padding-top:6px;border-top:1px solid #334155;'><strong>Target Keyword Gap Check:</strong><br/>" +
+              res.targetAudit.map((t) =>
+                `<span class="term" style="color:${t.count > 0 ? '#34d399' : '#f87171'};">${t.kw}: ${t.count}x ${t.inTitle ? '(Title✓)' : '(No Title)'} ${t.inH1 ? '(H1✓)' : ''}</span>`
+              ).join("") + "</div>";
+          }
 
-if (chrome.tabs && chrome.tabs.query) {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    if (!tabs || !tabs[0]) return;
-    chrome.tabs.sendMessage(tabs[0].id, { type: "SURFSEO_AUDIT" }, (res) => {
-      if (!chrome.runtime.lastError && res) {
-        renderAudit(res);
+          document.getElementById("metaBox").innerHTML = `
+            <div>Title Length: <strong>${res.titleLen} chars</strong> (Ideal: 30–65)</div>
+            <div>Meta Description: <strong>${res.metaLen} chars</strong> (Ideal: 110–165)</div>
+            <div>Images Missing Alt: <strong style="color:${res.missingAlt > 0 ? '#f87171' : '#34d399'}">${res.missingAlt} / ${res.imgs}</strong></div>
+            ${targetHtml}
+          `;
+
+          const termsHtml = [
+            "<div><strong>Top NLP Terms:</strong></div>",
+            ...res.topTerms.map((t) => `<span class="term">${t.term} (${t.count} • ${t.density})</span>`),
+            "<div style='margin-top:4px;'><strong>2-Word & 3-Word Phrases:</strong></div>",
+            ...res.topBigrams.map((t) => `<span class="term">${t.term} (${t.count}x)</span>`),
+            ...(res.topTrigrams || []).map((t) => `<span class="term tri">${t.term} (${t.count}x)</span>`)
+          ].join("");
+          document.getElementById("termsBox").innerHTML = termsHtml || "Not enough text on page.";
+        });
       }
     });
-  });
+  }
 }
 
-function runKeywordExplore() {
-  const query = document.getElementById("kwInput").value.trim();
-  if (!query) return;
-  chrome.runtime.sendMessage({ type: "SURFSEO_SUGGEST", query }, (res) => {
-    const out = document.getElementById("kwOut");
-    if (chrome.runtime.lastError || !res || !res.items || res.items.length === 0) {
-      out.textContent = "No suggestions returned.";
-      return;
-    }
-    const enriched = res.enriched || res.items.map((k) => ({ keyword: k, volume: 1200, cpc: 1.5, kd: 35 }));
-    out.innerHTML =
-      "<strong>High-Intent SERP Keywords (Vol • CPC • KD):</strong><br>" +
-      enriched
-        .map(
-          (item) =>
-            `<span class="kw" data-kw="${item.keyword}">${item.keyword} <strong>(${item.volume}/mo • $${item.cpc} • KD ${item.kd})</strong></span>`
-        )
-        .join("");
+document.getElementById("checkKwBtn").addEventListener("click", runAudit);
 
-    out.querySelectorAll(".kw").forEach((el) => {
-      el.addEventListener("click", () => {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(el.dataset.kw || el.textContent).catch(() => {});
-        }
-      });
-    });
-  });
-}
+document.getElementById("mdBtn").addEventListener("click", () => {
+  if (!lastAudit) return;
+  const md = [
+    `# SurfSEO Audit — ${lastAudit.title}`,
+    `- **URL**: ${lastAudit.url}`,
+    `- **Content Score**: ${lastAudit.score}/100`,
+    `- **Word Count**: ${lastAudit.wordCount}`,
+    `- **Headings**: H1: ${lastAudit.h1}, H2: ${lastAudit.h2}, H3: ${lastAudit.h3}`,
+    `- **Links**: Internal: ${lastAudit.internalLinks}, External: ${lastAudit.externalLinks}`,
+    `- **Top NLP Keywords**: ${lastAudit.topTerms.map((t) => `${t.term} (${t.count})`).join(", ")}`,
+    `- **Top 2/3-Word Phrases**: ${[...lastAudit.topBigrams, ...(lastAudit.topTrigrams || [])].map((t) => `${t.term} (${t.count}x)`).join(", ")}`
+  ].join("\n");
+  navigator.clipboard.writeText(md);
+  document.getElementById("mdBtn").textContent = "✅ Markdown Copied!";
+  setTimeout(() => (document.getElementById("mdBtn").textContent = "📋 Copy Markdown Report"), 1300);
+});
 
-document.getElementById("kwBtn").addEventListener("click", runKeywordExplore);
-runKeywordExplore();
+document.getElementById("csvBtn").addEventListener("click", () => {
+  if (!lastAudit) return;
+  const rows = [["Type", "Phrase", "Count", "Density"]];
+  lastAudit.topTerms.forEach((t) => rows.push(["1-Word", t.term, t.count, t.density]));
+  lastAudit.topBigrams.forEach((t) => rows.push(["2-Word", t.term, t.count, t.density]));
+  (lastAudit.topTrigrams || []).forEach((t) => rows.push(["3-Word", t.term, t.count, t.density]));
+  const csv = rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "surfseo-nlp-audit.csv";
+  a.click();
+});
+
+runAudit();

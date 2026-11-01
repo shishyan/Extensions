@@ -2,32 +2,39 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SemRank — Technical SEO Diagnosis & Keyword Density Matrix</title>
+<title>SemRank — Live Keyword Research, CPC, KD% & Density Auditor</title>
 <style>
   * { box-sizing: border-box; }
-  body { width: 385px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
-  h2 { margin: 0 0 4px; font-size: 15px; color: #fca5a5; display: flex; justify-content: space-between; align-items: center; }
-  .badge { background: rgba(220,38,38,0.2); color: #fecaca; border: 1px solid rgba(220,38,38,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
-  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  .tabs { display: flex; gap: 6px; margin-bottom: 8px; }
-  .tab-btn { flex: 1; background: #1e293b; color: #cbd5e1; border: 1px solid #334155; border-radius: 6px; padding: 5px; font-size: 11px; font-weight: 700; cursor: pointer; }
-  .tab-btn.active { background: #dc2626; color: #fff; border-color: #ef4444; }
-  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; max-height: 210px; overflow-y: auto; font-size: 11px; }
-  .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  body { width: 400px; margin: 0; padding: 13px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #f97316; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(249,115,22,0.2); color: #f97316; border: 1px solid #f97316; padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  .search-bar { display: flex; gap: 5px; margin-bottom: 8px; }
+  .search-bar input { flex: 1; background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 6px 8px; font-size: 11.5px; }
+  .search-bar button { background: #f97316; color: #fff; border: none; border-radius: 6px; padding: 6px 10px; font-weight: 700; font-size: 11px; cursor: pointer; }
+  .list { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; height: 170px; overflow-y: auto; font-size: 11px; margin-bottom: 8px; }
+  .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #334155; }
   .row:last-child { border-bottom: none; }
+  .btns { display: flex; gap: 6px; }
+  button.act { flex: 1; background: #f97316; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
+  button.act.sec { background: #334155; }
 </style>
 </head>
 <body>
-  <h2><span>📈 SemRank</span><span class="badge">SEOquake + SEMrush Free</span></h2>
-  <p class="sub">Technical SEO Audit, JSON-LD Validator & 1/2/3-Word N-Gram Matrix</p>
+  <h2><span>🚀 SemRank Pro</span><span class="badge">Unlimited Keyword Data</span></h2>
+  <p class="sub">Live Google Autocomplete Suggestions, Page Keyword Density, KD% & CPC</p>
 
-  <div class="tabs">
-    <button class="tab-btn active" data-n="1">1-Word N-Grams</button>
-    <button class="tab-btn" data-n="2">2-Word Phrases</button>
-    <button class="tab-btn" data-n="3">3-Word Phrases</button>
+  <div class="search-bar">
+    <input id="seedInput" type="text" placeholder="Enter seed keyword for live autocomplete ideas..." />
+    <button id="suggestBtn">Suggest</button>
   </div>
 
-  <div id="ngramBox" class="box">Calculating keyword density matrix...</div>
+  <div class="list" id="kwTable">Extracting page keywords & live search suggestions...</div>
+
+  <div class="btns">
+    <button id="csvBtn" class="act">📥 Export Keywords CSV</button>
+    <button id="copyBtn" class="act sec">📋 Copy Keyword List</button>
+  </div>
 
   <div id="tm-subtle-donate" style="margin-top:8px;text-align:right;">
     <a href="https://paypal.me/influenzian" target="_blank" rel="noopener" style="display:inline-block;padding:3px 9px;border-radius:6px;background:rgba(30,41,59,0.7);border:1px solid rgba(148,163,184,0.2);color:#94a3b8;font-size:10.5px;font-weight:600;text-decoration:none;">Donate</a>

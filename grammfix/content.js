@@ -1,194 +1,271 @@
-/**
- * GrammFix Pro — Real-Time In-Page Grammar, Style, Passive Voice & Tone Assistant
- * Replaces Grammarly Pro, Wordtune & QuillBot on <textarea>, <input>, and contenteditable
- */
 
-(() => {
-  "use strict";
+const CONCISE_MAP = [
+  [/\bin order to\b/gi, "to", "Wordy phrase"],
+  [/\bdue to the fact that\b/gi, "because", "Wordy phrase"],
+  [/\bat this point in time\b/gi, "now", "Wordy phrase"],
+  [/\bin the event that\b/gi, "if", "Wordy phrase"],
+  [/\bfor the purpose of\b/gi, "to", "Wordy phrase"],
+  [/\bhas the ability to\b/gi, "can", "Wordy phrase"],
+  [/\bin close proximity to\b/gi, "near", "Wordy phrase"],
+  [/\ba large number of\b/gi, "many", "Wordy phrase"],
+  [/\bwith regard to\b/gi, "regarding", "Wordy phrase"],
+  [/\bin spite of the fact that\b/gi, "although", "Wordy phrase"],
+  [/\bprior to\b/gi, "before", "Formal/Wordy"],
+  [/\bsubsequent to\b/gi, "after", "Formal/Wordy"],
+  [/\butilize\b/gi, "use", "Overly complex"],
+  [/\bfacilitate\b/gi, "help", "Overly complex"],
+  [/\bendeavor\b/gi, "try", "Overly complex"],
+  [/\bas a matter of fact\b/gi, "in fact", "Filler phrase"],
+  [/\bat the present time\b/gi, "currently", "Wordy phrase"],
+  [/\bby means of\b/gi, "by", "Wordy phrase"],
+  [/\bfor the reason that\b/gi, "because", "Wordy phrase"],
+  [/\bin accordance with\b/gi, "by", "Wordy phrase"],
+  [/\bin addition to\b/gi, "besides", "Wordy phrase"],
+  [/\bin the near future\b/gi, "soon", "Wordy phrase"],
+  [/\bis able to\b/gi, "can", "Wordy phrase"],
+  [/\bmake a decision\b/gi, "decide", "Weak verb phrase"],
+  [/\btake into consideration\b/gi, "consider", "Weak verb phrase"],
+  [/\bgive an indication\b/gi, "indicate", "Weak verb phrase"],
+  [/\breach a conclusion\b/gi, "conclude", "Weak verb phrase"],
+  [/\bconduct an investigation\b/gi, "investigate", "Weak verb phrase"]
+];
+
+const TYPO_MAP = {
+  "teh": "the",
+  "recieve": "receive",
+  "seperate": "separate",
+  "occured": "occurred",
+  "definately": "definitely",
+  "accomodate": "accommodate",
+  "wich": "which",
+  "untill": "until",
+  "wierd": "weird",
+  "alot": "a lot",
+  "thier": "their",
+  "beleive": "believe",
+  "calender": "calendar",
+  "collegue": "colleague",
+  "concious": "conscious",
+  "curiousity": "curiosity",
+  "disappear": "disappear",
+  "embarass": "embarrass",
+  "enviroment": "environment",
+  "existance": "existence",
+  "foriegn": "foreign",
+  "freind": "friend",
+  "goverment": "government",
+  "grammer": "grammar",
+  "harass": "harass",
+  "immediatly": "immediately",
+  "independant": "independent",
+  "knowlege": "knowledge",
+  "liason": "liaison",
+  "maintainance": "maintenance",
+  "millenium": "millennium",
+  "neccessary": "necessary",
+  "noticable": "noticeable",
+  "occassion": "occasion",
+  "parliment": "parliament",
+  "perseverence": "perseverance",
+  "priviledge": "privilege",
+  "publically": "publicly",
+  "recomend": "recommend",
+  "refered": "referred",
+  "relevent": "relevant",
+  "succesful": "successful",
+  "supersede": "supersede",
+  "tommorow": "tomorrow",
+  "truely": "truly",
+  "unforeseen": "unforeseen",
+  "unfortunatly": "unfortunately"
+};
+
+const GRAMMAR_PATTERNS = [
+  [/\b(could|would|should|must|might) of\b/gi, (m, v) => v + " have", "Modal 'of' instead of 'have'"],
+  [/\bi\b/g, "I", "Uncapitalized pronoun 'I'"],
+  [/\b(\w+)\s+\1\b/gi, "$1", "Repeated duplicate word"],
+  [/\b(a)\s+([aeiouAEIOU][a-z]{2,})\b/g, (m, a, w) => /^(uni|use|user|uro|one|once)/i.test(w) ? m : (a === "A" ? "An " : "an ") + w, "Article 'a' before vowel sound"],
+  [/\b(an)\s+([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ][a-z]{2,})\b/g, (m, an, w) => /^(hour|honest|honor|heir)/i.test(w) ? m : (an === "An" ? "A " : "a ") + w, "Article 'an' before consonant sound"],
+  [/\btheir\s+(is|are|was|were)\b/gi, (m, v) => (m[0] === "T" ? "There " : "there ") + v, "'Their' instead of 'there'"],
+  [/\byour\s+(welcome|right|correct|invited)\b/gi, (m, w) => (m[0] === "Y" ? "You're " : "you're ") + w, "'Your' instead of 'you're'"],
+  [/\bits\s+(a|an|very|so|too|going|been|not)\b/gi, (m, w) => (m[0] === "I" ? "It's " : "it's ") + w, "'Its' instead of 'it's'"]
+];
+
+function countSyllables(word) {
+  word = word.toLowerCase().replace(/[^a-z]/g, "");
+  if (!word) return 0;
+  if (word.length <= 3) return 1;
+  word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, "").replace(/^y/, "");
+  const matches = word.match(/[aeiouy]{1,2}/g);
+  return matches ? matches.length : 1;
+}
+
+function detectTone(text) {
+  const lower = (text || "").toLowerCase();
+  const urgentHits = (lower.match(/\b(urgent|asap|immediately|deadline|critical|now|important|must|priority)\b/g) || []).length + (text.match(/!/g) || []).length;
+  const formalHits = (lower.match(/\b(sincerely|regards|furthermore|therefore|consequently|pursuant|hereby|pleased|accordance|respectfully)\b/g) || []).length;
+  const friendlyHits = (lower.match(/\b(thanks|thank you|happy|glad|awesome|great|excited|love|cheers|wonderful|appreciate)\b/g) || []).length;
+  const confidentHits = (lower.match(/\b(will|definitely|certainly|proven|guarantee|ensure|deliver|confident|achieve|strong)\b/g) || []).length;
+  if (urgentHits >= 2) return "⚡ Urgent & Direct";
+  if (formalHits >= 2) return "🎩 Formal & Professional";
+  if (friendlyHits >= 2) return "😊 Friendly & Warm";
+  if (confidentHits >= 1) return "💪 Confident & Clear";
+  return "⚖️ Neutral & Balanced";
+}
+
+function analyzeAndFixText(rawText) {
+  let fixed = String(rawText || "");
+  const issues = [];
+
+  Object.entries(TYPO_MAP).forEach(([bad, good]) => {
+    const rx = new RegExp("\\b" + bad + "\\b", "gi");
+    if (rx.test(fixed)) {
+      issues.push({ type: "Spelling", from: bad, to: good, reason: "Common misspelling" });
+      fixed = fixed.replace(rx, (m) => m[0] === m[0].toUpperCase() ? good.charAt(0).toUpperCase() + good.slice(1) : good);
+    }
+  });
+
+  GRAMMAR_PATTERNS.forEach(([rx, rep, reason]) => {
+    const matches = fixed.match(rx);
+    if (matches && matches.length) {
+      issues.push({ type: "Grammar", from: matches[0], to: typeof rep === "function" ? matches[0].replace(rx, rep) : rep, reason });
+      fixed = fixed.replace(rx, rep);
+    }
+  });
+
+  CONCISE_MAP.forEach(([rx, rep, reason]) => {
+    const matches = fixed.match(rx);
+    if (matches && matches.length) {
+      issues.push({ type: "Clarity", from: matches[0], to: rep, reason });
+      fixed = fixed.replace(rx, rep);
+    }
+  });
+
+  const passiveRx = /\b(was|were|is|are|been)\s+([a-z]+ed)\b/gi;
+  const passiveMatches = fixed.match(passiveRx) || [];
+  passiveMatches.slice(0, 4).forEach((m) => {
+    issues.push({ type: "Passive Voice", from: m, to: "Use active verb", reason: "Passive construction weakens clarity" });
+  });
+
+  fixed = fixed.replace(/[ \t]{2,}/g, " ").replace(/\s+([,.;!?])/g, "$1");
+
+  const words = fixed.trim() ? fixed.trim().split(/\s+/) : [];
+  const sentences = Math.max(1, fixed.split(/[.!?]+/).filter((s) => s.trim().length > 0).length);
+  const syllables = words.reduce((acc, w) => acc + countSyllables(w), 0);
+  const wCount = words.length;
+
+  const fleschRaw = wCount > 0 ? 206.835 - 1.015 * (wCount / sentences) - 84.6 * (syllables / Math.max(1, wCount)) : 100;
+  const fleschScore = Math.max(0, Math.min(100, Math.round(fleschRaw)));
+  const fkGrade = wCount > 0 ? Math.max(1, Math.min(18, Math.round(0.39 * (wCount / sentences) + 11.8 * (syllables / Math.max(1, wCount)) - 15.59))) : 6;
+  const clarityScore = Math.max(35, Math.min(100, 100 - issues.length * 4));
+  const tone = detectTone(fixed);
+
+  return {
+    original: rawText,
+    fixed,
+    issues,
+    wordCount: wCount,
+    sentenceCount: sentences,
+    fleschScore,
+    gradeLevel: "Grade " + fkGrade,
+    clarityScore,
+    tone
+  };
+}
+
+(function () {
+  if (window.__grammfixLoaded) return;
+  window.__grammfixLoaded = true;
 
   let badge = null;
-  let activeEl = null;
-
-  const WORDY_MAP = {
-    "in order to": "to",
-    "due to the fact that": "because",
-    "at this point in time": "now",
-    "for the purpose of": "for",
-    "in the event that": "if",
-    "has the ability to": "can",
-    "make a decision": "decide",
-    "in the near future": "soon",
-    "a large number of": "many",
-    "with regard to": "regarding",
-    "take into consideration": "consider",
-    "on a daily basis": "daily"
-  };
-
-  const PASSIVE_TO_ACTIVE_HINTS = {
-    "was written by": "wrote",
-    "was created by": "created",
-    "was built by": "built",
-    "is managed by": "manages",
-    "was approved by": "approved"
-  };
-
-  function analyzeLocalStyle(text) {
-    const issues = [];
-    const passiveRegex = /\b(am|are|is|was|were|be|been|being)\s+(\w+ed|written|taken|made|done|given|shown|known|seen|built|sent|paid)\b/gi;
-    let m;
-    while ((m = passiveRegex.exec(text)) !== null) {
-      issues.push({
-        message: `Passive voice detected ("${m[0]}"). Consider active voice for stronger clarity.`,
-        orig: m[0],
-        replacement: null,
-        type: "passive"
-      });
-    }
-
-    for (const [phrase, rep] of Object.entries(PASSIVE_TO_ACTIVE_HINTS)) {
-      if (text.toLowerCase().includes(phrase)) {
-        issues.push({
-          message: `Passive construction "${phrase}"`,
-          orig: phrase,
-          replacement: rep,
-          type: "passive-fix"
-        });
-      }
-    }
-
-    for (const [phrase, rep] of Object.entries(WORDY_MAP)) {
-      if (text.toLowerCase().includes(phrase)) {
-        issues.push({
-          message: `Wordy phrase "${phrase}". Replace with "${rep}".`,
-          orig: phrase,
-          replacement: rep,
-          type: "conciseness"
-        });
-      }
-    }
-    return issues;
-  }
+  let activeField = null;
 
   function ensureBadge() {
-    if (badge && document.body.contains(badge)) return badge;
+    if (badge) return badge;
     badge = document.createElement("div");
     badge.id = "grammfix-floating-badge";
-    badge.className = "grammfix-floating-badge";
-    badge.innerHTML = '<span class="gf-dot"></span><span class="gf-count">GrammFix Ready</span>';
+    badge.title = "Click to auto-fix grammar, spelling & wordiness";
     badge.style.display = "none";
     document.body.appendChild(badge);
+
+    badge.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!activeField) return;
+      const raw = getFieldText(activeField);
+      const res = analyzeAndFixText(raw);
+      setFieldText(activeField, res.fixed);
+      updateBadgeForField(activeField);
+    });
     return badge;
   }
 
-  function positionBadge(el) {
-    if (!el) return;
-    const b = ensureBadge();
-    const rect = el.getBoundingClientRect();
-    if (rect.width > 80 && rect.height > 20) {
-      b.style.display = "flex";
-      b.style.top = `${Math.max(4, window.scrollY + rect.bottom - 30)}px`;
-      b.style.left = `${Math.max(4, window.scrollX + rect.right - 150)}px`;
-    }
-  }
-
-  function isEditableField(el) {
-    if (!el || !el.tagName) return false;
-    if (el.tagName === "TEXTAREA") return true;
-    if (el.tagName === "INPUT") {
-      const t = (el.type || "text").toLowerCase();
-      return ["text", "search", "email", "url"].includes(t);
-    }
-    return Boolean(el.isContentEditable || el.getAttribute?.("contenteditable") === "true");
-  }
-
-  function getText(el) {
+  function getFieldText(el) {
     if (!el) return "";
     if (el.tagName === "TEXTAREA" || el.tagName === "INPUT") return el.value || "";
-    return el.innerText || el.textContent || "";
+    return el.innerText || "";
   }
 
-  function setText(el, val) {
+  function setFieldText(el, val) {
     if (!el) return;
     if (el.tagName === "TEXTAREA" || el.tagName === "INPUT") {
       el.value = val;
-    } else {
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+    } else if (el.isContentEditable) {
       el.innerText = val;
+      el.dispatchEvent(new Event("input", { bubbles: true }));
     }
-    el.dispatchEvent(new Event("input", { bubbles: true }));
   }
 
-  function updateCheck(el) {
-    if (!el) return;
-    positionBadge(el);
-    const text = getText(el).trim();
+  function updateBadgeForField(el) {
     const b = ensureBadge();
-    if (text.length < 3) {
-      b.innerHTML = '<span class="gf-dot ok"></span><span class="gf-count">GrammFix: 0 issues</span>';
+    const txt = getFieldText(el);
+    if (!txt || txt.trim().length < 4) {
+      b.style.display = "none";
       return;
     }
-
-    const localIssues = analyzeLocalStyle(text);
-    chrome.runtime.sendMessage({ type: "GRAMMFIX_CHECK", text }, (res) => {
-      const apiMatches = !chrome.runtime.lastError && res && res.ok && Array.isArray(res.matches) ? res.matches : [];
-      const total = localIssues.length + apiMatches.length;
-      const words = text.split(/\s+/).filter(Boolean).length;
-
-      if (total === 0) {
-        b.innerHTML = `<span class="gf-dot ok"></span><span class="gf-count">${words}w • Perfect ✨</span>`;
-        b.onclick = null;
-      } else {
-        b.innerHTML = `<span class="gf-dot warn"></span><span class="gf-count">${total} Fix${total > 1 ? "es" : ""} (Click)</span>`;
-        b.onclick = (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          let updated = getText(el);
-          const sorted = [...apiMatches].sort((a, b) => b.offset - a.offset);
-          sorted.forEach((m) => {
-            if (m.replacements && m.replacements.length > 0) {
-              const rep = m.replacements[0].value;
-              updated = updated.slice(0, m.offset) + rep + updated.slice(m.offset + m.length);
-            }
-          });
-          localIssues.forEach((iss) => {
-            if (iss.orig && iss.replacement) {
-              updated = updated.replace(new RegExp(iss.orig, "gi"), iss.replacement);
-            }
-          });
-          setText(el, updated);
-          b.innerHTML = `<span class="gf-dot ok"></span><span class="gf-count">All Fixed! ✨</span>`;
-        };
-      }
-    });
+    const res = analyzeAndFixText(txt);
+    const rect = el.getBoundingClientRect();
+    b.style.display = "flex";
+    b.style.top = Math.max(8, rect.bottom - 32 + window.scrollY) + "px";
+    b.style.left = Math.max(8, rect.right - 220 + window.scrollX) + "px";
+    if (res.issues.length > 0) {
+      b.innerHTML = `<span>⚡ Fix ${res.issues.length} Issue${res.issues.length > 1 ? "s" : ""} • Flesch ${res.fleschScore}</span>`;
+      b.style.background = "linear-gradient(135deg, #ef4444, #d97706)";
+    } else {
+      b.innerHTML = `<span>✓ GrammFix ${res.clarityScore}% • ${res.tone.split(" ")[0]}</span>`;
+      b.style.background = "linear-gradient(135deg, #059669, #0284c7)";
+    }
   }
 
   document.addEventListener("focusin", (e) => {
-    const el = e.target;
-    if (!isEditableField(el)) return;
-    activeEl = el;
-    updateCheck(el);
-  });
-
-  document.addEventListener("click", (e) => {
-    const el = e.target;
-    if (isEditableField(el)) {
-      activeEl = el;
-      updateCheck(el);
+    const t = e.target;
+    if (t && (t.tagName === "TEXTAREA" || (t.tagName === "INPUT" && (t.type === "text" || t.type === "search" || t.type === "email")) || t.isContentEditable)) {
+      activeField = t;
+      updateBadgeForField(t);
     }
   });
 
-  let timer = null;
   document.addEventListener("input", (e) => {
-    if (isEditableField(e.target)) {
-      activeEl = e.target;
-      clearTimeout(timer);
-      timer = setTimeout(() => updateCheck(activeEl), 250);
+    if (e.target === activeField) {
+      updateBadgeForField(activeField);
     }
   });
 
-  // Automatically attach to the first visible editable field on load if focused or present
-  const firstEditable = document.querySelector("textarea, input[type='text'], [contenteditable='true']");
-  if (firstEditable) {
-    activeEl = firstEditable;
-    updateCheck(firstEditable);
-  }
+  chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+    if (msg && msg.type === "GRAMMFIX_GET_ACTIVE_TEXT") {
+      const sel = window.getSelection().toString().trim();
+      const text = sel || getFieldText(activeField) || document.body.innerText.slice(0, 1500);
+      sendResponse({ text });
+      return true;
+    }
+    if (msg && msg.type === "GRAMMFIX_APPLY_FIXED_TEXT" && msg.text) {
+      if (activeField) {
+        setFieldText(activeField, msg.text);
+        updateBadgeForField(activeField);
+      }
+      sendResponse({ ok: true });
+      return true;
+    }
+  });
 })();

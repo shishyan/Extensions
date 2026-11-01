@@ -44,7 +44,7 @@
   function renderBadge() {
     const info = inspectStorage();
     badge.innerHTML = `
-      <span>🍪 EditCookie: ${info.cookies.length} Cookies · ${info.localStorage.length} LocalStorage</span>
+      <span>🍪 EditCookie: ${info.cookies.length} Cookies · ${info.localStorage.length} Local · ${info.sessionStorage.length} Session</span>
       <button id="editcookie-seed-btn">+Dev Cookie</button>
     `;
     const btn = badge.querySelector("#editcookie-seed-btn");
@@ -71,8 +71,22 @@
         try {
           localStorage.setItem(msg.key, msg.value);
         } catch (e) {}
+      } else if (msg.target === "sessionStorage") {
+        try {
+          sessionStorage.setItem(msg.key, msg.value);
+        } catch (e) {}
       } else {
         document.cookie = `${encodeURIComponent(msg.key)}=${encodeURIComponent(msg.value)}; path=/`;
+      }
+      renderBadge();
+      sendResponse({ ok: true, data: inspectStorage() });
+    } else if (msg.type === "EDITCOOKIE_DELETE_KEY") {
+      if (msg.target === "localStorage") {
+        try { localStorage.removeItem(msg.key); } catch (e) {}
+      } else if (msg.target === "sessionStorage") {
+        try { sessionStorage.removeItem(msg.key); } catch (e) {}
+      } else {
+        document.cookie = `${encodeURIComponent(msg.key)}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
       }
       renderBadge();
       sendResponse({ ok: true, data: inspectStorage() });

@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentData = fallbackData;
   let activeStyle = "APA 7th";
+  let savedHistory = [];
 
   const metaAuthor = document.getElementById("metaAuthor");
   const metaSite = document.getElementById("metaSite");
@@ -28,15 +29,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const statusMsg = document.getElementById("statusMsg");
 
   function render() {
-    metaAuthor.textContent = currentData.author;
-    metaSite.textContent = currentData.siteName;
-    metaTitle.textContent = currentData.title;
-    yearBadge.textContent = currentData.year;
-    citationOutput.value = currentData.styles[activeStyle] || currentData.styles["APA 7th"];
-    exportOutput.value = currentData.bibtex;
+    metaAuthor.textContent = currentData.author || fallbackData.author;
+    metaSite.textContent = currentData.siteName || fallbackData.siteName;
+    metaTitle.textContent = currentData.title || fallbackData.title;
+    yearBadge.textContent = currentData.year || fallbackData.year;
+    const stylesObj = currentData.styles || fallbackData.styles;
+    citationOutput.value = stylesObj[activeStyle] || stylesObj["APA 7th"];
+    const histPreview = savedHistory.length
+      ? "\n\n% Saved Library (" + savedHistory.length + "):\n" + savedHistory.slice(0, 3).map((h, i) => `% ${i + 1}. ${h.title} (${h.year})`).join("\n")
+      : "";
+    exportOutput.value = (currentData.bibtex || fallbackData.bibtex) + histPreview;
   }
 
-  render();
+  if (chrome.storage && chrome.storage.local) {
+    chrome.storage.local.get({ zoterocite_history: [] }, (res) => {
+      if (Array.isArray(res.zoterocite_history)) savedHistory = res.zoterocite_history;
+      render();
+    });
+  } else {
+    render();
+  }
 
   document.querySelectorAll(".style-tab").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -74,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs && tabs[0] && tabs[0].id) {
         chrome.tabs.sendMessage(tabs[0].id, { type: "ZOTEROCITE_EXTRACT" }, (res) => {
-          if (res && res.ok && res.data) {
+          if (res && res.ok && res.data && res.data.styles) {
             currentData = res.data;
             render();
           }

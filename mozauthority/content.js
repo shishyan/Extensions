@@ -2,124 +2,184 @@
   if (window.__mozAuthorityLoaded) return;
   window.__mozAuthorityLoaded = true;
 
-  let highlighted = false;
+  function computeDeepSeoAudit() {
+    const title = (document.title || "").trim();
+    const titlePixels = Math.round(title.length * 9.2);
+    const metaDescEl = document.querySelector("meta[name='description']");
+    const metaDesc = metaDescEl ? (metaDescEl.getAttribute("content") || "").trim() : "";
+    const descPixels = Math.round(metaDesc.length * 6.8);
+    const canonicalEl = document.querySelector("link[rel='canonical']");
+    const canonical = canonicalEl ? canonicalEl.getAttribute("href") || "Missing" : "Missing";
+    const robotsEl = document.querySelector("meta[name='robots']");
+    const robots = robotsEl ? robotsEl.getAttribute("content") || "index, follow" : "index, follow";
+    const ogTitleEl = document.querySelector("meta[property='og:title']");
+    const ogTitle = ogTitleEl ? ogTitleEl.getAttribute("content") || "" : "";
 
-  function computeAuthorityMetrics() {
+    const schemaScripts = Array.from(document.querySelectorAll("script[type='application/ld+json']"));
+    const schemaTypes = [];
+    schemaScripts.forEach((s) => {
+      try {
+        const parsed = JSON.parse(s.textContent || "{}");
+        if (parsed["@type"]) schemaTypes.push(parsed["@type"]);
+        else if (Array.isArray(parsed["@graph"])) {
+          parsed["@graph"].forEach((g) => { if (g && g["@type"]) schemaTypes.push(g["@type"]); });
+        }
+      } catch (_) {}
+    });
+
+    const headings = [];
+    document.querySelectorAll("h1, h2, h3, h4, h5, h6").forEach((h) => {
+      const txt = (h.innerText || "").trim();
+      if (txt) headings.push({ tag: h.tagName, text: txt.slice(0, 90) });
+    });
+
+    const h1Count = document.querySelectorAll("h1").length;
+    const h2Count = document.querySelectorAll("h2").length;
+    const h3Count = document.querySelectorAll("h3").length;
+
+    const imgs = Array.from(document.querySelectorAll("img"));
+    const missingAlt = imgs.filter((img) => !img.getAttribute("alt") || !img.getAttribute("alt").trim()).length;
+
     const links = Array.from(document.querySelectorAll("a[href]"));
-    let dofollow = 0;
-    let nofollow = 0;
-    let sponsored = 0;
-    let internal = 0;
-    let external = 0;
+    let internal = 0, external = 0, nofollow = 0, dofollow = 0, sponsored = 0, ugc = 0;
+    const extDomains = new Set();
+    const linkRows = [];
 
-    const host = location.hostname || "localhost";
     links.forEach((a) => {
-      const rel = (a.getAttribute("rel") || "").toLowerCase();
-      const href = a.getAttribute("href") || "";
-      const isInt = href.startsWith("/") || href.startsWith("#") || href.includes(host);
+      const rawHref = a.getAttribute("href") || "";
+      if (!rawHref || rawHref.startsWith("javascript:") || rawHref.startsWith("#")) return;
+      let u;
+      try {
+        u = new URL(rawHref, location.href);
+      } catch (_) {
+        return;
+      }
+      const isInt = u.hostname === location.hostname;
       if (isInt) internal++;
-      else external++;
+      else {
+        external++;
+        if (u.hostname) extDomains.add(u.hostname.replace(/^www\./, ""));
+      }
+      const rel = (a.getAttribute("rel") || "").toLowerCase();
+      const isNo = rel.includes("nofollow");
+      if (isNo) nofollow++;
+      else dofollow++;
+      if (rel.includes("sponsored")) sponsored++;
+      if (rel.includes("ugc")) ugc++;
 
-      if (rel.includes("sponsored") || rel.includes("ugc")) {
-        sponsored++;
-      } else if (rel.includes("nofollow")) {
-        nofollow++;
-      } else {
-        dofollow++;
+      if (linkRows.length < 50) {
+        linkRows.push({
+          anchor: (a.innerText || a.getAttribute("title") || "[Image/Icon]").trim().slice(0, 50) || "[No Anchor]",
+          href: u.href,
+          type: isInt ? "Internal" : "External",
+          rel: isNo ? "nofollow" : "dofollow"
+        });
       }
     });
 
-    const hasSchema = document.querySelectorAll("script[type='application/ld+json']").length > 0;
-    const hasCanonical = Boolean(document.querySelector("link[rel='canonical']"));
-    const h1Count = document.querySelectorAll("h1").length;
-    const wordCount = ((document.body && document.body.innerText) || "").split(/\s+/).filter(Boolean).length;
+    // Keyword Density
+    const stop = new Set(["the","and","for","that","this","with","from","your","have","are","was","were","will","about","into","more","other","some","such","than","then","them","these","they","their","there","what","when","where","which","while","who","all","any","can","not","but","you","our"]);
+    const bodyText = (document.body ? document.body.innerText : "").trim();
+    const words = bodyText.toLowerCase().match(/[a-z]{3,}/g) || [];
+    const wordCount = bodyText ? bodyText.split(/\s+/).length : 0;
+    const freq = {};
+    const bigrams = {};
+    const cleanWords = words.filter((w) => !stop.has(w));
+    for (let i = 0; i < cleanWords.length; i++) {
+      const w = cleanWords[i];
+      freq[w] = (freq[w] || 0) + 1;
+      if (i < cleanWords.length - 1) {
+        const bg = cleanWords[i] + " " + cleanWords[i + 1];
+        bigrams[bg] = (bigrams[bg] || 0) + 1;
+      }
+    }
+    const topKeywords = Object.entries(freq)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([kw, count]) => ({
+        kw,
+        count,
+        density: ((count / Math.max(1, wordCount)) * 100).toFixed(2) + "%"
+      }));
 
-    const da = Math.min(96, Math.max(24, 42 + Math.round(Math.log10(Math.max(10, links.length)) * 16) + (hasSchema ? 8 : 0)));
-    const pa = Math.min(95, Math.max(28, 38 + Math.round(Math.log10(Math.max(50, wordCount)) * 12) + (hasCanonical ? 6 : 0) + (h1Count === 1 ? 5 : 0)));
+    const topPhrases = Object.entries(bigrams)
+      .filter(([, c]) => c > 1)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 8)
+      .map(([kw, count]) => ({ kw, count }));
 
-    const metaTitle = document.title || "";
-    const metaDescEl = document.querySelector("meta[name='description']");
-    const metaDesc = metaDescEl ? metaDescEl.getAttribute("content") || "" : "";
+    // Authority & Traffic Heuristics grounded in DOM structure + domain signals
+    const isHttps = location.protocol === "https:";
+    let da = 35;
+    if (isHttps) da += 8;
+    if (schemaTypes.length > 0) da += 10;
+    if (canonical !== "Missing") da += 7;
+    if (h1Count === 1 && h2Count >= 2) da += 10;
+    if (wordCount > 600) da += 9;
+    da = Math.min(96, da + Math.min(17, extDomains.size));
+    const pa = Math.min(94, Math.max(25, da - 3 + Math.min(10, Math.floor(internal / 10))));
+    const spamScore = Math.max(1, Math.min(35, nofollow > dofollow * 2 ? 12 : 2));
 
     return {
-      domain: host,
-      da,
-      pa,
-      spamScore: "1%",
+      domain: location.hostname,
+      url: location.href,
+      title,
+      titleLen: title.length,
+      titlePixels,
+      metaDesc,
+      descLen: metaDesc.length,
+      descPixels,
+      canonical,
+      robots,
+      ogTitle,
+      schemaTypes: Array.from(new Set(schemaTypes)),
+      h1Count,
+      h2Count,
+      h3Count,
+      headings: headings.slice(0, 25),
+      imgCount: imgs.length,
+      missingAlt,
+      wordCount,
       totalLinks: links.length,
+      internal,
+      external,
       dofollow,
       nofollow,
       sponsored,
-      internal,
-      external,
-      metaTitle,
-      metaDesc
+      ugc,
+      refDomains: extDomains.size,
+      extDomainList: Array.from(extDomains).slice(0, 20),
+      linkRows,
+      topKeywords,
+      topPhrases,
+      da,
+      pa,
+      spamScore
     };
   }
 
-  function applyLinkHighlight(enable) {
-    highlighted = enable;
-    const host = location.hostname || "localhost";
+  function highlightLinksOnPage() {
     document.querySelectorAll("a[href]").forEach((a) => {
-      a.classList.remove("mozauthority-dofollow", "mozauthority-nofollow", "mozauthority-sponsored", "mozauthority-internal");
-      if (!enable) return;
       const rel = (a.getAttribute("rel") || "").toLowerCase();
-      const href = a.getAttribute("href") || "";
-      if (rel.includes("sponsored") || rel.includes("ugc")) {
-        a.classList.add("mozauthority-sponsored");
-      } else if (rel.includes("nofollow")) {
-        a.classList.add("mozauthority-nofollow");
+      if (rel.includes("nofollow")) {
+        a.style.outline = "2px dashed #f43f5e";
+        a.style.backgroundColor = "rgba(244, 63, 94, 0.12)";
       } else {
-        a.classList.add("mozauthority-dofollow");
+        a.style.outline = "2px solid #10b981";
+        a.style.backgroundColor = "rgba(16, 185, 129, 0.10)";
       }
-      if (href.startsWith("/") || href.includes(host)) {
-        a.classList.add("mozauthority-internal");
-      }
-    });
-    return {
-      highlighted,
-      dofollowCount: document.querySelectorAll("a.mozauthority-dofollow").length,
-      nofollowCount: document.querySelectorAll("a.mozauthority-nofollow").length,
-      sponsoredCount: document.querySelectorAll("a.mozauthority-sponsored").length
-    };
-  }
-
-  function injectMozBar() {
-    if (document.getElementById("mozauthority-bar")) return;
-    const m = computeAuthorityMetrics();
-    const bar = document.createElement("div");
-    bar.id = "mozauthority-bar";
-    bar.innerHTML = `
-      <div class="ma-metrics">
-        <span>👑 <strong>MozAuthority</strong></span>
-        <span class="ma-pill">DA: <strong>${m.da}</strong>/100</span>
-        <span class="ma-pill">PA: <strong>${m.pa}</strong>/100</span>
-        <span class="ma-pill">Spam: ${m.spamScore}</span>
-        <span>🟢 Dofollow: ${m.dofollow} | 🟠 Nofollow: ${m.nofollow} | 🟣 Sponsored: ${m.sponsored}</span>
-      </div>
-      <div class="ma-btns">
-        <button class="ma-btn" id="ma-hl-btn">🖍️ Highlight Links</button>
-      </div>
-    `;
-    document.body.prepend(bar);
-
-    bar.querySelector("#ma-hl-btn").addEventListener("click", () => {
-      const res = applyLinkHighlight(!highlighted);
-      bar.querySelector("#ma-hl-btn").textContent = res.highlighted ? "✅ Links Highlighted" : "🖍️ Highlight Links";
     });
   }
 
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-    if (msg && msg.type === "MOZ_GET_METRICS") {
-      sendResponse(computeAuthorityMetrics());
+    if (msg && msg.type === "MOZ_ANALYZE") {
+      sendResponse(computeDeepSeoAudit());
       return true;
     }
     if (msg && msg.type === "MOZ_HIGHLIGHT_LINKS") {
-      const res = applyLinkHighlight(msg.enable !== undefined ? Boolean(msg.enable) : !highlighted);
-      sendResponse(Object.assign({ ok: true }, res, computeAuthorityMetrics()));
+      highlightLinksOnPage();
+      sendResponse({ ok: true });
       return true;
     }
   });
-
-  injectMozBar();
 })();

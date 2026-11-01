@@ -1,10 +1,15 @@
 {
   "manifest_version": 3,
-  "name": "VideoSpeed — 0.1x–16x HTML5 Speed Controller, PiP & A-B Loop",
+  "name": "VideoSpeed \u2014 0.1x\u201316x HTML5 Speed Controller, PiP & A-B Loop",
   "version": "1.0.0",
-  "description": "Precision 0.1x–16x HTML5 video speed controller, Picture-in-Picture launcher, A-B segment looper & PNG frame capture.",
-  "permissions": ["storage", "activeTab"],
-  "host_permissions": ["<all_urls>"],
+  "description": "Precision 0.1x\u201316x HTML5 video speed controller, Picture-in-Picture launcher, A-B segment looper & PNG frame capture.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -14,13 +19,21 @@
     }
   },
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "background.js"
+    ]
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["styles.css"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "styles.css"
+      ],
       "run_at": "document_idle"
     }
   ],

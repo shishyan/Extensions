@@ -2,64 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>SciSpace Research Assistant</title>
+  <title>SciSpace Research & Citation Assistant</title>
   <style>
-    body {
-      width: 390px;
-      margin: 0;
-      padding: 14px;
-      background: #1e1b4b;
-      color: #e0e7ff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 12px;
-    }
-    h2 {
-      margin: 0 0 8px;
-      font-size: 15px;
-      color: #818cf8;
-    }
-    .sec {
-      background: #0f172a;
-      border: 1px solid #4338ca;
-      border-radius: 6px;
-      padding: 8px;
-      margin-bottom: 8px;
-      font-size: 11px;
-    }
-    .row {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-    button {
-      background: #6366f1;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 6px 10px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      flex: 1;
-    }
-    pre {
-      background: #090d16;
-      border: 1px solid #3730a3;
-      border-radius: 6px;
-      padding: 8px;
-      font-size: 10px;
-      color: #c7d2fe;
-      overflow: auto;
-      margin: 0;
-    }
+    body { width: 400px; margin: 0; padding: 14px; background: #1e1b4b; color: #e0e7ff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; }
+    h2 { margin: 0 0 8px; font-size: 15px; color: #818cf8; }
+    .sec { background: #0f172a; border: 1px solid #4338ca; border-radius: 6px; padding: 8px; margin-bottom: 8px; font-size: 11px; line-height: 1.45; }
+    .row { display: flex; gap: 6px; margin-bottom: 8px; }
+    select, button { border-radius: 6px; padding: 6px 8px; font-size: 11px; font-weight: 700; }
+    select { background: #0f172a; color: #e0e7ff; border: 1px solid #4338ca; }
+    button { background: #6366f1; color: #fff; border: none; cursor: pointer; flex: 1; }
+    pre { background: #090d16; border: 1px solid #3730a3; border-radius: 6px; padding: 8px; font-size: 10px; color: #c7d2fe; max-height: 115px; overflow: auto; margin: 0; white-space: pre-wrap; }
   </style>
 </head>
 <body>
-  <h2>🔬 SciSpace — DOI, OA PDF & BibTeX</h2>
+  <h2>🔬 SciSpace — DOI, APA/MLA/Chicago/Harvard & BibTeX</h2>
   <div class="sec" id="ss-summary">Scanning active paper for DOI, arXiv ID & findings...</div>
   <div class="row">
-    <button id="ss-copy-bib">📋 Copy BibTeX</button>
-    <button id="ss-open-oa" style="background:#4f46e5">🔓 Open-Access Resolver</button>
+    <select id="ss-style-sel">
+      <option value="BibTeX">BibTeX (.bib)</option>
+      <option value="APA">APA 7th</option>
+      <option value="MLA">MLA 9th</option>
+      <option value="Chicago">Chicago 17th</option>
+      <option value="Harvard">Harvard</option>
+    </select>
+    <button id="ss-copy-bib">📋 Copy Citation</button>
+    <button id="ss-save-lib" style="background:#4f46e5">+Save Library</button>
+    <button id="ss-open-oa" style="background:#3730a3">🔓 OA PDF</button>
   </div>
   <pre id="ss-bibtex">@article{...}</pre>
 

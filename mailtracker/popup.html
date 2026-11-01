@@ -2,33 +2,47 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>MailTracker — Zero-Watermark Email Tracker & Subject Scorer</title>
+<title>MailTracker — Zero-Watermark Email Tracker, Pixel & Follow-Up Scheduler</title>
 <style>
   * { box-sizing: border-box; }
-  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  body { width: 395px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
   h2 { margin: 0 0 4px; font-size: 15px; color: #4ade80; display: flex; justify-content: space-between; align-items: center; }
   .badge { background: rgba(34,197,94,0.2); color: #86efac; border: 1px solid rgba(34,197,94,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
-  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
   .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 9px; margin-bottom: 8px; font-size: 11px; }
   input { width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 6px 8px; font-size: 11px; margin-bottom: 6px; }
-  button.act { width: 100%; background: #16a34a; color: #fff; border: none; padding: 7px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+  .btns { display: flex; gap: 6px; }
+  button.act { flex: 1; background: #16a34a; color: #fff; border: none; padding: 7px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+  button.sec { flex: 1; background: #334155; color: #fff; border: none; padding: 7px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
 </style>
 </head>
 <body>
   <h2><span>✓✓ MailTracker</span><span class="badge">Zero-Watermark Pro</span></h2>
-  <p class="sub">Subject-Line Open-Rate Scorer, UTM Click Builder & Follow-Up Log</p>
+  <p class="sub">Read-Receipt Pixel/Link Generator, Subject Scorer & Follow-Up Injector</p>
 
   <div class="card">
-    <div style="font-weight:700;margin-bottom:5px;">📧 Subject Line Open-Rate Scorer</div>
+    <div style="font-weight:700;margin-bottom:5px;">📧 Subject Line & Response-Likelihood Scorer</div>
     <input id="subjInput" value="Quick question on your 2026 AI roadmap" />
-    <button id="scoreBtn" class="act">Score Subject Open Rate</button>
+    <button id="scoreBtn" class="act" style="width:100%;">Score Open & Reply Likelihood</button>
     <div id="scoreOut" style="margin-top:6px;color:#86efac;font-weight:700;"></div>
   </div>
 
   <div class="card">
-    <div style="font-weight:700;margin-bottom:5px;">🔗 Click-Tracking UTM Link Builder</div>
+    <div style="font-weight:700;margin-bottom:5px;">👁️ Read-Receipt Pixel & Tracked Link Generator</div>
     <input id="urlInput" value="https://gurukuladesam.org/deck" />
-    <button id="utmBtn" class="act" style="background:#334155;">📋 Copy Tracked Link (Zero Signature Spam)</button>
+    <div class="btns">
+      <button id="utmBtn" class="act">🔗 Copy Tracked Link</button>
+      <button id="pixelBtn" class="sec">👁️ Copy HTML Read Pixel</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:5px;">⏰ Follow-Up Scheduler & Webmail Template Injector</div>
+    <div class="btns">
+      <button id="schedBtn" class="act" style="background:#0284c7;">📌 Schedule 48h Reminder</button>
+      <button id="injectBtn" class="sec">✍️ Inject Follow-Up in Compose</button>
+    </div>
+    <div id="schedList" style="margin-top:6px;font-size:10px;color:#cbd5e1;max-height:55px;overflow-y:auto;"></div>
   </div>
 
   <div id="tm-subtle-donate" style="margin-top:8px;text-align:right;">

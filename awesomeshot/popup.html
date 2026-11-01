@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>AwesomeShot — PII Blur Redactor, Callout Annotator & Screenshot Studio</title>
+<title>AwesomeShot — PII Blur Redactor, Arrow/Rect/Text Annotator & PNG Export</title>
 <style>
   * { box-sizing: border-box; }
-  body { width: 390px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  body { width: 395px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
   .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
   h2 { margin: 0; font-size: 16px; color: #fb7185; }
   .badge { background: rgba(244,63,94,0.2); color: #fda4af; border: 1px solid rgba(244,63,94,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
-  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  .btns { display: flex; flex-direction: column; gap: 7px; }
-  button.primary { background: #f43f5e; color: #fff; border: none; border-radius: 6px; padding: 9px; font-size: 11.5px; font-weight: 800; cursor: pointer; }
-  button.sec { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
-  #msg { margin-top: 8px; font-size: 11px; color: #34d399; text-align: center; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  .btns { display: flex; flex-direction: column; gap: 6px; }
+  button.primary { background: #f43f5e; color: #fff; border: none; border-radius: 6px; padding: 8px; font-size: 11.5px; font-weight: 800; cursor: pointer; }
+  button.sec { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; padding: 7px; font-size: 11px; font-weight: 700; cursor: pointer; }
+  #msg { margin-top: 7px; font-size: 11px; color: #34d399; text-align: center; }
 </style>
 </head>
 <body>
@@ -21,14 +21,16 @@
     <h2>🎨 AwesomeShot</h2>
     <span class="badge">Awesome Screenshot Pro</span>
   </div>
-  <p class="sub">1-Click PII / Sensitive Data Blur Redactor & Red Callout Box Annotator</p>
+  <p class="sub">Interactive Annotation Toolbar (Blur, Rect, Arrow, Text) & PNG Export</p>
 
   <div class="btns">
     <button class="primary" id="blurPiiBtn">🔒 Auto-Blur Emails, Phones & Prices (PII)</button>
-    <button class="sec" id="calloutBtn">🟥 Add Red Callout Box to Key Heading</button>
+    <button class="sec" id="calloutBtn">🟥 Add Red Rectangle Callout Box</button>
+    <button class="sec" id="arrowTextBtn">↙️ Add Arrow + Text Callout Banner</button>
+    <button class="sec" id="exportPngBtn" style="border-color:#10b981;color:#34d399;">⬇️ Download Annotated Screenshot (.PNG)</button>
     <button class="sec" id="clearBtn">🧹 Clear All Page Annotations</button>
   </div>
-  <div id="msg">Ready to redact & annotate before sharing screenshots.</div>
+  <div id="msg">Ready to redact, annotate & export PNG.</div>
 
   <div id="tm-subtle-donate" style="margin-top:8px;text-align:right;">
     <a href="https://paypal.me/influenzian" target="_blank" rel="noopener" style="display:inline-block;padding:3px 9px;border-radius:6px;background:rgba(30,41,59,0.7);border:1px solid rgba(148,163,184,0.2);color:#94a3b8;font-size:10.5px;font-weight:600;text-decoration:none;">Donate</a>

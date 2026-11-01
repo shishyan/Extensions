@@ -5,23 +5,26 @@
 <title>StreakCRM — Kanban Deal Pipeline & Contact CRM</title>
 <style>
   * { box-sizing: border-box; }
-  body { width: 385px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  body { width: 410px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
   h2 { margin: 0 0 4px; font-size: 15px; color: #fb923c; display: flex; justify-content: space-between; align-items: center; }
   .badge { background: rgba(234,88,12,0.2); color: #fdba74; border: 1px solid rgba(234,88,12,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
-  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
   .stats { display: flex; justify-content: space-between; background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 6px 10px; margin-bottom: 8px; font-size: 11px; }
-  .form { display: flex; gap: 5px; margin-bottom: 8px; }
-  input, select { background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 6px; font-size: 11px; }
-  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; max-height: 185px; overflow-y: auto; font-size: 11px; }
-  .row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .form { display: grid; grid-template-columns: 1.4fr 1fr 0.8fr; gap: 5px; margin-bottom: 5px; }
+  input, select { background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 6px; font-size: 11px; width: 100%; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; max-height: 175px; overflow-y: auto; font-size: 11px; }
+  .row { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
   .row:last-child { border-bottom: none; }
-  .stage-pill { background: rgba(234,88,12,0.2); color: #fb923c; border: 1px solid rgba(234,88,12,0.45); border-radius: 4px; padding: 1px 6px; font-weight: 700; font-size: 10px; }
-  button.act { width: 100%; background: #ea580c; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; margin-top: 8px; }
+  .row-top { display: flex; justify-content: space-between; align-items: center; }
+  .stage-btn { background: rgba(234,88,12,0.2); color: #fb923c; border: 1px solid rgba(234,88,12,0.45); border-radius: 4px; padding: 2px 6px; font-weight: 700; font-size: 10px; cursor: pointer; }
+  .btns { display: flex; gap: 6px; margin-top: 8px; }
+  button.act { flex: 1.3; background: #ea580c; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+  button.sec { flex: 1; background: #334155; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
 </style>
 </head>
 <body>
   <h2><span>💼 StreakCRM</span><span class="badge">Streak Pro Free</span></h2>
-  <p class="sub">In-Browser Kanban Deal Pipeline & Contact Revenue Tracker</p>
+  <p class="sub">Multi-Stage Kanban Pipeline (Lead → Contacted → Demo → Proposal → Won)</p>
 
   <div class="stats">
     <span id="dealCount">📌 Active Deals: 2</span>
@@ -29,19 +32,24 @@
   </div>
 
   <div class="form">
-    <input id="nameInp" placeholder="Account Name" style="width:42%;" />
-    <select id="stageSel" style="width:30%;">
+    <input id="nameInp" placeholder="Account Name" />
+    <select id="stageSel">
       <option value="Lead">Lead</option>
       <option value="Contacted">Contacted</option>
       <option value="Demo">Demo</option>
       <option value="Proposal">Proposal</option>
       <option value="Won">Won</option>
     </select>
-    <input id="valInp" placeholder="$ Value" value="15000" style="width:28%;" />
+    <input id="valInp" placeholder="$ Value" value="15000" />
   </div>
+  <input id="noteInp" placeholder="Deal Notes / Next Action (e.g. Send SOC2 report Friday)" style="margin-bottom:8px;" />
 
   <div id="dealList" class="box"></div>
-  <button id="addBtn" class="act">➕ Add Deal to Kanban Pipeline</button>
+
+  <div class="btns">
+    <button id="addBtn" class="act">➕ Add Deal to Pipeline</button>
+    <button id="csvBtn" class="sec">⬇️ Export Pipeline CSV</button>
+  </div>
 
   <div id="tm-subtle-donate" style="margin-top:8px;text-align:right;">
     <a href="https://paypal.me/influenzian" target="_blank" rel="noopener" style="display:inline-block;padding:3px 9px;border-radius:6px;background:rgba(30,41,59,0.7);border:1px solid rgba(148,163,184,0.2);color:#94a3b8;font-size:10.5px;font-weight:600;text-decoration:none;">Donate</a>

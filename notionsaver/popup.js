@@ -1,4 +1,11 @@
 let currentMd = `---\ntitle: "Active Article Clip"\ntags: ["notion-clip", "knowledge-base"]\n---\n\n> 💡 **Notion Callout**: Ready to paste directly into any Notion page or Obsidian vault.`;
+let clipHistory = [];
+
+if (chrome.storage && chrome.storage.local) {
+  chrome.storage.local.get({ notionsaver_history: [] }, (res) => {
+    if (Array.isArray(res.notionsaver_history)) clipHistory = res.notionsaver_history;
+  });
+}
 
 if (chrome.tabs && chrome.tabs.query) {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -6,6 +13,10 @@ if (chrome.tabs && chrome.tabs.query) {
       chrome.tabs.sendMessage(tabs[0].id, { type: "NOTION_CLIP_PAGE" }, (res) => {
         if (!chrome.runtime.lastError && res && res.markdown) {
           currentMd = res.markdown;
+          clipHistory.unshift({ title: res.title || "Clip", url: res.url || "", clippedAt: Date.now() });
+          if (chrome.storage && chrome.storage.local) {
+            chrome.storage.local.set({ notionsaver_history: clipHistory.slice(0, 30) });
+          }
         }
         document.getElementById("mdOut").textContent = currentMd;
       });

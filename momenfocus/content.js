@@ -3,8 +3,9 @@
   window.__momenFocusLoaded = true;
 
   let focusGoal = "Ship zero-error production release";
-  let secondsLeft = 1500; // 25:00
+  let secondsLeft = 1500;
   let running = false;
+  let intervalId = null;
 
   function formatMMSS(s) {
     const m = Math.floor(s / 60);
@@ -31,6 +32,13 @@
       if (running) {
         secondsLeft = Math.max(0, secondsLeft - 1);
         timerBtn.textContent = `▶ ${formatMMSS(secondsLeft)} (Active)`;
+        if (!intervalId) {
+          intervalId = setInterval(() => {
+            if (!running) return;
+            secondsLeft = Math.max(0, secondsLeft - 1);
+            timerBtn.textContent = `▶ ${formatMMSS(secondsLeft)} (Active)`;
+          }, 1000);
+        }
       } else {
         timerBtn.textContent = `⏸ ${formatMMSS(secondsLeft)} (Paused)`;
       }

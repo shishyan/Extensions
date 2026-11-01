@@ -5,32 +5,44 @@
 <title>CrystalPersona — DISC Buyer Personality & Pitch Coach</title>
 <style>
   * { box-sizing: border-box; }
-  body { width: 385px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  body { width: 395px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
   h2 { margin: 0 0 4px; font-size: 15px; color: #c084fc; display: flex; justify-content: space-between; align-items: center; }
   .badge { background: rgba(168,85,247,0.22); color: #e9d5ff; border: 1px solid rgba(168,85,247,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
-  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
   .type-banner { background: #1e293b; border: 1px solid #a855f7; border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; font-size: 12px; font-weight: 800; color: #e9d5ff; display: flex; justify-content: space-between; }
+  .disc-bars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-bottom: 8px; text-align: center; font-size: 10px; }
+  .disc-box { background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 5px; }
+  .disc-box strong { display: block; font-size: 13px; color: #c084fc; }
   .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 9px; margin-bottom: 8px; font-size: 11px; line-height: 1.45; }
   button.act { width: 100%; background: #9333ea; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
 </style>
 </head>
 <body>
   <h2><span>🔮 CrystalPersona</span><span class="badge">Crystal Knows Free</span></h2>
-  <p class="sub">DISC Buyer Personality Analyzer, Do's/Don'ts & Tailored Pitch Coach</p>
+  <p class="sub">DISC Buyer Personality Scores (D/I/S/C), Do's/Don'ts & Subject Templates</p>
 
   <div class="type-banner">
     <span id="archTxt">Analytical Architect (Type C/D)</span>
     <span id="codeTxt" style="color:#c084fc;">DISC: C/D</span>
   </div>
 
-  <div class="card">
-    <div style="color:#4ade80;font-weight:700;margin-bottom:3px;">✅ DO SAY (Communication Playbook):</div>
-    <div id="doTxt" style="color:#e2e8f0;margin-bottom:7px;">Provide concrete benchmarks, architecture diagrams, security specs, and deterministic proof.</div>
-    <div style="color:#fca5a5;font-weight:700;margin-bottom:3px;">❌ AVOID SAYING:</div>
-    <div id="avoidTxt" style="color:#cbd5e1;">Avoid unverified hype, emotional hyperbole, or rushing their technical evaluation.</div>
+  <div class="disc-bars">
+    <div class="disc-box"><strong id="dScore">72%</strong>Dominance (D)</div>
+    <div class="disc-box"><strong id="iScore">45%</strong>Influence (I)</div>
+    <div class="disc-box"><strong id="sScore">50%</strong>Steadiness (S)</div>
+    <div class="disc-box"><strong id="cScore">88%</strong>Conscientious (C)</div>
   </div>
 
-  <button id="copyPitchBtn" class="act">📋 Copy DISC-Tailored Outreach Pitch</button>
+  <div class="card">
+    <div style="color:#4ade80;font-weight:700;margin-bottom:2px;">✅ COLD EMAIL DO'S:</div>
+    <div id="doTxt" style="color:#e2e8f0;margin-bottom:6px;">Provide concrete benchmarks, architecture diagrams, security specs, and deterministic proof.</div>
+    <div style="color:#fca5a5;font-weight:700;margin-bottom:2px;">❌ COLD EMAIL DON'TS:</div>
+    <div id="avoidTxt" style="color:#cbd5e1;margin-bottom:6px;">Avoid unverified hype, emotional hyperbole, or rushing their technical evaluation.</div>
+    <div style="color:#38bdf8;font-weight:700;margin-bottom:2px;">📧 TAILORED SUBJECT LINE TEMPLATE:</div>
+    <div id="subjTxt" style="color:#f8fafc;font-family:monospace;">[Benchmark] Reproducible latency & ROI spec for Q4</div>
+  </div>
+
+  <button id="copyPitchBtn" class="act">📋 Copy Subject Line + DISC-Tailored Pitch</button>
 
   <div id="tm-subtle-donate" style="margin-top:8px;text-align:right;">
     <a href="https://paypal.me/influenzian" target="_blank" rel="noopener" style="display:inline-block;padding:3px 9px;border-radius:6px;background:rgba(30,41,59,0.7);border:1px solid rgba(148,163,184,0.2);color:#94a3b8;font-size:10.5px;font-weight:600;text-decoration:none;">Donate</a>

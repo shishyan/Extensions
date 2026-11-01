@@ -1,87 +1,147 @@
-const inputEl = document.getElementById("input");
-const outputEl = document.getElementById("output");
-const origCountEl = document.getElementById("origCount");
-const outCountEl = document.getElementById("outCount");
-const intensitySlider = document.getElementById("intensitySlider");
-const intensityVal = document.getElementById("intensityVal");
-const diffBar = document.getElementById("diff-bar");
-const modeButtons = Array.from(document.querySelectorAll(".mode-btn"));
 
-let activeMode = "fluency";
+const SYNONYM_FLUENCY = [
+  [/\bin order to\b/gi, "to"],
+  [/\bdue to the fact that\b/gi, "because"],
+  [/\ba lot of\b/gi, "many"],
+  [/\bvery important\b/gi, "crucial"],
+  [/\bmake sure\b/gi, "ensure"],
+  [/\bhelp\b/gi, "enable"],
+  [/\bshow\b/gi, "demonstrate"],
+  [/\bget\b/gi, "obtain"],
+  [/\bneed\b/gi, "require"],
+  [/\bfast\b/gi, "rapid"]
+];
 
-function countWords(str) {
-  const s = (str || "").trim();
-  return s ? s.split(/\s+/).filter(Boolean).length : 0;
+const SYNONYM_FORMAL = [
+  [/\bhelp\b/gi, "facilitate"],
+  [/\buse\b/gi, "utilize"],
+  [/\bstart\b/gi, "commence"],
+  [/\bend\b/gi, "conclude"],
+  [/\bget\b/gi, "acquire"],
+  [/\bneed\b/gi, "require"],
+  [/\bshow\b/gi, "illustrate"],
+  [/\bthink\b/gi, "consider"],
+  [/\bfix\b/gi, "resolve"],
+  [/\bgood\b/gi, "exemplary"],
+  [/\bbig\b/gi, "substantial"],
+  [/\bchange\b/gi, "modify"],
+  [/\bcheck\b/gi, "verify"],
+  [/\bkeep\b/gi, "retain"]
+];
+
+const SYNONYM_CONCISE = [
+  [/\bin order to\b/gi, "to"],
+  [/\bdue to the fact that\b/gi, "because"],
+  [/\bat this point in time\b/gi, "now"],
+  [/\bfor the purpose of\b/gi, "to"],
+  [/\bin the event that\b/gi, "if"],
+  [/\bhas the ability to\b/gi, "can"],
+  [/\ba large number of\b/gi, "many"],
+  [/\bin close proximity to\b/gi, "near"],
+  [/\bwith regard to\b/gi, "about"],
+  [/\bcompletely\s+/gi, ""],
+  [/\bbasically\s+/gi, ""],
+  [/\bactually\s+/gi, ""],
+  [/\bvery\s+/gi, ""]
+];
+
+const SYNONYM_EXPAND = [
+  [/\bimportant\b/gi, "strategically vital and high-impact"],
+  [/\bfast\b/gi, "remarkably swift and responsive"],
+  [/\beasy\b/gi, "intuitive and straightforward to execute"],
+  [/\bgood\b/gi, "consistently reliable and well-crafted"],
+  [/\bhelp\b/gi, "actively support and empower"],
+  [/\bimprove\b/gi, "measurably enhance and optimize"],
+  [/\bcreate\b/gi, "design and systematically build"],
+  [/\bproblem\b/gi, "operational bottleneck and challenge"]
+];
+
+function rewriteTextByMode(rawText, mode) {
+  let text = String(rawText || "").trim();
+  if (!text) return "";
+
+  if (mode === "formal") {
+    SYNONYM_FORMAL.forEach(([rx, rep]) => { text = text.replace(rx, rep); });
+    text = text.replace(/\bcan't\b/gi, "cannot").replace(/\bdon't\b/gi, "do not").replace(/\bwon't\b/gi, "will not").replace(/\bit's\b/gi, "it is");
+    return text;
+  }
+  if (mode === "concise" || mode === "shorten") {
+    SYNONYM_CONCISE.forEach(([rx, rep]) => { text = text.replace(rx, rep); });
+    return text.replace(/\s{2,}/g, " ").trim();
+  }
+  if (mode === "expand") {
+    SYNONYM_EXPAND.forEach(([rx, rep]) => { text = text.replace(rx, rep); });
+    if (!/in practice|ultimately/i.test(text)) {
+      text += " Ultimately, this approach ensures measurable clarity, higher engagement, and long-term reliability.";
+    }
+    return text;
+  }
+  if (mode === "bullet" || mode === "creative") {
+    const sentences = text.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean);
+    return sentences.map((s) => "• " + s.replace(/^[•\-*]\s*/, "")).join("\n");
+  }
+  // fluency (default)
+  SYNONYM_FLUENCY.forEach(([rx, rep]) => { text = text.replace(rx, rep); });
+  return text.replace(/\s{2,}/g, " ").trim();
 }
+
+let currentMode = "fluency";
+const srcEl = document.getElementById("srcText");
+const outEl = document.getElementById("outText");
+const deltaEl = document.getElementById("wordDelta");
+const modeLabel = document.getElementById("modeLabel");
 
 function runParaphrase() {
-  const text = inputEl.value.trim();
-  origCountEl.textContent = `${countWords(text)}w`;
-  if (!text) {
-    outputEl.value = "";
-    outCountEl.textContent = "0w";
-    return;
-  }
-
-  const intensity = Number(intensitySlider.value || 75);
-  chrome.runtime.sendMessage(
-    {
-      type: "QUILL_PARAPHRASE",
-      text,
-      mode: activeMode,
-      intensity
-    },
-    (res) => {
-      if (!chrome.runtime.lastError && res && res.ok) {
-        outputEl.value = res.output;
-        const origW = countWords(text);
-        const newW = countWords(res.output);
-        outCountEl.textContent = `${newW}w`;
-        const delta = newW - origW;
-        const deltaStr = delta === 0 ? "Same length" : delta > 0 ? `+${delta} words` : `${delta} words`;
-        diffBar.innerHTML = `✅ Mode: <strong style="color:#34d399;text-transform:capitalize">${activeMode}</strong> • Intensity: <strong>${intensity}%</strong> • Substitutions: <strong>${res.changedCount}</strong> • Length: <strong>${deltaStr}</strong>`;
-      }
-    }
-  );
+  const src = srcEl.value || "";
+  const out = rewriteTextByMode(src, currentMode);
+  outEl.value = out;
+  const w1 = src.trim() ? src.trim().split(/\s+/).length : 0;
+  const w2 = out.trim() ? out.trim().split(/\s+/).length : 0;
+  deltaEl.textContent = `Words: ${w1} → ${w2}`;
+  modeLabel.textContent = "Mode: " + currentMode.charAt(0).toUpperCase() + currentMode.slice(1);
 }
 
-modeButtons.forEach((btn) => {
+document.querySelectorAll("#modeBar button").forEach((btn) => {
   btn.addEventListener("click", () => {
-    modeButtons.forEach((b) => b.classList.remove("active"));
+    document.querySelectorAll("#modeBar button").forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
-    activeMode = btn.getAttribute("data-mode") || "fluency";
+    currentMode = btn.getAttribute("data-mode");
     runParaphrase();
   });
 });
 
-intensitySlider.addEventListener("input", () => {
-  intensityVal.textContent = `${intensitySlider.value}%`;
-  runParaphrase();
+document.getElementById("runBtn").addEventListener("click", runParaphrase);
+srcEl.addEventListener("input", runParaphrase);
+
+document.getElementById("pullBtn").addEventListener("click", () => {
+  if (chrome.tabs && chrome.tabs.query) {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs && tabs[0]) {
+        chrome.tabs.sendMessage(tabs[0].id, { type: "REWRITE_GET_SELECTION" }, (res) => {
+          if (!chrome.runtime.lastError && res && res.text) {
+            srcEl.value = res.text;
+            runParaphrase();
+          }
+        });
+      }
+    });
+  }
 });
 
-inputEl.addEventListener("input", () => {
-  origCountEl.textContent = `${countWords(inputEl.value)}w`;
-});
-
-document.getElementById("paraphraseBtn").addEventListener("click", runParaphrase);
-
-document.getElementById("synBtn").addEventListener("click", () => {
-  const sel = inputEl.value.slice(inputEl.selectionStart, inputEl.selectionEnd).trim();
-  const sampleWord = sel || (inputEl.value.match(/\b(important|good|problem|improve|idea|result|make|use|fast)\b/i) || ["important"])[0];
-  chrome.runtime.sendMessage({ type: "QUILL_SYNONYMS", word: sampleWord }, (res) => {
-    if (!chrome.runtime.lastError && res && res.ok) {
-      diffBar.innerHTML = `📖 Synonyms for <strong>"${res.word}"</strong>: <span style="color:#34d399">${(res.synonyms || []).join(", ") || "No matches"}</span>`;
-    }
-  });
+document.getElementById("replaceBtn").addEventListener("click", () => {
+  if (chrome.tabs && chrome.tabs.query && outEl.value) {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs && tabs[0]) {
+        chrome.tabs.sendMessage(tabs[0].id, { type: "REWRITE_REPLACE_SELECTION", text: outEl.value });
+      }
+    });
+  }
 });
 
 document.getElementById("copyBtn").addEventListener("click", () => {
-  const val = outputEl.value || inputEl.value;
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(val).catch(() => {});
-  }
-  diffBar.innerHTML = `<span style="color:#34d399">📋 Paraphrased text copied to clipboard!</span>`;
+  navigator.clipboard.writeText(outEl.value || "");
+  document.getElementById("copyBtn").textContent = "✅";
+  setTimeout(() => (document.getElementById("copyBtn").textContent = "📋 Copy"), 1200);
 });
 
-// Run initial paraphrase immediately on popup open
 runParaphrase();

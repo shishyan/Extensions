@@ -36,6 +36,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  document.getElementById("exportStylesBtn").addEventListener("click", () => {
+    if (chrome.storage && chrome.storage.local) {
+      chrome.storage.local.get(null, (all) => {
+        const styles = {};
+        Object.keys(all || {}).forEach((k) => {
+          if (k.startsWith("styluscss_")) styles[k.replace("styluscss_", "")] = all[k];
+        });
+        const json = JSON.stringify({ exportedAt: new Date().toISOString(), domainStyles: styles }, null, 2);
+        cssEditor.value = json;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(json).catch(() => {});
+        }
+        statusMsg.textContent = `✓ Exported ${Object.keys(styles).length} saved domain stylesheet(s) to JSON!`;
+      });
+    }
+  });
+
   document.getElementById("resetCssBtn").addEventListener("click", () => {
     cssEditor.value = "";
     if (chrome.tabs && chrome.tabs.query) {

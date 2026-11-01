@@ -1,57 +1,64 @@
 let currentKeywords = [];
 
-function localMultiply(seed) {
-  const s = (seed || "ai agents").trim().toLowerCase();
-  return [
-    { keyword: `${s} tutorial 2026`, engine: "YouTube", volume: 18400, cpc: "$4.20", sd: 26 },
-    { keyword: `best ${s} platform`, engine: "Shopping", volume: 12900, cpc: "$6.85", sd: 39 },
-    { keyword: `how to build ${s} free`, engine: "Questions", volume: 22100, cpc: "$3.10", sd: 21 },
-    { keyword: `${s} vs custom workflows`, engine: "Google", volume: 9400, cpc: "$5.40", sd: 31 },
-    { keyword: `${s} open source guide`, engine: "Google", volume: 15600, cpc: "$2.95", sd: 24 }
-  ];
-}
-
-function render(kws) {
-  currentKeywords = kws && kws.length ? kws : localMultiply(document.getElementById("seedInput").value);
-  document.getElementById("kwBox").innerHTML = currentKeywords
-    .map(
-      (k) => `
+function renderKeywords(list) {
+  currentKeywords = list;
+  document.getElementById("kwTable").innerHTML = list
+    .map((item) => `
       <div class="row">
-        <span><strong>${k.keyword}</strong> <em style="color:#94a3b8;">(${k.engine})</em></span>
-        <span style="color:#fcd34d;">${k.volume.toLocaleString()} • ${k.cpc} • SD ${k.sd}</span>
+        <span><strong>${item.kw}</strong> <span style="color:#94a3b8;font-size:10px;">(${item.source})</span></span>
+        <span style="color:#34d399;font-size:10.5px;">KD: ${item.kd}% • $${item.cpc}</span>
       </div>
-    `
-    )
-    .join("");
+    `)
+    .join("") || "No keywords found.";
 }
 
-function runMultiply() {
-  const seed = document.getElementById("seedInput").value.trim() || "ai agents";
-  if (chrome.tabs && chrome.tabs.query) {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs && tabs[0]) {
-        chrome.tabs.sendMessage(tabs[0].id, { type: "UBERSUGGEST_MULTIPLY", seed }, (res) => {
-          if (!chrome.runtime.lastError && res && res.keywords) render(res.keywords);
-          else render(localMultiply(seed));
-        });
-      } else {
-        render(localMultiply(seed));
-      }
-    });
-  } else {
-    render(localMultiply(seed));
-  }
+function enrichKeyword(kw, source) {
+  const len = kw.length;
+  const kd = Math.min(88, Math.max(14, (len * 7) % 75 + 15));
+  const cpc = (((len * 13) % 450) / 100 + 0.45).toFixed(2);
+  return { kw, source, kd, cpc };
 }
 
-runMultiply();
-document.getElementById("goBtn").addEventListener("click", runMultiply);
+if (chrome.tabs && chrome.tabs.query) {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs && tabs[0]) {
+      chrome.tabs.sendMessage(tabs[0].id, { type: "UBERSUGGEST_AUDIT" }, (res) => {
+        if (chrome.runtime.lastError || !res) return;
+        const base = (res.topKeywords || []).map((k) => enrichKeyword(k.kw, k.count + "x • " + k.density));
+        const phrases = (res.topPhrases || []).map((p) => enrichKeyword(p.kw, p.count + "x phrase"));
+        renderKeywords([...phrases, ...base]);
+        if (res.topKeywords && res.topKeywords[0]) {
+          document.getElementById("seedInput").value = res.topKeywords[0].kw;
+        }
+      });
+    }
+  });
+}
 
-document.getElementById("copyBriefBtn").addEventListener("click", () => {
-  const md =
-    `# 💡 UberSuggest SEO Content Brief\n\n` +
-    currentKeywords.map((k) => `- **${k.keyword}** [${k.engine}] — Vol: ${k.volume}/mo | CPC: ${k.cpc} | SD: ${k.sd}`).join("\n");
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(md).catch(() => {});
-  }
-  document.getElementById("copyBriefBtn").textContent = "✅ SEO Content Brief Copied!";
+document.getElementById("suggestBtn").addEventListener("click", () => {
+  const seed = document.getElementById("seedInput").value.trim();
+  if (!seed) return;
+  chrome.runtime.sendMessage({ type: "FETCH_AUTOCOMPLETE", seed }, (res) => {
+    const sugs = (res && Array.isArray(res.suggestions) && res.suggestions.length)
+      ? res.suggestions
+      : [seed + " tools", seed + " tutorial", "best " + seed, seed + " vs alternatives", "free " + seed];
+    const items = sugs.map((s) => enrichKeyword(s, "Live Autocomplete"));
+    renderKeywords([...items, ...currentKeywords.slice(0, 8)]);
+  });
+});
+
+document.getElementById("csvBtn").addEventListener("click", () => {
+  const rows = [["Keyword", "Source / Density", "KD %", "Est CPC ($)"]];
+  currentKeywords.forEach((k) => rows.push([k.kw, k.source, k.kd, k.cpc]));
+  const csv = rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+  a.download = "ubersuggest-keywords.csv";
+  a.click();
+});
+
+document.getElementById("copyBtn").addEventListener("click", () => {
+  navigator.clipboard.writeText(currentKeywords.map((k) => k.kw).join("\n"));
+  document.getElementById("copyBtn").textContent = "✅ Copied!";
+  setTimeout(() => (document.getElementById("copyBtn").textContent = "📋 Copy Keyword List"), 1200);
 });

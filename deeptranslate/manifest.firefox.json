@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "DeepTranslate \u2014 Free Bilingual Selection Translator & Dual-Language Reader",
+  "name": "DeepTranslate — Free Bilingual Selection Translator & Dual-Language Reader",
   "short_name": "DeepTranslate",
   "version": "1.0.0",
   "description": "100% Free DeepL Pro & Immersive Translate alternative: Instant selection tooltip translator, inline side-by-side bilingual paragraph reader & TTS pronouncer.",
@@ -11,7 +11,7 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "DeepTranslate \u2014 Bilingual Selection & Immersive Page Translator",
+    "default_title": "DeepTranslate — Bilingual Selection & Immersive Page Translator",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
@@ -43,7 +43,8 @@
     "storage"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "<all_urls>",
+    "https://translate.googleapis.com/*"
   ],
   "browser_specific_settings": {
     "gecko": {

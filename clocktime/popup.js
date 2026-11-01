@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const h = Math.floor(sec / 3600);
     const m = Math.floor((sec % 3600) / 60);
     const s = sec % 60;
-    return [h, m, s].map(v => String(v).padStart(2, "0")).join(":");
+    return [h, m, s].map((v) => String(v).padStart(2, "0")).join(":");
   }
 
   function buildMarkdown() {
@@ -70,6 +70,13 @@ document.addEventListener("DOMContentLoaded", () => {
     render();
   }
 
+  setInterval(() => {
+    if (state.running) {
+      state.elapsedSeconds += 1;
+      render();
+    }
+  }, 1000);
+
   projectInput.addEventListener("input", () => {
     state.projectName = projectInput.value.trim() || "Client Project";
     persist();
@@ -87,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     state.elapsedSeconds += 60;
     persist();
     render();
-    statusMsg.textContent = state.running ? "▶ Timer active (+1m logged)" : "⏹ Timer paused & saved";
+    statusMsg.textContent = state.running ? "▶ Live Timer ticking (+1m logged)" : "⏹ Timer paused & saved";
   });
 
   document.getElementById("add15mBtn").addEventListener("click", () => {
@@ -112,6 +119,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(csv).catch(() => {});
     }
-    statusMsg.textContent = "✓ Copied CSV Client Timesheet!";
+    try {
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "clocktime-timesheet.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (_) {}
+    statusMsg.textContent = "✓ Copied & Downloaded CSV Client Timesheet!";
   });
 });

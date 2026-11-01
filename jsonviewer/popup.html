@@ -2,30 +2,34 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>JSONViewer — JSON Tree Formatter & TypeScript Generator</title>
+<title>JSONViewer — Collapsible JSON Tree, Key Filter, Minify/Beautify & TypeScript Generator</title>
 <style>
   * { box-sizing: border-box; }
-  body { width: 385px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  body { width: 410px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
   h2 { margin: 0 0 4px; font-size: 15px; color: #34d399; display: flex; justify-content: space-between; align-items: center; }
   .badge { background: rgba(16,185,129,0.2); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
-  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  textarea { width: 100%; height: 85px; background: #090d16; color: #6ee7b7; border: 1px solid #334155; border-radius: 6px; padding: 7px 8px; font-family: monospace; font-size: 11px; resize: none; margin-bottom: 8px; }
-  pre { background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 8px; font-size: 11px; color: #e2e8f0; max-height: 115px; overflow-y: auto; margin: 0 0 8px; }
-  .btns { display: flex; gap: 6px; }
-  button.act { flex: 1; background: #10b981; color: #052e16; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+  p.sub { margin: 0 0 6px; font-size: 11px; color: #94a3b8; }
+  input { width: 100%; background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 6px 8px; font-size: 11px; margin-bottom: 6px; }
+  textarea { width: 100%; height: 85px; background: #090d16; color: #6ee7b7; border: 1px solid #334155; border-radius: 6px; padding: 7px 8px; font-family: monospace; font-size: 11px; resize: none; margin-bottom: 6px; }
+  pre { background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 8px; font-size: 10.5px; color: #e2e8f0; max-height: 95px; overflow-y: auto; margin: 0 0 6px; }
+  .btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+  button.act { background: #10b981; color: #052e16; border: none; padding: 7px 4px; border-radius: 6px; font-weight: 800; font-size: 10.5px; cursor: pointer; }
   button.act.sec { background: #334155; color: #f8fafc; }
 </style>
 </head>
 <body>
   <h2><span>{ } JSONViewer</span><span class="badge">JSON Viewer Pro Free</span></h2>
-  <p class="sub">Dark-Mode JSON Prettifier & 1-Click TypeScript Interface Generator</p>
+  <p class="sub">Beautify/Minify, JSONPath Key Search, TypeScript Interface & .JSON Download</p>
 
-  <textarea id="jsonInp">{"id":101,"service":"AI Engine","latencyMs":14.2,"verified":true}</textarea>
+  <input id="filterInp" placeholder="🔍 Filter by key or JSONPath (e.g. service, latencyMs)..." />
+  <textarea id="jsonInp">{"id":101,"service":"AI Engine","latencyMs":14.2,"verified":true,"tags":["mv3","zero-error"]}</textarea>
   <pre id="tsOut"></pre>
 
   <div class="btns">
-    <button id="fmtBtn" class="act">✨ Prettify + Gen TS</button>
-    <button id="copyTsBtn" class="act sec">📋 Copy TypeScript</button>
+    <button id="fmtBtn" class="act">✨ Beautify</button>
+    <button id="minBtn" class="act sec">📦 Minify</button>
+    <button id="copyTsBtn" class="act sec">📋 Copy TS</button>
+    <button id="dlJsonBtn" class="act sec">⬇️ .JSON</button>
   </div>
 
   <div id="tm-subtle-donate" style="margin-top:8px;text-align:right;">

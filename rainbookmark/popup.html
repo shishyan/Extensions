@@ -4,66 +4,33 @@
   <meta charset="UTF-8" />
   <title>RainBookmark Manager</title>
   <style>
-    body {
-      width: 380px;
-      margin: 0;
-      padding: 14px;
-      background: #082f49;
-      color: #f0f9ff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 12px;
-    }
-    h2 {
-      margin: 0 0 8px;
-      font-size: 15px;
-      color: #38bdf8;
-    }
-    .row {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-    input {
-      flex: 1;
-      background: #0c4a6e;
-      border: 1px solid #0284c7;
-      color: #fff;
-      border-radius: 6px;
-      padding: 6px 8px;
-      font-size: 11px;
-    }
-    button {
-      background: #0ea5e9;
-      color: #082f49;
-      border: none;
-      border-radius: 6px;
-      padding: 6px 10px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    pre {
-      background: #041e30;
-      border: 1px solid #0369a1;
-      border-radius: 6px;
-      padding: 8px;
-      font-size: 10px;
-      max-height: 175px;
-      overflow: auto;
-      color: #bae6fd;
-      white-space: pre-wrap;
-      margin: 0;
-    }
+    body { width: 380px; margin: 0; padding: 14px; background: #082f49; color: #f0f9ff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; }
+    h2 { margin: 0 0 8px; font-size: 15px; color: #38bdf8; }
+    .row { display: flex; gap: 6px; margin-bottom: 6px; }
+    input, select { flex: 1; background: #0c4a6e; border: 1px solid #0284c7; color: #fff; border-radius: 6px; padding: 6px 8px; font-size: 11px; }
+    button { background: #0ea5e9; color: #082f49; border: none; border-radius: 6px; padding: 6px 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
+    pre { background: #041e30; border: 1px solid #0369a1; border-radius: 6px; padding: 8px; font-size: 10px; max-height: 165px; overflow: auto; color: #bae6fd; white-space: pre-wrap; margin: 0; }
   </style>
 </head>
 <body>
-  <h2>🌧️ RainBookmark — Smart Auto-Tagger</h2>
+  <h2>🌧️ RainBookmark — Smart Collections &amp; Dedupe</h2>
   <div class="row">
     <input id="rb-search" placeholder="Search bookmarks or #tags..." />
-    <button id="rb-add">+Bookmark Tab</button>
+    <select id="rb-folder" style="max-width:110px;">
+      <option value="All">All Folders</option>
+      <option value="Engineering">Engineering</option>
+      <option value="Design">Design</option>
+      <option value="AI & ML">AI &amp; ML</option>
+      <option value="Reading">Reading</option>
+    </select>
   </div>
   <div class="row">
-    <button id="rb-html" style="flex:1">Export Netscape Bookmarks HTML</button>
+    <button id="rb-add" style="flex:1;">+ Bookmark Tab</button>
+    <button id="rb-dedupe" style="flex:1;background:#f59e0b;color:#082f49;">🧹 Deduplicate</button>
+    <button id="rb-check" style="flex:1;background:#10b981;color:#082f49;">✓ Check Links</button>
+  </div>
+  <div class="row">
+    <button id="rb-html" style="flex:1">Export Netscape HTML</button>
     <button id="rb-json" style="flex:1;background:#0284c7;color:#fff">Export JSON</button>
   </div>
   <pre id="rb-output">Loading saved bookmarks...</pre>

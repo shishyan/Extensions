@@ -1,8 +1,20 @@
-let harvested = { domain: "enterprise-ai.io", emails: [], topic: "AI Automation" };
+let harvested = {
+  name: "Alex Rivera",
+  title: "CTO",
+  company: "Enterprise AI",
+  domain: "enterprise-ai.io",
+  emails: ["alex.rivera@enterprise-ai.io", "alex@enterprise-ai.io", "arivera@enterprise-ai.io"],
+  topic: "AI Automation"
+};
 let dripSeq = [];
+let savedLeads = [];
 
 const emailsBox = document.getElementById("emailsBox");
 const dripBox = document.getElementById("dripBox");
+
+chrome.storage.local.get({ snov_crm_leads: [] }, (res) => {
+  savedLeads = Array.isArray(res.snov_crm_leads) ? res.snov_crm_leads : [];
+});
 
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   const tab = tabs && tabs[0];
@@ -26,11 +38,21 @@ document.getElementById("copyDripBtn").addEventListener("click", () => {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(txt).catch(() => {});
   }
-  document.getElementById("copyDripBtn").textContent = "✅ Copied 3-Step Drip!";
+  document.getElementById("copyDripBtn").textContent = "✅ Copied Drip!";
+});
+
+document.getElementById("saveCrmBtn").addEventListener("click", () => {
+  savedLeads.unshift(harvested);
+  chrome.storage.local.set({ snov_crm_leads: savedLeads.slice(0, 60) }, () => {
+    document.getElementById("saveCrmBtn").textContent = `✅ Saved (${savedLeads.length})`;
+  });
 });
 
 document.getElementById("exportCsvBtn").addEventListener("click", () => {
-  const csv = ["Email,Domain", ...(harvested.emails || []).map((e) => `${e},${harvested.domain}`)].join("\n");
+  const csv = [
+    "Email,Domain,Executive,Title",
+    ...(harvested.emails || []).map((e) => `"${e}","${harvested.domain}","${harvested.name || ""}","${harvested.title || ""}"`)
+  ].join("\n");
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(csv).catch(() => {});
   }

@@ -5,29 +5,35 @@
 <title>ClearbitConnect — B2B Firmographics & Domain Inspector</title>
 <style>
   * { box-sizing: border-box; }
-  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  body { width: 395px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
   h2 { margin: 0 0 4px; font-size: 15px; color: #38bdf8; display: flex; justify-content: space-between; align-items: center; }
   .badge { background: rgba(14,165,233,0.2); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
   p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
   .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px; margin-bottom: 8px; font-size: 11px; }
-  .row { display: flex; justify-content: space-between; margin-bottom: 6px; }
-  button.act { width: 100%; background: #0284c7; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+  .row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+  .btns { display: flex; gap: 6px; }
+  button.act { flex: 1; background: #0284c7; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+  button.sec { flex: 1; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; padding: 8px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
 </style>
 </head>
 <body>
   <h2><span>🏢 ClearbitConnect</span><span class="badge">Clearbit Pro Free</span></h2>
-  <p class="sub">B2B Company Firmographics, Headcount Tier & Domain MX Inspector</p>
+  <p class="sub">B2B Company Firmographics, Decision-Maker Email Permutator & CRM CSV</p>
 
   <div class="card">
     <div class="row"><span>🏢 Company:</span><strong id="coVal">Enterprise AI Corp</strong></div>
-    <div class="row"><span>🌐 Domain:</span><strong id="domVal" style="color:#38bdf8;">example.com</strong></div>
+    <div class="row"><span>🌐 Domain:</span><strong id="domVal" style="color:#38bdf8;">enterprise-ai.io</strong></div>
     <div class="row"><span>🏭 Industry:</span><strong id="indVal">B2B SaaS & Cloud Software</strong></div>
     <div class="row"><span>👥 Headcount Tier:</span><strong id="empVal">51–250 Employees</strong></div>
     <div class="row"><span>💰 Est. Annual Revenue:</span><strong id="arrVal" style="color:#4ade80;">$10M–$25M ARR</strong></div>
-    <div class="row" style="margin-bottom:0;"><span>📧 MX Email Infrastructure:</span><strong id="mxVal">Google Workspace</strong></div>
+    <div class="row"><span>👤 Key Executive:</span><strong id="execVal" style="color:#fbbf24;">Alex Rivera (CTO)</strong></div>
+    <div class="row" style="margin-bottom:0;"><span>✉️ Verified Email:</span><strong id="emailVal" style="color:#34d399;">alex.rivera@enterprise-ai.io</strong></div>
   </div>
 
-  <button id="copyBtn" class="act">📋 Copy B2B Firmographic Dossier</button>
+  <div class="btns">
+    <button id="saveCrmBtn" class="act">+ Save to CRM</button>
+    <button id="copyBtn" class="sec">⬇️ Export CSV</button>
+  </div>
 
   <div id="tm-subtle-donate" style="margin-top:8px;text-align:right;">
     <a href="https://paypal.me/influenzian" target="_blank" rel="noopener" style="display:inline-block;padding:3px 9px;border-radius:6px;background:rgba(30,41,59,0.7);border:1px solid rgba(148,163,184,0.2);color:#94a3b8;font-size:10.5px;font-weight:600;text-decoration:none;">Donate</a>

@@ -1,10 +1,15 @@
 {
   "manifest_version": 3,
-  "name": "BitPass — Password & Passphrase Generator + TOTP 2FA Vault",
+  "name": "BitPass \u2014 Password & Passphrase Generator + TOTP 2FA Vault",
   "version": "1.0.0",
   "description": "Cryptographic password & BIP-39 passphrase generator, built-in RFC-6238 TOTP 2FA authenticator & local autofill vault.",
-  "permissions": ["storage", "activeTab"],
-  "host_permissions": ["<all_urls>"],
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -14,13 +19,21 @@
     }
   },
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "background.js"
+    ]
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["styles.css"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "styles.css"
+      ],
       "run_at": "document_idle"
     }
   ],

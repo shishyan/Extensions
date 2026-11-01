@@ -2,36 +2,41 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>OneTab — Tab Session Manager & RAM Saver</title>
+<title>OneTab — Tab Session Stasher, Named Groups & Restore Manager</title>
 <style>
   * { box-sizing: border-box; }
-  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  body { width: 405px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
   h2 { margin: 0 0 4px; font-size: 15px; color: #38bdf8; display: flex; justify-content: space-between; align-items: center; }
   .badge { background: rgba(2,132,199,0.22); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
-  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  .stats { display: flex; justify-content: space-between; background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 6px 10px; margin-bottom: 8px; font-size: 11px; }
-  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; max-height: 195px; overflow-y: auto; font-size: 11px; margin-bottom: 8px; }
-  .row { padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: #e2e8f0; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  .stats { display: flex; justify-content: space-between; background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 6px 10px; margin-bottom: 6px; font-size: 11px; }
+  input { width: 100%; background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 6px 8px; font-size: 11px; margin-bottom: 6px; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; max-height: 155px; overflow-y: auto; font-size: 11px; margin-bottom: 8px; }
+  .row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: #e2e8f0; }
   .row:last-child { border-bottom: none; }
-  .btns { display: flex; gap: 6px; }
-  button.act { flex: 1; background: #0284c7; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+  .rest-btn { background: #0284c7; color: #fff; border: none; border-radius: 4px; padding: 2px 6px; font-size: 10px; cursor: pointer; }
+  .btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; }
+  button.act { background: #0284c7; color: #fff; border: none; padding: 8px 4px; border-radius: 6px; font-weight: 800; font-size: 10.5px; cursor: pointer; }
   button.act.sec { background: #334155; }
 </style>
 </head>
 <body>
   <h2><span>🗂️ OneTab</span><span class="badge">Workona + OneTab Pro</span></h2>
-  <p class="sub">1-Click Tab Session Stasher, Duplicate Closer & RAM Saver</p>
+  <p class="sub">Named Session Groups • Stash & Close Tabs • 1-Click Restore & Markdown</p>
 
   <div class="stats">
     <span id="tabCount">🗂️ Open Tabs: 1</span>
     <span id="ramSaved" style="color:#4ade80;font-weight:700;">⚡ Est. RAM: 65 MB</span>
   </div>
 
+  <input id="groupNameInp" placeholder="Session Group Name (e.g. Q4 Research Sprint)" value="Research Workspace" />
+
   <div id="tabList" class="box"></div>
 
   <div class="btns">
-    <button id="stashBtn" class="act">📥 Stash Active Tab</button>
-    <button id="exportMdBtn" class="act sec">📋 Copy Markdown Links</button>
+    <button id="stashBtn" class="act">📥 Stash Open Tabs</button>
+    <button id="restoreAllBtn" class="act sec">🔄 Restore Stashed</button>
+    <button id="exportMdBtn" class="act sec">📋 Export .MD</button>
   </div>
 
   <div id="tm-subtle-donate" style="margin-top:8px;text-align:right;">

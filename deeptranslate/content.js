@@ -1,254 +1,82 @@
+
+const OFFLINE_LEXICON = {
+  es: { hello: "hola", world: "mundo", thank: "gracias", you: "tú", good: "bueno", morning: "mañana", night: "noche", friend: "amigo", price: "precio", free: "gratis", software: "software", fast: "rápido", open: "abierto", search: "buscar", page: "página", book: "libro", water: "agua", food: "comida", house: "casa", work: "trabajo", time: "tiempo", day: "día", love: "amor", happy: "feliz", new: "nuevo", today: "hoy" },
+  fr: { hello: "bonjour", world: "monde", thank: "merci", you: "vous", good: "bon", morning: "matin", night: "nuit", friend: "ami", price: "prix", free: "gratuit", software: "logiciel", fast: "rapide", open: "ouvert", search: "chercher", page: "page", book: "livre", water: "eau", food: "nourriture", house: "maison", work: "travail", time: "temps", day: "jour", love: "amour", happy: "heureux", new: "nouveau", today: "aujourd'hui" },
+  de: { hello: "hallo", world: "welt", thank: "danke", you: "du", good: "gut", morning: "morgen", night: "nacht", friend: "freund", price: "preis", free: "kostenlos", software: "software", fast: "schnell", open: "offen", search: "suchen", page: "seite", book: "buch", water: "wasser", food: "essen", house: "haus", work: "arbeit", time: "zeit", day: "tag", love: "liebe", happy: "glücklich", new: "neu", today: "heute" },
+  ja: { hello: "こんにちは", world: "世界", thank: "ありがとう", you: "あなた", good: "良い", morning: "朝", night: "夜", friend: "友達", price: "価格", free: "無料", software: "ソフトウェア", fast: "速い", open: "開く", search: "検索", page: "ページ", book: "本", water: "水", food: "食べ物", house: "家", work: "仕事", time: "時間", day: "日", love: "愛", happy: "幸せ", new: "新しい", today: "今日" },
+  "zh-CN": { hello: "你好", world: "世界", thank: "谢谢", you: "你", good: "好", morning: "早上", night: "夜晚", friend: "朋友", price: "价格", free: "免费", software: "软件", fast: "快", open: "打开", search: "搜索", page: "页面", book: "书", water: "水", food: "食物", house: "房子", work: "工作", time: "时间", day: "天", love: "爱", happy: "快乐", new: "新", today: "今天" },
+  pt: { hello: "olá", world: "mundo", thank: "obrigado", you: "você", good: "bom", morning: "manhã", night: "noite", friend: "amigo", price: "preço", free: "grátis", software: "software", fast: "rápido", open: "aberto", search: "buscar", page: "página" },
+  it: { hello: "ciao", world: "mondo", thank: "grazie", you: "tu", good: "buono", morning: "mattina", night: "notte", friend: "amico", price: "prezzo", free: "gratuito", software: "software", fast: "veloce", open: "aperto", search: "cercare", page: "pagina" },
+  ru: { hello: "привет", world: "мир", thank: "спасибо", you: "вы", good: "хороший", morning: "утро", night: "ночь", friend: "друг", price: "цена", free: "бесплатно", fast: "быстро", search: "поиск", page: "страница" },
+  ko: { hello: "안녕하세요", world: "세계", thank: "감사합니다", you: "당신", good: "좋은", morning: "아침", night: "밤", friend: "친구", price: "가격", free: "무료", fast: "빠른", search: "검색", page: "페이지" },
+  ar: { hello: "مرحبا", world: "عالم", thank: "شكرا", you: "أنت", good: "جيد", morning: "صباح", night: "ليل", friend: "صديق", price: "سعر", free: "مجاني", fast: "سريع", search: "بحث", page: "صفحة" },
+  hi: { hello: "नमस्ते", world: "दुनिया", thank: "धन्यवाद", you: "आप", good: "अच्छा", morning: "सुबह", night: "रात", friend: "दोस्त", price: "कीमत", free: "मुफ़्त", fast: "तेज़", search: "खोज", page: "पृष्ठ" }
+};
+
+function offlineTranslate(text, targetLang) {
+  const dict = OFFLINE_LEXICON[targetLang] || OFFLINE_LEXICON.es;
+  return String(text || "")
+    .split(/(\b)/)
+    .map((tok) => {
+      const low = tok.toLowerCase();
+      return dict[low] ? dict[low] : tok;
+    })
+    .join("");
+}
+
 (function () {
   if (window.__deepTranslateLoaded) return;
   window.__deepTranslateLoaded = true;
 
-  let targetLang = "es";
-
-  const LANG_LABELS = {
-    es: "Spanish (Español)",
-    ta: "Tamil (தமிழ்)",
-    hi: "Hindi (हिन्दी)",
-    fr: "French (Français)",
-    de: "German (Deutsch)",
-    ja: "Japanese (日本語)"
-  };
-
-  const OFFLINE_LEXICON = {
-    es: {
-      hello: "hola",
-      world: "mundo",
-      welcome: "bienvenido",
-      summary: "resumen",
-      article: "artículo",
-      research: "investigación",
-      intelligence: "inteligencia",
-      artificial: "artificial",
-      system: "sistema",
-      performance: "rendimiento",
-      language: "idioma",
-      translation: "traducción",
-      knowledge: "conocimiento",
-      guide: "guía",
-      data: "datos",
-      analysis: "análisis"
-    },
-    ta: {
-      hello: "வணக்கம்",
-      world: "உலகம்",
-      welcome: "நல்வரவு",
-      summary: "சுருக்கம்",
-      article: "கட்டுரை",
-      research: "ஆராய்ச்சி",
-      intelligence: "நுண்ணறிவு",
-      artificial: "செயற்கை",
-      system: "அமைப்பு",
-      performance: "செயல்திறன்",
-      language: "மொழி",
-      translation: "மொழிபெயர்ப்பு",
-      knowledge: "அறிவு",
-      guide: "வழிகாட்டி",
-      data: "தரவு",
-      analysis: "பகுப்பாய்வு"
-    },
-    hi: {
-      hello: "नमस्ते",
-      world: "दुनिया",
-      welcome: "स्वागत",
-      summary: "सारांश",
-      article: "लेख",
-      research: "अनुसंधान",
-      intelligence: "बुद्धिमत्ता",
-      artificial: "कृत्रिम",
-      system: "प्रणाली",
-      performance: "प्रदर्शन",
-      language: "भाषा",
-      translation: "अनुवाद",
-      knowledge: "ज्ञान",
-      guide: "मार्गदर्शिका",
-      data: "डेटा",
-      analysis: "विश्लेषण"
-    },
-    fr: {
-      hello: "bonjour",
-      world: "monde",
-      welcome: "bienvenue",
-      summary: "résumé",
-      article: "article",
-      research: "recherche",
-      intelligence: "intelligence",
-      artificial: "artificielle",
-      system: "système",
-      performance: "performance",
-      language: "langue",
-      translation: "traduction",
-      knowledge: "connaissance",
-      guide: "guide",
-      data: "données",
-      analysis: "analyse"
-    },
-    de: {
-      hello: "hallo",
-      world: "Welt",
-      welcome: "willkommen",
-      summary: "Zusammenfassung",
-      article: "Artikel",
-      research: "Forschung",
-      intelligence: "Intelligenz",
-      artificial: "künstliche",
-      system: "System",
-      performance: "Leistung",
-      language: "Sprache",
-      translation: "Übersetzung",
-      knowledge: "Wissen",
-      guide: "Leitfaden",
-      data: "Daten",
-      analysis: "Analyse"
-    },
-    ja: {
-      hello: "こんにちは",
-      world: "世界",
-      welcome: "ようこそ",
-      summary: "要約",
-      article: "記事",
-      research: "研究",
-      intelligence: "知能",
-      artificial: "人工",
-      system: "システム",
-      performance: "パフォーマンス",
-      language: "言語",
-      translation: "翻訳",
-      knowledge: "知識",
-      guide: "ガイド",
-      data: "データ",
-      analysis: "分析"
+  let tooltip = null;
+  function showTooltip(x, y, text) {
+    if (!tooltip) {
+      tooltip = document.createElement("div");
+      tooltip.id = "deeptranslate-tooltip";
+      tooltip.style.cssText = "position:fixed;z-index:2147483647;background:#0f172a;color:#f8fafc;border:1px solid #38bdf8;border-radius:8px;padding:8px 11px;font-size:12px;max-width:320px;box-shadow:0 8px 24px rgba(0,0,0,0.45);font-family:system-ui,sans-serif;";
+      document.body.appendChild(tooltip);
     }
-  };
-
-  if (chrome.storage && chrome.storage.local) {
-    chrome.storage.local.get(["deeptranslate_lang"], (res) => {
-      if (res && res.deeptranslate_lang) targetLang = res.deeptranslate_lang;
-    });
+    tooltip.style.left = Math.min(window.innerWidth - 330, Math.max(10, x)) + "px";
+    tooltip.style.top = Math.min(window.innerHeight - 80, Math.max(10, y + 14)) + "px";
+    tooltip.style.display = "block";
+    tooltip.innerHTML = text;
   }
 
-  function offlineTranslate(text, lang) {
-    const dict = OFFLINE_LEXICON[lang] || OFFLINE_LEXICON.es;
-    const replaced = String(text).replace(/\b([A-Za-z]+)\b/g, (word) => {
-      const lower = word.toLowerCase();
-      return dict[lower] ? dict[lower] : word;
-    });
-    const tag = LANG_LABELS[lang] || lang.toUpperCase();
-    return `[${tag}] ${replaced}`;
-  }
-
-  async function translateText(text, lang) {
-    const clean = String(text || "").trim();
-    if (!clean) return "";
-    try {
-      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${encodeURIComponent(lang)}&dt=t&q=${encodeURIComponent(clean)}`;
-      const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 1800);
-      const res = await fetch(url, { signal: controller.signal });
-      clearTimeout(timer);
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data) && Array.isArray(data[0])) {
-          const joined = data[0].map((seg) => (seg && seg[0] ? seg[0] : "")).join("");
-          if (joined.trim()) return joined.trim();
-        }
-      }
-    } catch (_) {
-      // Fallback to instant offline lexicon engine
+  document.addEventListener("mouseup", (e) => {
+    const sel = window.getSelection().toString().trim();
+    if (!sel || sel.length < 2 || sel.length > 350) {
+      if (tooltip) tooltip.style.display = "none";
+      return;
     }
-    return offlineTranslate(clean, lang);
-  }
-
-  function ensureTooltip() {
-    let tip = document.getElementById("deeptranslate-tooltip");
-    if (!tip) {
-      tip = document.createElement("div");
-      tip.id = "deeptranslate-tooltip";
-      tip.innerHTML = `
-        <div class="dt-head">
-          <span id="dt-lang-label">🌐 DeepTranslate</span>
-          <button id="dt-speak-btn" style="background:none;border:none;color:#38bdf8;cursor:pointer;font-size:11px;font-weight:700;">🔊 Listen</button>
-        </div>
-        <div class="dt-body" id="dt-body-text">Translating...</div>
-      `;
-      document.body.appendChild(tip);
-
-      tip.querySelector("#dt-speak-btn").addEventListener("click", () => {
-        const txt = tip.querySelector("#dt-body-text").textContent || "";
-        if (window.speechSynthesis && txt) {
-          const u = new SpeechSynthesisUtterance(txt);
-          u.lang = targetLang;
-          window.speechSynthesis.speak(u);
-        }
+    chrome.storage.local.get(["deeptranslate_target_lang"], (st) => {
+      const lang = (st && st.deeptranslate_target_lang) || "es";
+      chrome.runtime.sendMessage({ type: "DEEPTRANSLATE_TRANSLATE", text: sel, targetLang: lang }, (res) => {
+        const out = (!chrome.runtime.lastError && res && res.translated) ? res.translated : offlineTranslate(sel, lang);
+        showTooltip(e.clientX, e.clientY, `🌐 <strong>[${lang.toUpperCase()}]</strong> ${out}`);
       });
-    }
-    return tip;
-  }
-
-  document.addEventListener("mouseup", async (e) => {
-    const tip = ensureTooltip();
-    if (tip.contains(e.target)) return;
-    const sel = window.getSelection();
-    const txt = sel ? sel.toString().trim() : "";
-    if (txt.length >= 3 && sel.rangeCount > 0) {
-      const rect = sel.getRangeAt(0).getBoundingClientRect();
-      tip.style.left = `${Math.max(12, Math.min(window.innerWidth - 330, rect.left))}px`;
-      tip.style.top = `${Math.max(12, rect.bottom + 8)}px`;
-      tip.querySelector("#dt-lang-label").textContent = `🌐 DeepTranslate → ${LANG_LABELS[targetLang] || targetLang}`;
-      tip.querySelector("#dt-body-text").textContent = "Translating selection...";
-      tip.style.display = "block";
-      const translated = await translateText(txt, targetLang);
-      tip.querySelector("#dt-body-text").textContent = translated;
-    } else {
-      tip.style.display = "none";
-    }
+    });
   });
-
-  async function toggleBilingualPage(langOverride) {
-    const lang = langOverride || targetLang;
-    const existing = document.querySelectorAll(".deeptranslate-bilingual-block");
-    if (existing.length > 0 && !langOverride) {
-      existing.forEach((el) => el.remove());
-      return { active: false, count: 0 };
-    }
-    existing.forEach((el) => el.remove());
-
-    const paragraphs = Array.from(document.querySelectorAll("p, article li, h2")).filter(
-      (p) => p.innerText && p.innerText.trim().length > 20
-    ).slice(0, 12);
-
-    let count = 0;
-    for (const p of paragraphs) {
-      const orig = p.innerText.trim();
-      const trans = await translateText(orig, lang);
-      const block = document.createElement("div");
-      block.className = "deeptranslate-bilingual-block";
-      block.textContent = `🌐 ${trans}`;
-      p.insertAdjacentElement("afterend", block);
-      count++;
-    }
-    return { active: true, count };
-  }
 
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-    if (msg && msg.type === "DEEP_TRANSLATE_TEXT") {
-      const lang = msg.lang || targetLang;
-      translateText(msg.text || "", lang).then((translated) => {
-        sendResponse({ ok: true, translated, lang });
+    if (msg && msg.type === "DEEPTRANSLATE_PAGE") {
+      const lang = msg.lang || "es";
+      const paragraphs = Array.from(document.querySelectorAll("p, h1, h2, h3")).slice(0, 18);
+      paragraphs.forEach((p) => {
+        if (p.dataset.deepTranslated) return;
+        p.dataset.deepTranslated = "1";
+        const orig = (p.innerText || "").trim();
+        if (orig.length < 12) return;
+        chrome.runtime.sendMessage({ type: "DEEPTRANSLATE_TRANSLATE", text: orig.slice(0, 260), targetLang: lang }, (res) => {
+          const out = (!chrome.runtime.lastError && res && res.translated) ? res.translated : offlineTranslate(orig, lang);
+          const sub = document.createElement("div");
+          sub.className = "deeptranslate-bilingual-line";
+          sub.style.cssText = "margin-top:4px;padding:4px 8px;border-left:3px solid #38bdf8;background:rgba(15,23,42,0.06);color:#0284c7;font-size:0.92em;";
+          sub.textContent = `🌐 [${lang.toUpperCase()}] ${out}`;
+          p.appendChild(sub);
+        });
       });
-      return true;
-    }
-    if (msg && msg.type === "DEEP_TOGGLE_BILINGUAL") {
-      if (msg.lang) targetLang = msg.lang;
-      toggleBilingualPage(targetLang).then((res) => {
-        sendResponse(res);
-      });
+      sendResponse({ ok: true });
       return true;
     }
   });
-
-  ensureTooltip();
 })();

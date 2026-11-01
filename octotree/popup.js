@@ -6,9 +6,11 @@ let latestItems = [
 
 function render(items) {
   if (Array.isArray(items) && items.length) latestItems = items;
-  document.getElementById("treeBox").innerHTML = latestItems
-    .map((it) => `<div class="row">${it.type === "file" ? "📄" : "📑"} <strong>${it.label}</strong></div>`)
-    .join("");
+  const q = (document.getElementById("searchInp").value || "").trim().toLowerCase();
+  const visible = q ? latestItems.filter((it) => it.label.toLowerCase().includes(q)) : latestItems;
+  document.getElementById("treeBox").innerHTML = visible
+    .map((it) => `<div class="row">${it.type === "folder" ? "📁" : it.type === "file" ? "📄" : "📑"} <strong>${it.label}</strong></div>`)
+    .join("") || "No matching files.";
 }
 
 if (chrome.tabs && chrome.tabs.query) {
@@ -25,6 +27,8 @@ if (chrome.tabs && chrome.tabs.query) {
 } else {
   render(latestItems);
 }
+
+document.getElementById("searchInp").addEventListener("input", () => render(latestItems));
 
 document.getElementById("copyTreeBtn").addEventListener("click", () => {
   const md = `# 🐙 OctoTree Structure\n` + latestItems.map((i) => `- ${i.label}`).join("\n");

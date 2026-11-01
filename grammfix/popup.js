@@ -1,22 +1,34 @@
-const input = document.getElementById("input");
-const stats = document.getElementById("stats");
-const issuesList = document.getElementById("issues-list");
 
-const CONCISE_MAP = {
-  "in order to": "to",
-  "due to the fact that": "because",
-  "at this point in time": "now",
-  "for the purpose of": "for",
-  "in the event that": "if",
-  "has the ability to": "can",
-  "make a decision": "decide",
-  "in the near future": "soon",
-  "a large number of": "many",
-  "really ": "",
-  "very ": "",
-  "basically ": "",
-  "actually ": ""
-};
+const CONCISE_MAP = [
+  [/\bin order to\b/gi, "to", "Wordy phrase"],
+  [/\bdue to the fact that\b/gi, "because", "Wordy phrase"],
+  [/\bat this point in time\b/gi, "now", "Wordy phrase"],
+  [/\bin the event that\b/gi, "if", "Wordy phrase"],
+  [/\bfor the purpose of\b/gi, "to", "Wordy phrase"],
+  [/\bhas the ability to\b/gi, "can", "Wordy phrase"],
+  [/\bin close proximity to\b/gi, "near", "Wordy phrase"],
+  [/\ba large number of\b/gi, "many", "Wordy phrase"],
+  [/\bwith regard to\b/gi, "regarding", "Wordy phrase"],
+  [/\bin spite of the fact that\b/gi, "although", "Wordy phrase"],
+  [/\bprior to\b/gi, "before", "Formal/Wordy"],
+  [/\bsubsequent to\b/gi, "after", "Formal/Wordy"],
+  [/\butilize\b/gi, "use", "Overly complex"],
+  [/\bfacilitate\b/gi, "help", "Overly complex"],
+  [/\bendeavor\b/gi, "try", "Overly complex"],
+  [/\bas a matter of fact\b/gi, "in fact", "Filler phrase"],
+  [/\bat the present time\b/gi, "currently", "Wordy phrase"],
+  [/\bby means of\b/gi, "by", "Wordy phrase"],
+  [/\bfor the reason that\b/gi, "because", "Wordy phrase"],
+  [/\bin accordance with\b/gi, "by", "Wordy phrase"],
+  [/\bin addition to\b/gi, "besides", "Wordy phrase"],
+  [/\bin the near future\b/gi, "soon", "Wordy phrase"],
+  [/\bis able to\b/gi, "can", "Wordy phrase"],
+  [/\bmake a decision\b/gi, "decide", "Weak verb phrase"],
+  [/\btake into consideration\b/gi, "consider", "Weak verb phrase"],
+  [/\bgive an indication\b/gi, "indicate", "Weak verb phrase"],
+  [/\breach a conclusion\b/gi, "conclude", "Weak verb phrase"],
+  [/\bconduct an investigation\b/gi, "investigate", "Weak verb phrase"]
+];
 
 const TYPO_MAP = {
   "teh": "the",
@@ -28,121 +40,202 @@ const TYPO_MAP = {
   "wich": "which",
   "untill": "until",
   "wierd": "weird",
-  "becuase": "because"
+  "alot": "a lot",
+  "thier": "their",
+  "beleive": "believe",
+  "calender": "calendar",
+  "collegue": "colleague",
+  "concious": "conscious",
+  "curiousity": "curiosity",
+  "disappear": "disappear",
+  "embarass": "embarrass",
+  "enviroment": "environment",
+  "existance": "existence",
+  "foriegn": "foreign",
+  "freind": "friend",
+  "goverment": "government",
+  "grammer": "grammar",
+  "harass": "harass",
+  "immediatly": "immediately",
+  "independant": "independent",
+  "knowlege": "knowledge",
+  "liason": "liaison",
+  "maintainance": "maintenance",
+  "millenium": "millennium",
+  "neccessary": "necessary",
+  "noticable": "noticeable",
+  "occassion": "occasion",
+  "parliment": "parliament",
+  "perseverence": "perseverance",
+  "priviledge": "privilege",
+  "publically": "publicly",
+  "recomend": "recommend",
+  "refered": "referred",
+  "relevent": "relevant",
+  "succesful": "successful",
+  "supersede": "supersede",
+  "tommorow": "tomorrow",
+  "truely": "truly",
+  "unforeseen": "unforeseen",
+  "unfortunatly": "unfortunately"
 };
 
-function updateStats(extra = "") {
-  const txt = input.value.trim();
-  const words = txt ? txt.split(/\s+/).filter(Boolean).length : 0;
-  const sentences = txt ? txt.split(/[.!?]+/).filter((s) => s.trim().length > 0).length : 0;
-  const chars = txt.length;
-  const readTime = Math.max(1, Math.ceil(words / 200));
-  const passiveMatches = txt.match(/\b(am|are|is|was|were|be|been|being)\s+(\w+ed|written|taken|made|done|given|shown|known|seen)\b/gi) || [];
+const GRAMMAR_PATTERNS = [
+  [/\b(could|would|should|must|might) of\b/gi, (m, v) => v + " have", "Modal 'of' instead of 'have'"],
+  [/\bi\b/g, "I", "Uncapitalized pronoun 'I'"],
+  [/\b(\w+)\s+\1\b/gi, "$1", "Repeated duplicate word"],
+  [/\b(a)\s+([aeiouAEIOU][a-z]{2,})\b/g, (m, a, w) => /^(uni|use|user|uro|one|once)/i.test(w) ? m : (a === "A" ? "An " : "an ") + w, "Article 'a' before vowel sound"],
+  [/\b(an)\s+([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ][a-z]{2,})\b/g, (m, an, w) => /^(hour|honest|honor|heir)/i.test(w) ? m : (an === "An" ? "A " : "a ") + w, "Article 'an' before consonant sound"],
+  [/\btheir\s+(is|are|was|were)\b/gi, (m, v) => (m[0] === "T" ? "There " : "there ") + v, "'Their' instead of 'there'"],
+  [/\byour\s+(welcome|right|correct|invited)\b/gi, (m, w) => (m[0] === "Y" ? "You're " : "you're ") + w, "'Your' instead of 'you're'"],
+  [/\bits\s+(a|an|very|so|too|going|been|not)\b/gi, (m, w) => (m[0] === "I" ? "It's " : "it's ") + w, "'Its' instead of 'it's'"]
+];
 
-  stats.innerHTML = `<strong>${words}</strong> words • <strong>${sentences}</strong> sentences • <strong>${chars}</strong> chars • Passive: <strong>${passiveMatches.length}</strong> • ~${readTime}m read ${extra ? "<br>" + extra : ""}`;
+function countSyllables(word) {
+  word = word.toLowerCase().replace(/[^a-z]/g, "");
+  if (!word) return 0;
+  if (word.length <= 3) return 1;
+  word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, "").replace(/^y/, "");
+  const matches = word.match(/[aeiouy]{1,2}/g);
+  return matches ? matches.length : 1;
 }
 
-input.addEventListener("input", () => updateStats());
+function detectTone(text) {
+  const lower = (text || "").toLowerCase();
+  const urgentHits = (lower.match(/\b(urgent|asap|immediately|deadline|critical|now|important|must|priority)\b/g) || []).length + (text.match(/!/g) || []).length;
+  const formalHits = (lower.match(/\b(sincerely|regards|furthermore|therefore|consequently|pursuant|hereby|pleased|accordance|respectfully)\b/g) || []).length;
+  const friendlyHits = (lower.match(/\b(thanks|thank you|happy|glad|awesome|great|excited|love|cheers|wonderful|appreciate)\b/g) || []).length;
+  const confidentHits = (lower.match(/\b(will|definitely|certainly|proven|guarantee|ensure|deliver|confident|achieve|strong)\b/g) || []).length;
+  if (urgentHits >= 2) return "⚡ Urgent & Direct";
+  if (formalHits >= 2) return "🎩 Formal & Professional";
+  if (friendlyHits >= 2) return "😊 Friendly & Warm";
+  if (confidentHits >= 1) return "💪 Confident & Clear";
+  return "⚖️ Neutral & Balanced";
+}
 
-document.getElementById("checkBtn").addEventListener("click", () => {
-  const text = input.value.trim();
-  if (!text) return;
-  stats.textContent = "Checking grammar, spelling & style...";
+function analyzeAndFixText(rawText) {
+  let fixed = String(rawText || "");
+  const issues = [];
 
-  chrome.runtime.sendMessage({ type: "GRAMMFIX_CHECK", text }, (res) => {
-    let updated = text;
-    let fixCount = 0;
-
-    if (!chrome.runtime.lastError && res && res.ok && Array.isArray(res.matches)) {
-      const matches = [...res.matches].sort((a, b) => b.offset - a.offset);
-      matches.forEach((m) => {
-        if (m.replacements && m.replacements.length > 0) {
-          updated = updated.slice(0, m.offset) + m.replacements[0].value + updated.slice(m.offset + m.length);
-          fixCount++;
-        }
-      });
+  Object.entries(TYPO_MAP).forEach(([bad, good]) => {
+    const rx = new RegExp("\\b" + bad + "\\b", "gi");
+    if (rx.test(fixed)) {
+      issues.push({ type: "Spelling", from: bad, to: good, reason: "Common misspelling" });
+      fixed = fixed.replace(rx, (m) => m[0] === m[0].toUpperCase() ? good.charAt(0).toUpperCase() + good.slice(1) : good);
     }
+  });
 
-    // Apply local dictionary fixes for any remaining typos
-    for (const [wrong, right] of Object.entries(TYPO_MAP)) {
-      const rx = new RegExp(`\\b${wrong}\\b`, "gi");
-      if (rx.test(updated)) {
-        updated = updated.replace(rx, right);
-        fixCount++;
+  GRAMMAR_PATTERNS.forEach(([rx, rep, reason]) => {
+    const matches = fixed.match(rx);
+    if (matches && matches.length) {
+      issues.push({ type: "Grammar", from: matches[0], to: typeof rep === "function" ? matches[0].replace(rx, rep) : rep, reason });
+      fixed = fixed.replace(rx, rep);
+    }
+  });
+
+  CONCISE_MAP.forEach(([rx, rep, reason]) => {
+    const matches = fixed.match(rx);
+    if (matches && matches.length) {
+      issues.push({ type: "Clarity", from: matches[0], to: rep, reason });
+      fixed = fixed.replace(rx, rep);
+    }
+  });
+
+  const passiveRx = /\b(was|were|is|are|been)\s+([a-z]+ed)\b/gi;
+  const passiveMatches = fixed.match(passiveRx) || [];
+  passiveMatches.slice(0, 4).forEach((m) => {
+    issues.push({ type: "Passive Voice", from: m, to: "Use active verb", reason: "Passive construction weakens clarity" });
+  });
+
+  fixed = fixed.replace(/[ \t]{2,}/g, " ").replace(/\s+([,.;!?])/g, "$1");
+
+  const words = fixed.trim() ? fixed.trim().split(/\s+/) : [];
+  const sentences = Math.max(1, fixed.split(/[.!?]+/).filter((s) => s.trim().length > 0).length);
+  const syllables = words.reduce((acc, w) => acc + countSyllables(w), 0);
+  const wCount = words.length;
+
+  const fleschRaw = wCount > 0 ? 206.835 - 1.015 * (wCount / sentences) - 84.6 * (syllables / Math.max(1, wCount)) : 100;
+  const fleschScore = Math.max(0, Math.min(100, Math.round(fleschRaw)));
+  const fkGrade = wCount > 0 ? Math.max(1, Math.min(18, Math.round(0.39 * (wCount / sentences) + 11.8 * (syllables / Math.max(1, wCount)) - 15.59))) : 6;
+  const clarityScore = Math.max(35, Math.min(100, 100 - issues.length * 4));
+  const tone = detectTone(fixed);
+
+  return {
+    original: rawText,
+    fixed,
+    issues,
+    wordCount: wCount,
+    sentenceCount: sentences,
+    fleschScore,
+    gradeLevel: "Grade " + fkGrade,
+    clarityScore,
+    tone
+  };
+}
+
+const input = document.getElementById("input");
+const clarityVal = document.getElementById("clarityVal");
+const fleschVal = document.getElementById("fleschVal");
+const gradeVal = document.getElementById("gradeVal");
+const issueVal = document.getElementById("issueVal");
+const toneVal = document.getElementById("toneVal");
+const issuesList = document.getElementById("issuesList");
+
+function renderAnalysis(applyFix) {
+  const res = analyzeAndFixText(input.value);
+  if (applyFix) {
+    input.value = res.fixed;
+  }
+  clarityVal.textContent = res.clarityScore + "%";
+  fleschVal.textContent = res.fleschScore;
+  gradeVal.textContent = res.gradeLevel;
+  issueVal.textContent = res.issues.length;
+  toneVal.textContent = res.tone;
+
+  if (!res.issues.length) {
+    issuesList.innerHTML = "<span style='color:#34d399;'>✅ Crisp, clear, and error-free!</span>";
+  } else {
+    issuesList.innerHTML = res.issues
+      .map((i) => `<div class="issue-item"><div><span class="tag">${i.type}</span> <s style="color:#f87171;">${i.from}</s> → <strong style="color:#34d399;">${i.to}</strong></div><span style="color:#94a3b8;font-size:10px;">${i.reason}</span></div>`)
+      .join("");
+  }
+}
+
+document.getElementById("fixBtn").addEventListener("click", () => renderAnalysis(true));
+input.addEventListener("input", () => renderAnalysis(false));
+
+document.getElementById("pullBtn").addEventListener("click", () => {
+  if (chrome.tabs && chrome.tabs.query) {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs && tabs[0]) {
+        chrome.tabs.sendMessage(tabs[0].id, { type: "GRAMMFIX_GET_ACTIVE_TEXT" }, (res) => {
+          if (!chrome.runtime.lastError && res && res.text) {
+            input.value = res.text;
+            renderAnalysis(false);
+          }
+        });
       }
-    }
-
-    input.value = updated;
-    updateStats(`<span style="color:#34d399">✅ Applied ${fixCount} grammar & spelling fix(es)!</span>`);
-  });
+    });
+  }
 });
 
-document.getElementById("conciseBtn").addEventListener("click", () => {
-  let t = input.value;
-  Object.keys(CONCISE_MAP).forEach((k) => {
-    t = t.replace(new RegExp(k, "gi"), CONCISE_MAP[k]);
-  });
-  input.value = t.replace(/\s{2,}/g, " ").trim();
-  updateStats('<span style="color:#38bdf8">✂️ Tightened filler & wordy phrasing!</span>');
-});
-
-document.getElementById("passiveBtn").addEventListener("click", () => {
-  let t = input.value;
-  t = t
-    .replace(/that was written by ([\w\s]+)/gi, "that $1 wrote")
-    .replace(/was written by ([\w\s]+)/gi, "$1 wrote")
-    .replace(/was created by ([\w\s]+)/gi, "$1 created")
-    .replace(/was built by ([\w\s]+)/gi, "$1 built")
-    .replace(/is managed by ([\w\s]+)/gi, "$1 manages");
-  input.value = t;
-  updateStats('<span style="color:#fbbf24">⚡ Converted passive clauses to active voice!</span>');
-});
-
-document.getElementById("formalBtn").addEventListener("click", () => {
-  let t = input.value;
-  const map = {
-    "can't": "cannot",
-    "won't": "will not",
-    "don't": "do not",
-    "didn't": "did not",
-    "I think": "I believe",
-    "thanks": "thank you",
-    "need to": "must",
-    "get": "obtain",
-    "help": "assist",
-    "check": "verify"
-  };
-  Object.keys(map).forEach((k) => {
-    t = t.replace(new RegExp("\\b" + k + "\\b", "gi"), map[k]);
-  });
-  input.value = t;
-  updateStats('<span style="color:#a78bfa">👔 Converted to Executive Formal tone!</span>');
-});
-
-document.getElementById("friendlyBtn").addEventListener("click", () => {
-  let t = input.value;
-  const map = {
-    "cannot": "can't",
-    "will not": "won't",
-    "do not": "don't",
-    "must": "need to",
-    "obtain": "get",
-    "assist": "help",
-    "verify": "check",
-    "therefore": "so"
-  };
-  Object.keys(map).forEach((k) => {
-    t = t.replace(new RegExp("\\b" + k + "\\b", "gi"), map[k]);
-  });
-  input.value = t;
-  updateStats('<span style="color:#34d399">😊 Converted to Warm Friendly tone!</span>');
+document.getElementById("pushBtn").addEventListener("click", () => {
+  const res = analyzeAndFixText(input.value);
+  input.value = res.fixed;
+  renderAnalysis(false);
+  if (chrome.tabs && chrome.tabs.query) {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs && tabs[0]) {
+        chrome.tabs.sendMessage(tabs[0].id, { type: "GRAMMFIX_APPLY_FIXED_TEXT", text: res.fixed });
+      }
+    });
+  }
 });
 
 document.getElementById("copyBtn").addEventListener("click", () => {
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(input.value).catch(() => {});
-  }
-  updateStats('<span style="color:#10b981">📋 Copied polished text to clipboard!</span>');
+  navigator.clipboard.writeText(input.value);
+  document.getElementById("copyBtn").textContent = "✅ Copied";
+  setTimeout(() => (document.getElementById("copyBtn").textContent = "📋 Copy"), 1400);
 });
 
-updateStats();
+renderAnalysis(false);

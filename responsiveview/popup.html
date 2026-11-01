@@ -4,67 +4,34 @@
   <meta charset="UTF-8" />
   <title>ResponsiveView Simulator</title>
   <style>
-    body {
-      width: 350px;
-      margin: 0;
-      padding: 14px;
-      background: #0f172a;
-      color: #f8fafc;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 12px;
-    }
-    h2 {
-      margin: 0 0 8px;
-      font-size: 15px;
-      color: #38bdf8;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-    button {
-      background: #1e293b;
-      color: #e0f2fe;
-      border: 1px solid #0284c7;
-      border-radius: 8px;
-      padding: 8px;
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: left;
-    }
-    button:hover {
-      background: #0369a1;
-    }
-    .status {
-      background: #020617;
-      border: 1px solid #1e293b;
-      border-radius: 6px;
-      padding: 9px;
-      color: #7dd3fc;
-      font-size: 11px;
-    }
+    body { width: 365px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12px; }
+    h2 { margin: 0 0 8px; font-size: 15px; color: #38bdf8; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px; }
+    button { background: #1e293b; color: #e0f2fe; border: 1px solid #0284c7; border-radius: 6px; padding: 6px 8px; font-size: 11px; font-weight: 600; cursor: pointer; text-align: left; }
+    button:hover { background: #0369a1; }
+    .row { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; }
+    input { width: 70px; background: #020617; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 5px 6px; font-size: 11px; }
+    .status { background: #020617; border: 1px solid #1e293b; border-radius: 6px; padding: 8px; color: #7dd3fc; font-size: 11px; }
   </style>
 </head>
 <body>
   <h2>📱 ResponsiveView Studio</h2>
   <div class="grid">
-    <button class="preset-btn" data-name="iPhone 16 Pro" data-w="393" data-h="852">
-      📱 iPhone 16 Pro<br><small>393 × 852 px</small>
-    </button>
-    <button class="preset-btn" data-name="Pixel 9" data-w="412" data-h="915">
-      🤖 Pixel 9<br><small>412 × 915 px</small>
-    </button>
-    <button class="preset-btn" data-name="iPad Air" data-w="820" data-h="1180">
-      📟 iPad Air<br><small>820 × 1180 px</small>
-    </button>
-    <button class="preset-btn" data-name="MacBook Pro" data-w="1440" data-h="900">
-      💻 MacBook Pro<br><small>1440 × 900 px</small>
-    </button>
+    <button class="preset-btn" data-name="iPhone 16 Pro" data-w="393" data-h="852">📱 iPhone 16 Pro<br><small>393 × 852 px</small></button>
+    <button class="preset-btn" data-name="Pixel 9" data-w="412" data-h="915">🤖 Pixel 9<br><small>412 × 915 px</small></button>
+    <button class="preset-btn" data-name="iPad Air" data-w="820" data-h="1180">📟 iPad Air<br><small>820 × 1180 px</small></button>
+    <button class="preset-btn" data-name="MacBook Pro" data-w="1440" data-h="900">💻 MacBook Pro<br><small>1440 × 900 px</small></button>
+    <button class="preset-btn" data-name="Galaxy S24 Ultra" data-w="384" data-h="824">📱 S24 Ultra<br><small>384 × 824 px</small></button>
+    <button class="preset-btn" data-name="4K Studio Display" data-w="1920" data-h="1080">🖥️ Full HD 1080p<br><small>1920 × 1080 px</small></button>
   </div>
-  <button id="rv-reset" style="width:100%;text-align:center;margin-bottom:10px;background:#334155;">
+  <div class="row">
+    <input type="number" id="rv-w" value="393" placeholder="W" />
+    <span>×</span>
+    <input type="number" id="rv-h" value="852" placeholder="H" />
+    <button id="rv-custom" style="flex:1;text-align:center;background:#0284c7;">Apply Custom</button>
+    <button id="rv-rotate" style="text-align:center;background:#4f46e5;">🔄 Rotate</button>
+  </div>
+  <button id="rv-reset" style="width:100%;text-align:center;margin-bottom:8px;background:#334155;">
     Reset to Full Native Viewport
   </button>
   <div class="status" id="rv-status">

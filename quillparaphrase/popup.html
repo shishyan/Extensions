@@ -2,68 +2,49 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>QuillParaphrase Studio — Free AI Paraphraser & Synonym Slider</title>
+<title>QuillParaphrase — 5-Mode AI Paraphraser & Rewriter</title>
 <style>
   * { box-sizing: border-box; }
-  body { width: 410px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
-  .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-  h2 { margin: 0; font-size: 16px; color: #10b981; display: flex; align-items: center; gap: 6px; }
-  .badge { background: rgba(16,185,129,0.18); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
-  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  .modes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 10px; }
-  .mode-btn { background: #1e293b; color: #cbd5e1; border: 1px solid #334155; border-radius: 6px; padding: 6px 4px; font-size: 10px; font-weight: 700; cursor: pointer; text-align: center; }
-  .mode-btn.active { background: #10b981; color: #052e16; border-color: #10b981; }
-  .slider-row { display: flex; align-items: center; justify-content: space-between; background: #1e293b; border: 1px solid #334155; padding: 6px 10px; border-radius: 8px; margin-bottom: 10px; font-size: 11px; }
-  .slider-row input[type="range"] { width: 150px; accent-color: #10b981; cursor: pointer; }
-  .panes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .pane-lbl { font-size: 10px; font-weight: 700; color: #94a3b8; margin-bottom: 4px; display: flex; justify-content: space-between; }
-  textarea { width: 100%; height: 120px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: #fff; padding: 8px; font-size: 11.5px; resize: vertical; outline: none; line-height: 1.45; }
-  textarea:focus { border-color: #10b981; }
-  #output { background: #064e3b; border-color: #059669; color: #ecfdf5; }
-  .actions { display: flex; gap: 6px; margin-top: 10px; }
-  button.primary { flex: 2; background: #10b981; color: #052e16; border: none; padding: 8px 10px; border-radius: 6px; font-weight: 800; font-size: 12px; cursor: pointer; }
-  button.sec { flex: 1; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; padding: 8px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
-  #diff-bar { margin-top: 8px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 7px 10px; font-size: 11px; color: #cbd5e1; }
+  body { width: 390px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #10b981; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  .modes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 8px; }
+  .modes button { background: #1e293b; color: #cbd5e1; border: 1px solid #334155; border-radius: 6px; padding: 6px 4px; font-size: 10px; font-weight: 700; cursor: pointer; }
+  .modes button.active { background: #10b981; color: #fff; border-color: #10b981; }
+  textarea { width: 100%; height: 82px; background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 8px; padding: 8px; font-size: 11.5px; margin-bottom: 6px; font-family: inherit; }
+  .meta { display: flex; justify-content: space-between; font-size: 10.5px; color: #94a3b8; margin-bottom: 6px; }
+  .btns { display: flex; gap: 6px; }
+  button.act { flex: 1; background: #10b981; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
+  button.act.sec { background: #334155; }
 </style>
 </head>
 <body>
-  <div class="hdr">
-    <h2>🪶 QuillParaphrase</h2>
-    <span class="badge">QuillBot Premium Unlocked</span>
-  </div>
-  <p class="sub">5 AI Rewriting Modes + Synonym Intensity Slider + Word Count Diff</p>
+  <h2><span>🪶 QuillParaphrase Pro</span><span class="badge">Unlimited Words</span></h2>
+  <p class="sub">5 Pro Modes: Fluency, Formal, Concise, Expand & Executive Bullets</p>
 
   <div class="modes" id="modeBar">
-    <button class="mode-btn active" data-mode="fluency">Fluency</button>
-    <button class="mode-btn" data-mode="formal">Formal</button>
-    <button class="mode-btn" data-mode="academic">Academic</button>
-    <button class="mode-btn" data-mode="concise">Concise</button>
-    <button class="mode-btn" data-mode="creative">Creative</button>
+    <button data-mode="fluency" class="active">Fluency</button>
+    <button data-mode="formal">Formal</button>
+    <button data-mode="concise">Concise</button>
+    <button data-mode="expand">Expand</button>
+    <button data-mode="bullet">Bullets</button>
   </div>
 
-  <div class="slider-row">
-    <span>🎚️ Synonym Intensity: <strong id="intensityVal" style="color:#34d399;">75%</strong></span>
-    <input type="range" id="intensitySlider" min="25" max="100" step="25" value="75">
+  <textarea id="srcText" placeholder="Paste or pull selected text from page...">In order to make sure our team can get fast results, we need to help users fix important problems due to the fact that speed matters.</textarea>
+  <textarea id="outText" readonly placeholder="Paraphrased output appears here..."></textarea>
+
+  <div class="meta">
+    <span id="wordDelta">Words: 0 → 0</span>
+    <span id="modeLabel">Mode: Fluency</span>
   </div>
 
-  <div class="panes">
-    <div>
-      <div class="pane-lbl"><span>ORIGINAL TEXT</span><span id="origCount">0w</span></div>
-      <textarea id="input" placeholder="Paste text to paraphrase...">In order to make a decision at this point in time, we need to use important ideas that help improve our big problem and show good results.</textarea>
-    </div>
-    <div>
-      <div class="pane-lbl"><span>PARAPHRASED</span><span id="outCount">0w</span></div>
-      <textarea id="output" readonly placeholder="Paraphrased output will appear here..."></textarea>
-    </div>
+  <div class="btns">
+    <button id="runBtn" class="act">✨ Rewrite Now</button>
+    <button id="pullBtn" class="act sec">📥 Pull Selection</button>
+    <button id="replaceBtn" class="act sec">📤 Replace on Page</button>
+    <button id="copyBtn" class="act sec">📋 Copy</button>
   </div>
-
-  <div class="actions">
-    <button class="primary" id="paraphraseBtn">🪶 Paraphrase Now</button>
-    <button class="sec" id="synBtn">📖 Synonyms</button>
-    <button class="sec" id="copyBtn">📋 Copy</button>
-  </div>
-
-  <div id="diff-bar">Select a mode or slide intensity to paraphrase instantly.</div>
 
   <div id="tm-subtle-donate" style="margin-top:8px;text-align:right;">
     <a href="https://paypal.me/influenzian" target="_blank" rel="noopener" style="display:inline-block;padding:3px 9px;border-radius:6px;background:rgba(30,41,59,0.7);border:1px solid rgba(148,163,184,0.2);color:#94a3b8;font-size:10.5px;font-weight:600;text-decoration:none;">Donate</a>

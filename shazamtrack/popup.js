@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const lyLink = document.getElementById("lyLink");
   const jsonOutput = document.getElementById("jsonOutput");
   const statusMsg = document.getElementById("statusMsg");
+  const histCount = document.getElementById("histCount");
 
   function render() {
     streamBadge.textContent = `${current.streamCount} Stream(s)`;
@@ -34,13 +35,49 @@ document.addEventListener("DOMContentLoaded", () => {
     jsonOutput.value = JSON.stringify(current, null, 2);
   }
 
+  function updateHistCount() {
+    if (chrome.storage && chrome.storage.local) {
+      chrome.storage.local.get({ shazamHistory: [] }, (res) => {
+        histCount.textContent = (res.shazamHistory || []).length;
+      });
+    }
+  }
+
   render();
+  updateHistCount();
 
   document.getElementById("copyJsonBtn").addEventListener("click", () => {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(jsonOutput.value).catch(() => {});
     }
     statusMsg.textContent = "✓ Copied JSON media stream report!";
+  });
+
+  document.getElementById("saveHistBtn").addEventListener("click", () => {
+    if (chrome.storage && chrome.storage.local) {
+      chrome.storage.local.get({ shazamHistory: [] }, (res) => {
+        const list = res.shazamHistory || [];
+        list.unshift({ title: current.title, artist: current.artist, album: current.album, ts: new Date().toISOString() });
+        chrome.storage.local.set({ shazamHistory: list.slice(0, 100) }, () => {
+          updateHistCount();
+          statusMsg.textContent = "✓ Saved track to ShazamTrack History!";
+        });
+      });
+    }
+  });
+
+  document.getElementById("exportCsvBtn").addEventListener("click", () => {
+    if (chrome.storage && chrome.storage.local) {
+      chrome.storage.local.get({ shazamHistory: [] }, (res) => {
+        const list = res.shazamHistory && res.shazamHistory.length ? res.shazamHistory : [{ title: current.title, artist: current.artist, album: current.album, ts: new Date().toISOString() }];
+        const csv = "Title,Artist,Album,Timestamp\n" + list.map(r => `"${r.title}","${r.artist}","${r.album}","${r.ts}"`).join("\n");
+        jsonOutput.value = csv;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(csv).catch(() => {});
+        }
+        statusMsg.textContent = `✓ Exported ${list.length} track(s) as CSV!`;
+      });
+    }
   });
 
   if (chrome.tabs && chrome.tabs.query) {

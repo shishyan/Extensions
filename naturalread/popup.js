@@ -1,94 +1,68 @@
-const rsvpStage = document.getElementById("rsvpStage");
-const wpmSlider = document.getElementById("wpmSlider");
-const wpmLabel = document.getElementById("wpmLabel");
-const sourceText = document.getElementById("sourceText");
-const startRsvpBtn = document.getElementById("startRsvpBtn");
+const voiceSelect = document.getElementById("voiceSelect");
+const rateRange = document.getElementById("rateRange");
+const pitchRange = document.getElementById("pitchRange");
+const rateLbl = document.getElementById("rateLbl");
+const pitchLbl = document.getElementById("pitchLbl");
+const ttsInput = document.getElementById("ttsInput");
 
-let timer = null;
-let words = [];
-let ptr = 0;
-
-function formatWordWithORP(word) {
-  const w = word || "";
-  if (w.length <= 1) return `<span class="rsvp-pivot">${w}</span>`;
-  const pivotIdx = Math.floor((w.length - 1) * 0.35);
-  return (
-    w.slice(0, pivotIdx) +
-    `<span class="rsvp-pivot">${w[pivotIdx]}</span>` +
-    w.slice(pivotIdx + 1)
-  );
-}
-
-function stopRsvp() {
-  if (timer) {
-    clearInterval(timer);
-    timer = null;
-  }
-  startRsvpBtn.textContent = "▶ Start Speed Reader";
-}
-
-function startRsvp() {
-  if (timer) {
-    stopRsvp();
+function populateVoices() {
+  const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+  if (!voices.length) {
+    voiceSelect.innerHTML = '<option value="">System Default Natural Voice</option>';
     return;
   }
-  words = sourceText.value.trim().split(/\s+/).filter(Boolean);
-  if (!words.length) return;
-  ptr = 0;
-  const wpm = Number(wpmSlider.value || 450);
-  const intervalMs = Math.max(60, Math.round(60000 / wpm));
-  startRsvpBtn.textContent = "⏸ Pause RSVP";
-
-  rsvpStage.innerHTML = formatWordWithORP(words[ptr]);
-  timer = setInterval(() => {
-    ptr++;
-    if (ptr >= words.length) {
-      stopRsvp();
-      rsvpStage.textContent = "✓ Finished!";
-      return;
-    }
-    rsvpStage.innerHTML = formatWordWithORP(words[ptr]);
-  }, intervalMs);
+  voiceSelect.innerHTML = voices
+    .map((v, i) => `<option value="${i}">${v.name} (${v.lang})</option>`)
+    .join("");
 }
 
-wpmSlider.addEventListener("input", () => {
-  wpmLabel.textContent = `${wpmSlider.value} WPM`;
-  chrome.runtime.sendMessage({ type: "NATURALREAD_SAVE_PREFS", wpm: Number(wpmSlider.value) }, () => {});
-  if (timer) {
-    stopRsvp();
-    startRsvp();
+populateVoices();
+if (window.speechSynthesis) {
+  window.speechSynthesis.onvoiceschanged = populateVoices;
+}
+
+rateRange.addEventListener("input", () => { rateLbl.textContent = rateRange.value + "x"; });
+pitchRange.addEventListener("input", () => { pitchLbl.textContent = Number(pitchRange.value).toFixed(1); });
+
+document.getElementById("playBtn").addEventListener("click", () => {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(ttsInput.value || "Ready to read.");
+  const voices = window.speechSynthesis.getVoices();
+  const idx = Number(voiceSelect.value);
+  if (voices[idx]) u.voice = voices[idx];
+  u.rate = Number(rateRange.value) || 1.25;
+  u.pitch = Number(pitchRange.value) || 1.0;
+  window.speechSynthesis.speak(u);
+});
+
+document.getElementById("pageBtn").addEventListener("click", () => {
+  const rate = Number(rateRange.value) || 1.25;
+  const pitch = Number(pitchRange.value) || 1.0;
+  if (chrome.tabs && chrome.tabs.query) {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs && tabs[0]) {
+        chrome.tabs.sendMessage(tabs[0].id, { type: "NATURALREAD_READ_PAGE", rate, pitch }, (res) => {
+          if (!chrome.runtime.lastError && res && res.excerpt) {
+            ttsInput.value = res.excerpt;
+          }
+        });
+      }
+    });
   }
 });
 
-startRsvpBtn.addEventListener("click", startRsvp);
-
-document.getElementById("toggleRulerBtn").addEventListener("click", () => {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const tab = tabs && tabs[0];
-    if (!tab || !tab.id) return;
-    chrome.tabs.sendMessage(tab.id, { type: "NATURALREAD_TOGGLE_RULER" }, (res) => {
-      if (!chrome.runtime.lastError && res) {
-        rsvpStage.textContent = res.rulerActive ? "📏 Ruler ON" : "📏 Ruler OFF";
-      }
-    });
-  });
+document.getElementById("pauseBtn").addEventListener("click", () => {
+  if (!window.speechSynthesis) return;
+  if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+  else window.speechSynthesis.pause();
 });
 
-document.getElementById("pullPageBtn").addEventListener("click", () => {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const tab = tabs && tabs[0];
-    if (!tab || !tab.id) return;
-    chrome.tabs.sendMessage(tab.id, { type: "NATURALREAD_GET_TEXT" }, (res) => {
-      if (!chrome.runtime.lastError && res && res.ok && res.text) {
-        sourceText.value = res.text;
-        rsvpStage.textContent = "Loaded Page!";
-      }
+document.getElementById("stopBtn").addEventListener("click", () => {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  if (chrome.tabs && chrome.tabs.query) {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs && tabs[0]) chrome.tabs.sendMessage(tabs[0].id, { type: "NATURALREAD_STOP" });
     });
-  });
+  }
 });
-
-// Show first word formatted on open
-const initWords = sourceText.value.trim().split(/\s+/);
-if (initWords.length) {
-  rsvpStage.innerHTML = formatWordWithORP(initWords[0]);
-}

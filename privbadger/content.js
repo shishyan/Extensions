@@ -2,19 +2,14 @@
   if (document.getElementById("privbadger-pill")) return;
 
   const TRACKING_PARAMS = [
-    "utm_source",
-    "utm_medium",
-    "utm_campaign",
-    "utm_term",
-    "utm_content",
-    "fbclid",
-    "gclid",
-    "mc_cid",
-    "_ga",
-    "msclkid"
+    "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content",
+    "fbclid", "gclid", "mc_cid", "_ga", "msclkid", "igshid", "twclid"
   ];
 
+  let whitelisted = false;
+
   function scrubTrackingUrls() {
+    if (whitelisted) return 0;
     let cleanedCount = 0;
 
     try {
@@ -56,16 +51,31 @@
   let totalCleanedOnPage = scrubTrackingUrls();
 
   function buildAudit() {
+    const host = location.hostname || "localhost";
     const cookiesCount = document.cookie ? document.cookie.split(";").filter(Boolean).length : 0;
     let lsCount = 0;
     try {
       lsCount = localStorage.length;
     } catch (e) {}
+
+    const thirdPartyDomains = new Set();
+    document.querySelectorAll("script[src], iframe[src], img[src]").forEach((el) => {
+      try {
+        const u = new URL(el.src, location.href);
+        if (u.hostname && u.hostname !== host && !u.hostname.endsWith("." + host)) {
+          thirdPartyDomains.add(u.hostname);
+        }
+      } catch (_) {}
+    });
+
     return {
+      host,
+      whitelisted,
       grade: cookiesCount > 5 ? "B+" : "A+",
       cleanedParams: totalCleanedOnPage,
       cookiesCount,
       localStorageKeys: lsCount,
+      thirdPartyDomains: Array.from(thirdPartyDomains).slice(0, 12),
       canvasProtected: true,
       webglProtected: true,
       hardwareConcurrency: navigator.hardwareConcurrency || 4
@@ -96,6 +106,9 @@
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (msg.type === "PRIVBADGER_AUDIT") {
       totalCleanedOnPage += scrubTrackingUrls();
+      sendResponse({ ok: true, audit: buildAudit() });
+    } else if (msg.type === "PRIVBADGER_TOGGLE_WHITELIST") {
+      whitelisted = !whitelisted;
       sendResponse({ ok: true, audit: buildAudit() });
     }
   });

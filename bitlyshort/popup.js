@@ -46,7 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateUtmAndQr() {
-    const base = cleanUrlInput.value.trim() || "https://gurukuladesam.org";
+    const rawVal = String((cleanUrlInput && cleanUrlInput.value) || "");
+    const base = rawVal.trim() || "https://gurukuladesam.org";
     try {
       const u = new URL(base);
       if (utmSource.value.trim()) u.searchParams.set("utm_source", utmSource.value.trim());
@@ -56,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (e) {
       utmResultInput.value = base;
     }
-    qrContainer.innerHTML = makeSvgQr(cleanUrlInput.value.trim() || "https://gurukuladesam.org");
+    qrContainer.innerHTML = makeSvgQr(rawVal.trim() || "https://gurukuladesam.org");
   }
 
   updateUtmAndQr();
@@ -64,9 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
     el.addEventListener("input", updateUtmAndQr);
   });
 
-  document.getElementById("copyCleanBtn").addEventListener("click", () => {
+  document.getElementById("copyCleanBtn").addEventListener("click", async () => {
+    const targetUrl = cleanUrlInput.value.trim();
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(cleanUrlInput.value).catch(() => {});
+      navigator.clipboard.writeText(targetUrl).catch(() => {});
     }
     statusMsg.textContent = "✓ Copied clean canonical URL!";
   });
@@ -79,19 +81,29 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("copySvgBtn").addEventListener("click", () => {
+    const svg = qrContainer.innerHTML;
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(qrContainer.innerHTML).catch(() => {});
+      navigator.clipboard.writeText(svg).catch(() => {});
     }
-    statusMsg.textContent = "✓ Copied SVG QR vector markup!";
+    try {
+      const blob = new Blob([svg], { type: "image/svg+xml" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "bitlyshort-qr.svg";
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (_) {}
+    statusMsg.textContent = "✓ Copied & Downloaded SVG QR vector!";
   });
 
   if (chrome.tabs && chrome.tabs.query) {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs && tabs[0] && tabs[0].id) {
         chrome.tabs.sendMessage(tabs[0].id, { type: "BITLYSHORT_ANALYZE" }, (res) => {
-          if (res && res.ok) {
+          if (res && res.ok && res.cleanUrl) {
             cleanUrlInput.value = res.cleanUrl;
-            strippedBadge.textContent = `${res.removedCount} stripped`;
+            strippedBadge.textContent = `${res.removedCount || 0} stripped`;
             updateUtmAndQr();
           }
         });

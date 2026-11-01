@@ -1,99 +1,86 @@
-/**
- * HuntLead — Free B2B Email Finder, Domain Search & Lead Extractor
- * Replaces Hunter.io, Apollo.io & Lusha: DOM/HTML/mailto email extraction, phone extraction, social/role detection, corporate permutation engine & CSV export
- */
+(function () {
+  if (window.__huntLeadLoaded) return;
+  window.__huntLeadLoaded = true;
 
-(() => {
-  "use strict";
+  function inferEmailPattern(emails, domain) {
+    const cleanDomain = (domain || "").replace(/^www\./i, "").toLowerCase();
+    const domainEmails = emails.filter((e) => e.toLowerCase().endsWith("@" + cleanDomain));
+    const pool = domainEmails.length ? domainEmails : emails;
+    let firstDotLast = 0;
+    let firstUnderscoreLast = 0;
+    let firstOnly = 0;
+    let initialLast = 0;
 
-  const ROLE_PREFIXES = new Set([
-    "contact", "info", "support", "sales", "hello", "admin", "careers", "jobs", "press", "media", "founders", "team", "billing", "office", "help", "marketing", "hr", "legal"
-  ]);
-
-  function scanContacts() {
-    const html = document.documentElement ? document.documentElement.innerHTML : "";
-    const text = document.body ? (document.body.innerText || document.body.textContent || "") : "";
-    const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,12}/g;
-
-    const mailtoLinks = Array.from(document.querySelectorAll('a[href^="mailto:"]')).map((a) => {
-      const raw = a.getAttribute("href") || "";
-      return raw.replace(/^mailto:/i, "").split("?")[0].trim();
+    pool.forEach((email) => {
+      const local = email.split("@")[0].toLowerCase();
+      if (/^[a-z]+\.[a-z]+$/.test(local)) firstDotLast++;
+      else if (/^[a-z]+_[a-z]+$/.test(local)) firstUnderscoreLast++;
+      else if (/^[a-z][a-z0-9]{2,9}$/.test(local)) firstOnly++;
+      else if (/^[a-z][a-z]{3,12}$/.test(local)) initialLast++;
     });
 
-    const rawEmails = [
-      ...mailtoLinks,
-      ...(text.match(emailRegex) || []),
-      ...(html.match(emailRegex) || [])
-    ];
+    if (firstDotLast >= firstOnly && firstDotLast > 0) {
+      return { pattern: `{first}.{last}@${cleanDomain}`, confidence: Math.min(96, 72 + firstDotLast * 8) };
+    }
+    if (firstUnderscoreLast > 0) {
+      return { pattern: `{first}_{last}@${cleanDomain}`, confidence: Math.min(92, 68 + firstUnderscoreLast * 8) };
+    }
+    if (firstOnly > 0) {
+      return { pattern: `{first}@${cleanDomain}`, confidence: Math.min(90, 65 + firstOnly * 6) };
+    }
+    return { pattern: `{first}.{last}@${cleanDomain || "company.com"}`, confidence: pool.length ? 64 : 50 };
+  }
 
-    const cleanEmails = Array.from(
+  function scanLeads() {
+    const html = document.documentElement.innerHTML || "";
+    const text = document.body ? document.body.innerText : "";
+
+    const emailRx = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,10}/g;
+    const mailtoLinks = Array.from(document.querySelectorAll("a[href^='mailto:']")).map((a) =>
+      a.getAttribute("href").replace(/^mailto:/i, "").split("?")[0].trim()
+    );
+    const rawEmails = [...(text.match(emailRx) || []), ...(html.match(emailRx) || []), ...mailtoLinks];
+    const emails = Array.from(
       new Set(
         rawEmails
           .map((e) => e.toLowerCase().trim())
-          .filter(
-            (e) =>
-              e.includes("@") &&
-              !/\.(png|jpg|jpeg|gif|svg|webp|js|css|woff|woff2|ttf|eot|mp4|mp3)$/i.test(e) &&
-              !e.includes("example.com") &&
-              !e.includes("sentry.io") &&
-              !e.includes("wixpress.com")
-          )
+          .filter((e) => !/\.(png|jpg|jpeg|gif|svg|webp|css|js|woff|woff2)$/i.test(e) && !e.includes("example.com") && !e.includes("sentry.io"))
       )
-    ).slice(0, 40);
+    ).slice(0, 100);
 
-    const categorizedEmails = cleanEmails.map((email) => {
-      const localPart = email.split("@")[0].replace(/[^a-z]/g, "");
-      const isRole = ROLE_PREFIXES.has(localPart);
-      return {
-        email,
-        type: isRole ? "Role / Dept" : "Personal / Direct"
-      };
-    });
-
-    const phoneRegex = /(?:\+?\d{1,3}[\s.-]?)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}/g;
-    const telLinks = Array.from(document.querySelectorAll('a[href^="tel:"]')).map((a) =>
-      (a.getAttribute("href") || "").replace(/^tel:/i, "").trim()
+    const telLinks = Array.from(document.querySelectorAll("a[href^='tel:']")).map((a) =>
+      a.getAttribute("href").replace(/^tel:/i, "").trim()
     );
-    const phones = Array.from(new Set([...telLinks, ...(text.match(phoneRegex) || [])]))
-      .filter((p) => p.replace(/\D/g, "").length >= 10)
-      .slice(0, 15);
+    const phoneRx = /(?:\+?\d{1,3}[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}/g;
+    const phones = Array.from(new Set([...telLinks, ...(text.match(phoneRx) || []).map((p) => p.trim())])).slice(0, 40);
 
-    const socialLinks = [];
-    const seenSocial = new Set();
-    Array.from(document.querySelectorAll("a[href]")).forEach((a) => {
-      const href = a.href || "";
-      if (/(linkedin\.com\/(in|company)\/|twitter\.com\/|x\.com\/|github\.com\/)/i.test(href)) {
-        const cleanHref = href.split("?")[0];
-        if (!seenSocial.has(cleanHref)) {
-          seenSocial.add(cleanHref);
-          socialLinks.push(cleanHref);
-        }
+    const socials = [];
+    document.querySelectorAll("a[href]").forEach((a) => {
+      const h = a.href || "";
+      if (/linkedin\.com\/(in|company)\/|twitter\.com\/|x\.com\/|github\.com\/|facebook\.com\/|instagram\.com\/|youtube\.com\/@/i.test(h)) {
+        socials.push(h.split("?")[0]);
       }
     });
 
-    const domain = (location.hostname || "company.com").replace(/^www\./, "") || "company.com";
-    const patterns = [
-      `first@${domain}`,
-      `first.last@${domain}`,
-      `flast@${domain}`,
-      `first_last@${domain}`,
-      `founders@${domain}`,
-      `contact@${domain}`
-    ];
+    const uniqueSocials = Array.from(new Set(socials)).slice(0, 50);
+    const inferred = inferEmailPattern(emails, location.hostname);
 
     return {
-      domain,
-      emails: cleanEmails,
-      categorizedEmails,
+      domain: location.hostname,
+      url: location.href,
+      title: document.title || location.hostname,
+      emails,
       phones,
-      socialLinks: socialLinks.slice(0, 12),
-      patterns
+      socials: uniqueSocials,
+      pattern: inferred.pattern,
+      confidence: inferred.confidence
     };
   }
 
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (msg && msg.type === "HUNTLEAD_SCAN") {
-      sendResponse(scanContacts());
+      sendResponse(scanLeads());
+      return true;
     }
   });
 })();

@@ -39,6 +39,24 @@
     }
   }
 
+  function injectFollowUpTemplate() {
+    const template = "Hi — floating this back to the top of your inbox in case it got buried. Would Thursday at 10:00 AM work for a quick 10-minute alignment call?";
+    const compose = document.querySelector("div[aria-label*='Message Body' i], div[role='textbox'], textarea, [contenteditable='true']");
+    if (compose) {
+      if (compose.tagName === "TEXTAREA" || compose.tagName === "INPUT") {
+        compose.value = (compose.value ? compose.value + "\n\n" : "") + template;
+        compose.dispatchEvent(new Event("input", { bubbles: true }));
+      } else {
+        compose.innerText = (compose.innerText ? compose.innerText + "\n\n" : "") + template;
+      }
+      return true;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(template).catch(() => {});
+    }
+    return false;
+  }
+
   function injectBar() {
     if (document.getElementById("mailtracker-bar")) return;
     const subjInp =
@@ -55,13 +73,21 @@
       <div>
         <span>✓✓ <strong>MailTracker Pro</strong> (Zero Watermark)</span>
         &nbsp;•&nbsp;
-        <span id="mt-score-txt">Subject Score: <strong>${sRes.score}/100</strong> (Est. Open Rate: ${sRes.openRateEst})</span>
+        <span id="mt-score-txt">Subject Score: <strong>${sRes.score}/100</strong> (Est. Open: ${sRes.openRateEst})</span>
       </div>
-      <button class="mt-btn" id="mt-log-btn">📌 Log Follow-Up (48h)</button>
+      <div style="display:flex;gap:6px;">
+        <button class="mt-btn" id="mt-tpl-btn">✍️ Inject Follow-Up</button>
+        <button class="mt-btn" id="mt-log-btn">📌 Log Follow-Up (48h)</button>
+      </div>
     `;
 
     const target = document.querySelector("main") || document.body;
     target.prepend(bar);
+
+    bar.querySelector("#mt-tpl-btn").addEventListener("click", () => {
+      injectFollowUpTemplate();
+      bar.querySelector("#mt-tpl-btn").textContent = "✅ Template Injected!";
+    });
 
     bar.querySelector("#mt-log-btn").addEventListener("click", () => {
       const item = {
@@ -87,6 +113,10 @@
     }
     if (msg && msg.type === "MAILTRACKER_BUILD_UTM") {
       sendResponse({ ok: true, trackedUrl: buildTrackedUrl(msg.url, msg.campaign) });
+      return true;
+    }
+    if (msg && msg.type === "MAILTRACKER_INJECT_TEMPLATE") {
+      sendResponse({ ok: true, injected: injectFollowUpTemplate() });
       return true;
     }
   });

@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("printPdfBtn").addEventListener("click", () => {
-    statusMsg.textContent = "🖨️ Clean Print / PDF layout prepared!";
+    sendToPage({ type: "PRINTCLEAN_ACTION", action: "PRINT_NOW" }, () => {});
+    statusMsg.textContent = "🖨️ Clean Print / PDF dialog triggered!";
   });
 });

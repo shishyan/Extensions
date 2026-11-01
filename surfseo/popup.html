@@ -2,29 +2,51 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SurfSEO — 100-Pt On-Page SEO Audit & SERP Keyword Explorer</title>
+<title>SurfSEO — Real-Time Content Score & NLP Auditor</title>
 <style>
   * { box-sizing: border-box; }
-  body { width: 390px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
-  h2 { margin: 0 0 4px; font-size: 16px; color: #38bdf8; display: flex; justify-content: space-between; align-items: center; }
-  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 9px; margin-bottom: 8px; font-size: 11px; line-height: 1.5; }
-  .kw { display: inline-block; background: #0284c7; color: #fff; padding: 2px 6px; border-radius: 4px; margin: 2px; font-size: 10px; cursor: pointer; }
-  .kw.bg2 { background: #4f46e5; }
-  .search { display: flex; gap: 6px; margin-top: 6px; }
-  input { flex: 1; background: #1e293b; border: 1px solid #334155; color: #fff; padding: 7px 9px; border-radius: 6px; font-size: 11px; outline: none; }
-  button { background: #38bdf8; color: #082f49; border: none; padding: 7px 12px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
+  body { width: 400px; margin: 0; padding: 13px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #a78bfa; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(167,139,250,0.2); color: #a78bfa; border: 1px solid rgba(167,139,250,0.4); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 8px; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 6px; text-align: center; }
+  .card .v { font-size: 14px; font-weight: 800; color: #34d399; }
+  .card .k { font-size: 9.5px; color: #94a3b8; margin-top: 2px; }
+  .kw-input { display: flex; gap: 5px; margin-bottom: 7px; }
+  .kw-input input { flex: 1; background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 6px 8px; font-size: 11px; }
+  .kw-input button { background: #7c3aed; color: #fff; border: none; border-radius: 6px; padding: 6px 10px; font-size: 11px; font-weight: 700; cursor: pointer; }
+  .panel { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; margin-bottom: 7px; font-size: 11px; max-height: 150px; overflow-y: auto; }
+  .term { display: inline-block; background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); border-radius: 5px; padding: 2px 6px; margin: 2px; font-size: 10px; }
+  .term.tri { background: rgba(167,139,250,0.15); color: #c4b5fd; border-color: rgba(167,139,250,0.35); }
+  .btns { display: flex; gap: 6px; }
+  button.act { flex: 1; background: #6d28d9; color: #fff; border: none; padding: 7px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
+  button.act.sec { background: #334155; }
 </style>
 </head>
 <body>
-  <h2><span>🌊 SurfSEO Pro</span><span id="scoreBadge" style="font-size:12px;color:#34d399;background:rgba(16,185,129,0.15);padding:2px 8px;border-radius:999px;">SEO: --/100</span></h2>
-  <p class="sub">100-Pt On-Page SEO Audit, NLP 1w/2w Density & SERP Keyword Explorer</p>
-  <div id="audit" class="card">Running 100-Point On-Page SEO Audit...</div>
-  <div class="search">
-    <input id="kwInput" placeholder="Enter seed keyword for Google SERP ideas..." value="youtube seo">
-    <button id="kwBtn">Explore</button>
+  <h2><span>🏄‍♂️ SurfSEO Pro</span><span class="badge">Live NLP Grader</span></h2>
+  <p class="sub">Content Score, 2/3-Word NLP Phrase Density & Missing Keyword Checker</p>
+
+  <div class="grid">
+    <div class="card"><div class="v" id="scoreVal">--</div><div class="k">SEO Score</div></div>
+    <div class="card"><div class="v" id="wordsVal">--</div><div class="k">Words</div></div>
+    <div class="card"><div class="v" id="headsVal">--</div><div class="k">H1/H2/H3</div></div>
+    <div class="card"><div class="v" id="linksVal">--</div><div class="k">Int/Ext Links</div></div>
   </div>
-  <div id="kwOut" class="card" style="margin-top:8px;max-height:130px;overflow-y:auto;">Type a keyword above for instant autocomplete volume & CPC.</div>
+
+  <div class="kw-input">
+    <input id="targetKws" type="text" placeholder="Target keywords (comma-separated, e.g. seo audit, backlinks)" />
+    <button id="checkKwBtn">Check</button>
+  </div>
+
+  <div class="panel" id="metaBox">Auditing page structure...</div>
+  <div class="panel" id="termsBox">Extracting 1-word, 2-word & 3-word NLP phrases...</div>
+
+  <div class="btns">
+    <button id="mdBtn" class="act">📋 Copy Markdown Report</button>
+    <button id="csvBtn" class="act sec">📥 Export CSV</button>
+  </div>
 
   <div id="tm-subtle-donate" style="margin-top:8px;text-align:right;">
     <a href="https://paypal.me/influenzian" target="_blank" rel="noopener" style="display:inline-block;padding:3px 9px;border-radius:6px;background:rgba(30,41,59,0.7);border:1px solid rgba(148,163,184,0.2);color:#94a3b8;font-size:10.5px;font-weight:600;text-decoration:none;">Donate</a>

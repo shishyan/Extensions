@@ -3,6 +3,16 @@
 
   let clickTimer = null;
   let clickCount = 0;
+  let pickerMode = false;
+  let pickedSelector = "[data-autoclick-target], #qa-action-btn, button";
+
+  function computeSelector(el) {
+    if (!el || el.nodeType !== 1) return "button";
+    if (el.id) return "#" + el.id;
+    const tag = el.tagName.toLowerCase();
+    const cls = Array.from(el.classList || [])[0];
+    return cls ? `${tag}.${cls}` : tag;
+  }
 
   function fillAllForms() {
     let filled = 0;
@@ -53,38 +63,72 @@
     return filled;
   }
 
-  function triggerAutoClick(selector, intervalMs = 500) {
+  function stopAutoClick() {
     if (clickTimer) {
       clearInterval(clickTimer);
       clickTimer = null;
-      return { running: false, clickCount };
     }
-    const target = document.querySelector(selector);
+    const runBtn = document.getElementById("autoclick-run-btn");
+    if (runBtn) runBtn.textContent = "Auto-Click";
+    return { running: false, clickCount };
+  }
+
+  function triggerAutoClick(selector, intervalMs = 500) {
+    if (clickTimer) {
+      return stopAutoClick();
+    }
+    const sel = selector || pickedSelector;
+    const target = document.querySelector(sel);
     if (target) {
       target.click();
       clickCount++;
     }
     clickTimer = setInterval(() => {
-      const el = document.querySelector(selector);
+      const el = document.querySelector(sel);
       if (el) {
         el.click();
         clickCount++;
       }
-    }, Math.max(100, Number(intervalMs) || 500));
-    return { running: true, clickCount };
+    }, Math.max(50, Number(intervalMs) || 500));
+    return { running: true, clickCount, selector: sel };
   }
 
   const pill = document.createElement("div");
   pill.id = "autoclick-pill";
   pill.innerHTML = `
-    <span class="ac-label">⚡ AutoClick &amp; QA Form Filler</span>
+    <span class="ac-label">⚡ AutoClick &amp; QA Filler</span>
+    <button type="button" id="autoclick-pick-btn">🎯 Pick Target</button>
     <button type="button" id="autoclick-fill-btn">Fill Forms</button>
     <button type="button" id="autoclick-run-btn">Auto-Click</button>
   `;
   document.body.appendChild(pill);
 
+  const pickBtn = document.getElementById("autoclick-pick-btn");
   const fillBtn = document.getElementById("autoclick-fill-btn");
   const runBtn = document.getElementById("autoclick-run-btn");
+
+  pickBtn.addEventListener("click", () => {
+    pickerMode = !pickerMode;
+    document.body.style.cursor = pickerMode ? "crosshair" : "";
+    pickBtn.textContent = pickerMode ? "🎯 Click Element..." : "🎯 Pick Target";
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!pickerMode || !e.target || e.target.closest("#autoclick-pill")) return;
+    e.preventDefault();
+    e.stopPropagation();
+    pickerMode = false;
+    document.body.style.cursor = "";
+    pickedSelector = computeSelector(e.target);
+    pickBtn.textContent = `🎯 ${pickedSelector.slice(0, 14)}`;
+  }, true);
+
+  // Hotkey stop: Escape or Alt+S
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" || (e.altKey && (e.key === "s" || e.key === "S"))) {
+      stopAutoClick();
+    }
+  });
 
   fillBtn.addEventListener("click", () => {
     const count = fillAllForms();
@@ -95,7 +139,7 @@
   });
 
   runBtn.addEventListener("click", () => {
-    const res = triggerAutoClick("[data-autoclick-target], #qa-action-btn, button", 500);
+    const res = triggerAutoClick(pickedSelector, 500);
     runBtn.textContent = res.running ? `⏹ Stop (${res.clickCount})` : "Auto-Click";
   });
 
@@ -106,8 +150,14 @@
       return true;
     }
     if (msg && msg.type === "AUTOCLICK_TOGGLE_CLICKER") {
-      const res = triggerAutoClick(msg.selector || "#qa-action-btn", msg.intervalMs || 500);
-      sendResponse({ ok: true, running: res.running, clickCount: res.clickCount });
+      const res = triggerAutoClick(msg.selector || pickedSelector, msg.intervalMs || 500);
+      sendResponse({ ok: true, running: res.running, clickCount: res.clickCount, selector: res.selector });
+      return true;
+    }
+    if (msg && msg.type === "AUTOCLICK_PICK_TARGET") {
+      pickerMode = true;
+      document.body.style.cursor = "crosshair";
+      sendResponse({ ok: true, pickerMode: true });
       return true;
     }
   });

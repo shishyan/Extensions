@@ -1,53 +1,36 @@
-let latestStack = { hostname: "active-site", categories: {} };
-const stackContainer = document.getElementById("stackContainer");
+let lastStack = null;
 
-function renderStack(data) {
-  latestStack = data;
-  const cats = data.categories || {};
-  stackContainer.innerHTML = Object.entries(cats)
-    .map(
-      ([cat, list]) => `
-      <div class="cat-card">
-        <div class="cat-title">${cat}</div>
-        <div class="cat-items">${(list || []).join(" • ")}</div>
-      </div>`
-    )
-    .join("");
-}
-
-chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-  const tab = tabs && tabs[0];
-  if (!tab || !tab.id) return;
-  chrome.tabs.sendMessage(tab.id, { type: "BUILTSTACK_SCAN" }, (res) => {
-    if (!chrome.runtime.lastError && res && res.ok) {
-      renderStack(res);
-    } else {
-      renderStack({
-        hostname: "web-app",
-        categories: {
-          "Frontend & UI": ["HTML5 / CSS3", "ES2024 JavaScript"],
-          "CMS & Commerce": ["Custom SSR Engine"],
-          "Analytics & Pixels": ["First-Party Telemetry"]
-        }
+if (chrome.tabs && chrome.tabs.query) {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs && tabs[0]) {
+      chrome.tabs.sendMessage(tabs[0].id, { type: "BUILTSTACK_SCAN" }, (res) => {
+        if (chrome.runtime.lastError || !res) return;
+        lastStack = res;
+        document.getElementById("techCount").textContent = res.detected.length;
+        document.getElementById("scriptCount").textContent = res.scriptCount;
+        document.getElementById("cssCount").textContent = res.stylesheetCount;
+        document.getElementById("stackList").innerHTML = res.detected
+          .map((t) => `<div class="item"><strong>${t.name}</strong><span class="cat">${t.cat}</span></div>`)
+          .join("");
       });
     }
   });
+}
+
+document.getElementById("copyBtn").addEventListener("click", () => {
+  if (!lastStack) return;
+  navigator.clipboard.writeText(JSON.stringify(lastStack, null, 2));
+  document.getElementById("copyBtn").textContent = "✅ JSON Copied!";
+  setTimeout(() => (document.getElementById("copyBtn").textContent = "📋 Copy JSON Stack"), 1300);
 });
 
-document.getElementById("copyMdBtn").addEventListener("click", () => {
-  const lines = [
-    `# 🧱 BuiltStack Report: ${latestStack.hostname}`,
-    ...Object.entries(latestStack.categories || {}).map(([k, v]) => `- **${k}:** ${v.join(", ")}`)
-  ];
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(lines.join("\n")).catch(() => {});
-  }
-  document.getElementById("copyMdBtn").textContent = "✅ Copied Markdown!";
-});
-
-document.getElementById("copyJsonBtn").addEventListener("click", () => {
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(JSON.stringify(latestStack, null, 2)).catch(() => {});
-  }
-  document.getElementById("copyJsonBtn").textContent = "✅ Copied JSON!";
+document.getElementById("csvBtn").addEventListener("click", () => {
+  if (!lastStack) return;
+  const rows = [["Domain", "Technology", "Category"]];
+  lastStack.detected.forEach((t) => rows.push([lastStack.domain, t.name, t.cat]));
+  const csv = rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+  a.download = `builtstack-${lastStack.domain}.csv`;
+  a.click();
 });

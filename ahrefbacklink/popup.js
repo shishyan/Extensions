@@ -1,67 +1,39 @@
-let lastReport = {
-  totalLinks: 4,
-  brokenCount: 0,
-  topAnchors: [
-    { anchor: "Documentation & API Reference", count: 2 },
-    { anchor: "GitHub Repository", count: 1 }
-  ],
-  items: []
-};
+let lastAudit = null;
 
-function renderReport(rep) {
-  if (rep && typeof rep.totalLinks === "number") lastReport = rep;
-  document.getElementById("totSpan").textContent = `🔗 Total Links: ${lastReport.totalLinks}`;
-  document.getElementById("brkSpan").textContent = `⚠️ Broken/Empty: ${lastReport.brokenCount}`;
+if (chrome.tabs && chrome.tabs.query) {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs && tabs[0]) {
+      chrome.tabs.sendMessage(tabs[0].id, { type: "AHREF_AUDIT" }, (res) => {
+        if (chrome.runtime.lastError || !res) return;
+        lastAudit = res;
+        document.getElementById("drVal").textContent = res.da;
+        document.getElementById("extVal").textContent = res.external;
+        document.getElementById("dfVal").textContent = res.dofollow;
+        document.getElementById("nfVal").textContent = res.nofollow;
 
-  const box = document.getElementById("anchorBox");
-  const list = lastReport.topAnchors || [];
-  if (!list.length) {
-    box.innerHTML = `<div style="color:#94a3b8;">No anchor links found on active page.</div>`;
-    return;
-  }
-  box.innerHTML = list
-    .map(
-      (a) => `
-      <div class="row">
-        <span style="color:#f1f5f9;">"${a.anchor}"</span>
-        <strong style="color:#fb923c;">${a.count}x</strong>
-      </div>
-    `
-    )
-    .join("");
+        document.getElementById("linkTable").innerHTML = (res.linkRows || [])
+          .map((l) => `<div class="item"><span style="max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><strong>${l.anchor}</strong> → ${l.href}</span><span style="color:${l.rel === 'nofollow' ? '#f87171' : '#34d399'};font-size:9.5px;font-weight:700;">${l.type}•${l.rel}</span></div>`)
+          .join("") || "No links detected.";
+      });
+    }
+  });
 }
-
-function triggerScan() {
-  if (chrome.tabs && chrome.tabs.query) {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs && tabs[0]) {
-        chrome.tabs.sendMessage(tabs[0].id, { type: "AHREF_SCAN_LINKS" }, (res) => {
-          if (!chrome.runtime.lastError && res) renderReport(res);
-          else renderReport(lastReport);
-        });
-      } else {
-        renderReport(lastReport);
-      }
-    });
-  } else {
-    renderReport(lastReport);
-  }
-}
-
-triggerScan();
-document.getElementById("scanBtn").addEventListener("click", triggerScan);
 
 document.getElementById("csvBtn").addEventListener("click", () => {
-  const rows = ["Anchor,Href,Domain,Rel,Broken"];
-  (lastReport.items || []).forEach((it) => {
-    rows.push(`"${String(it.anchor).replace(/"/g, '""')}","${it.href}","${it.domain}","${it.rel}",${it.broken}`);
-  });
-  const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
+  if (!lastAudit) return;
+  const rows = [["Anchor Text", "Target URL", "Link Type", "Rel Attribute"]];
+  (lastAudit.linkRows || []).forEach((l) => rows.push([l.anchor, l.href, l.type, l.rel]));
+  const csv = rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
   const a = document.createElement("a");
-  a.href = url;
-  a.download = "ahrefbacklink-anchors.csv";
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+  a.download = `ahrefbacklink-${lastAudit.domain}.csv`;
   a.click();
-  URL.revokeObjectURL(url);
-  document.getElementById("csvBtn").textContent = "✅ Exported CSV!";
+});
+
+document.getElementById("mdBtn").addEventListener("click", () => {
+  if (!lastAudit) return;
+  const txt = (lastAudit.linkRows || []).map((l) => `- [${l.anchor}](${l.href}) (${l.type}, ${l.rel})`).join("\n");
+  navigator.clipboard.writeText(txt);
+  document.getElementById("mdBtn").textContent = "✅ Copied!";
+  setTimeout(() => (document.getElementById("mdBtn").textContent = "📋 Copy Anchor Report"), 1200);
 });

@@ -9,6 +9,12 @@ function getHeaderPairs() {
     .filter((x) => x.name);
 }
 
+function saveProfile() {
+  if (chrome.storage && chrome.storage.local) {
+    chrome.storage.local.set({ modheader_headers: getHeaderPairs() });
+  }
+}
+
 function buildCurl() {
   const pairs = getHeaderPairs();
   const flags = pairs.map((p) => `  -H "${p.name}: ${p.value}"`).join(" \\\n");
@@ -23,7 +29,22 @@ function buildFetch() {
 }
 
 function refreshSnippet() {
+  saveProfile();
   codeOut.textContent = buildCurl();
+}
+
+if (chrome.storage && chrome.storage.local) {
+  chrome.storage.local.get({ modheader_headers: null }, (res) => {
+    if (Array.isArray(res.modheader_headers) && res.modheader_headers.length) {
+      const names = Array.from(document.querySelectorAll(".hn"));
+      const vals = Array.from(document.querySelectorAll(".hv"));
+      res.modheader_headers.forEach((p, idx) => {
+        if (names[idx]) names[idx].value = p.name || "";
+        if (vals[idx]) vals[idx].value = p.value || "";
+      });
+      refreshSnippet();
+    }
+  });
 }
 
 document.querySelectorAll("input").forEach((inp) => inp.addEventListener("input", refreshSnippet));

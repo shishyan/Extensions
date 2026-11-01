@@ -1,38 +1,32 @@
-let xrayData = { products: [], keywords: [] };
-const productsBox = document.getElementById("productsBox");
-const keywordsBox = document.getElementById("keywordsBox");
+let xrayData = null;
 
-chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-  const tab = tabs && tabs[0];
-  if (!tab || !tab.id) return;
-  chrome.tabs.sendMessage(tab.id, { type: "HELIUM_XRAY_SCAN" }, (res) => {
-    if (!chrome.runtime.lastError && res && res.ok) {
-      xrayData = res;
-      productsBox.innerHTML = (res.products || [])
-        .map((p) => `<div><strong>${p.asin}</strong> • ${p.price} • <span style="color:#34d399">${p.reviewVelocity}</span></div>`)
-        .join("");
-      keywordsBox.textContent = (res.keywords || []).map((k) => `${k.word} (${k.estSearchVol}/mo)`).join(" • ");
-    } else {
-      productsBox.textContent = "Ready — Open any product or search page to run Helium Xray.";
+if (chrome.tabs && chrome.tabs.query) {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs && tabs[0]) {
+      chrome.tabs.sendMessage(tabs[0].id, { type: "HELIUM_XRAY" }, (res) => {
+        if (chrome.runtime.lastError || !res) return;
+        xrayData = res;
+        document.getElementById("asinVal").textContent = res.asin;
+        document.getElementById("bsrVal").textContent = "#" + res.bsr.toLocaleString();
+        document.getElementById("velVal").textContent = res.estMonthlySales.toLocaleString() + "/mo";
+        document.getElementById("kwBox").innerHTML = `
+          <div><strong>Listing SEO Score:</strong> ${res.lqs}/10 (${res.bullets} bullets, ${res.images} images, ${res.rating}★)</div>
+          <div style="margin-top:4px;"><strong>Est. Monthly Revenue:</strong> <span style="color:#34d399;">$${res.estMonthlyRev.toLocaleString()}</span> (${res.searchProducts.length} ASINs indexed)</div>
+        `;
+      });
     }
   });
-});
+}
 
-document.getElementById("copyKwBtn").addEventListener("click", () => {
-  const kwStr = (xrayData.keywords || []).map((k) => k.word).join(" ");
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(kwStr).catch(() => {});
-  }
-  document.getElementById("copyKwBtn").textContent = "✅ Copied Keywords!";
-});
-
-document.getElementById("exportCsvBtn").addEventListener("click", () => {
-  const csv = [
-    "ASIN,Title,Price,ReviewVelocity",
-    ...(xrayData.products || []).map((p) => `${p.asin},"${p.title}",${p.price},${p.reviewVelocity}`)
-  ].join("\n");
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(csv).catch(() => {});
-  }
-  document.getElementById("exportCsvBtn").textContent = "✅ Copied CSV!";
+document.getElementById("csvBtn").addEventListener("click", () => {
+  if (!xrayData) return;
+  const rows = [["ASIN", "Title", "Price", "BSR", "Est Monthly Sales", "Est Monthly Revenue"]];
+  (xrayData.searchProducts || []).forEach((p) => {
+    rows.push([p.asin, p.title, p.price, xrayData.bsr, p.estSales, p.estRev]);
+  });
+  const csv = rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+  a.download = `heliumseller-xray-${xrayData.asin}.csv`;
+  a.click();
 });

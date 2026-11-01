@@ -1,66 +1,63 @@
-/**
- * NaturalRead — Content Script
- * Mouse-Tracking Horizontal ADHD/Dyslexia Focus Reading Ruler + Page Text Extractor for RSVP Speed Reader
- */
+(function () {
+  if (window.__naturalreadLoaded) return;
+  window.__naturalreadLoaded = true;
 
-(() => {
-  "use strict";
+  let activeBlock = null;
 
-  if (!document.body) return;
-
-  let ruler = null;
-  let rulerActive = false;
-
-  function ensureRuler() {
-    if (ruler && document.body.contains(ruler)) return ruler;
-    ruler = document.createElement("div");
-    ruler.id = "naturalread-ruler";
-    ruler.className = "naturalread-ruler";
-    ruler.style.display = "none";
-    document.body.appendChild(ruler);
-    return ruler;
-  }
-
-  function toggleRuler() {
-    const r = ensureRuler();
-    rulerActive = !rulerActive;
-    r.style.display = rulerActive ? "block" : "none";
-    const fab = document.getElementById("naturalread-fab");
-    if (fab) {
-      fab.textContent = rulerActive ? "📏 Ruler ON" : "📏 Focus Ruler";
+  function clearHighlight() {
+    if (activeBlock) {
+      activeBlock.style.outline = "";
+      activeBlock.style.backgroundColor = "";
+      activeBlock = null;
     }
-    return rulerActive;
   }
 
-  document.addEventListener("mousemove", (e) => {
-    if (!rulerActive || !ruler) return;
-    ruler.style.top = `${Math.max(0, e.clientY - 22)}px`;
-  });
+  function readPageParagraphs(rate, pitch) {
+    window.speechSynthesis.cancel();
+    clearHighlight();
+    const sel = window.getSelection().toString().trim();
+    if (sel) {
+      const u = new SpeechSynthesisUtterance(sel);
+      u.rate = rate || 1.25;
+      u.pitch = pitch || 1.0;
+      window.speechSynthesis.speak(u);
+      return sel.slice(0, 400);
+    }
+
+    const blocks = Array.from(document.querySelectorAll("article p, main p, p")).filter(
+      (p) => p.innerText && p.innerText.trim().length > 40
+    ).slice(0, 25);
+
+    let idx = 0;
+    function speakNext() {
+      clearHighlight();
+      if (idx >= blocks.length) return;
+      const el = blocks[idx++];
+      activeBlock = el;
+      el.style.outline = "2px solid #38bdf8";
+      el.style.backgroundColor = "rgba(56, 189, 248, 0.12)";
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      const u = new SpeechSynthesisUtterance(el.innerText.trim());
+      u.rate = rate || 1.25;
+      u.pitch = pitch || 1.0;
+      u.onend = speakNext;
+      window.speechSynthesis.speak(u);
+    }
+    speakNext();
+    return blocks[0] ? blocks[0].innerText.trim().slice(0, 400) : "";
+  }
 
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-    if (msg && msg.type === "NATURALREAD_TOGGLE_RULER") {
-      const state = toggleRuler();
-      sendResponse({ ok: true, rulerActive: state });
-      return false;
+    if (msg && msg.type === "NATURALREAD_READ_PAGE") {
+      const excerpt = readPageParagraphs(msg.rate, msg.pitch);
+      sendResponse({ ok: true, excerpt });
+      return true;
     }
-    if (msg && msg.type === "NATURALREAD_GET_TEXT") {
-      const paras = Array.from(document.querySelectorAll("article p, main p, p"))
-        .map((p) => (p.innerText || p.textContent || "").trim())
-        .filter((t) => t.length > 30);
-      const text = paras.join(" ") || (document.body.innerText || "").trim();
-      sendResponse({ ok: true, text: text.slice(0, 4000) });
-      return false;
+    if (msg && msg.type === "NATURALREAD_STOP") {
+      window.speechSynthesis.cancel();
+      clearHighlight();
+      sendResponse({ ok: true });
+      return true;
     }
   });
-
-  let fab = document.getElementById("naturalread-fab");
-  if (!fab) {
-    fab = document.createElement("div");
-    fab.id = "naturalread-fab";
-    fab.className = "naturalread-fab";
-    fab.title = "NaturalRead: Toggle ADHD/Dyslexia Focus Reading Ruler";
-    fab.textContent = "📏 Focus Ruler";
-    fab.addEventListener("click", toggleRuler);
-    document.body.appendChild(fab);
-  }
 })();

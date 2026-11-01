@@ -102,6 +102,12 @@
         sendResponse({ ok: true, fontScale });
         return true;
       }
+      if (msg.action === "PRINT_NOW") {
+        stripClutter();
+        try { window.print(); } catch (_) {}
+        sendResponse({ ok: true, printed: true });
+        return true;
+      }
     }
   });
 })();

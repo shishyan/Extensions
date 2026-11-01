@@ -1,4 +1,5 @@
 const scriptBox = document.getElementById("scriptBox");
+let isRec = false;
 
 document.getElementById("prompterBtn").addEventListener("click", () => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -12,10 +13,12 @@ document.getElementById("prompterBtn").addEventListener("click", () => {
 
 document.getElementById("recBtn").addEventListener("click", async () => {
   const btn = document.getElementById("recBtn");
-  btn.textContent = "🔴 Ready (HD WebM)";
-  try {
-    if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
-      // Triggered on user gesture in real browser session
+  isRec = !isRec;
+  btn.textContent = isRec ? "⏹️ Stop & Download .WebM" : "✅ Saved .WebM Recording!";
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const tab = tabs && tabs[0];
+    if (tab && tab.id) {
+      chrome.tabs.sendMessage(tab.id, { type: "LOOM_RECORD_TOGGLE" }, () => {});
     }
-  } catch (_) {}
+  });
 });
