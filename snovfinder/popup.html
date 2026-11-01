@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SnovFinder — Bulk Domain Email Harvester & 3-Step Drip Builder</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 410px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  .hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  h2 { margin: 0; font-size: 16px; color: #38bdf8; }
+  .badge { background: rgba(14,165,233,0.2); color: #7dd3fc; border: 1px solid rgba(14,165,233,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  .lbl { font-size: 10px; font-weight: 800; color: #94a3b8; margin: 6px 0 4px; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; font-size: 11px; max-height: 115px; overflow-y: auto; line-height: 1.45; white-space: pre-wrap; }
+  .btns { display: flex; gap: 6px; margin-top: 8px; }
+  button.primary { flex: 1.4; background: #0ea5e9; color: #082f49; border: none; border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 800; cursor: pointer; }
+  button.sec { flex: 1; background: #1e293b; color: #e2e8f0; border: 1px solid #334155; border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 700; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="hdr">
+    <h2>💧 SnovFinder</h2>
+    <span class="badge">Snov.io Pro Unlocked</span>
+  </div>
+  <p class="sub">Bulk Domain Email Harvester & 3-Step Cold Drip Campaign Builder</p>
+
+  <div class="lbl">HARVESTED DOMAIN EMAILS</div>
+  <div class="box" id="emailsBox" style="color:#38bdf8;font-weight:700;"></div>
+
+  <div class="lbl">AUTOMATED 3-STEP DRIP CAMPAIGN (DAY 1 → DAY 3 → DAY 7)</div>
+  <div class="box" id="dripBox"></div>
+
+  <div class="btns">
+    <button class="primary" id="copyDripBtn">📋 Copy 3-Step Sequence</button>
+    <button class="sec" id="exportCsvBtn">⬇️ Emails CSV</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

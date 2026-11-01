@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "RockReach \u2014 Free Executive Social Graph Mapper & Email Confidence Scorer",
+  "short_name": "RockReach",
+  "version": "1.0.0",
+  "description": "100% Free RocketReach alternative: Cross-platform executive social graph mapper (LinkedIn, GitHub, X, Crunchbase), email confidence scorer & cold icebreakers.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "RockReach \u2014 Executive Social Graph & Email Scorer",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "rockreach@gurukuladesam.org",
+      "strict_min_version": "109.0"
+    }
+  }
+}

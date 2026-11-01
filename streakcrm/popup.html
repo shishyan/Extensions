@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>StreakCRM — Kanban Deal Pipeline & Contact CRM</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 385px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #fb923c; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(234,88,12,0.2); color: #fdba74; border: 1px solid rgba(234,88,12,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .stats { display: flex; justify-content: space-between; background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 6px 10px; margin-bottom: 8px; font-size: 11px; }
+  .form { display: flex; gap: 5px; margin-bottom: 8px; }
+  input, select { background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 6px; font-size: 11px; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; max-height: 185px; overflow-y: auto; font-size: 11px; }
+  .row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .row:last-child { border-bottom: none; }
+  .stage-pill { background: rgba(234,88,12,0.2); color: #fb923c; border: 1px solid rgba(234,88,12,0.45); border-radius: 4px; padding: 1px 6px; font-weight: 700; font-size: 10px; }
+  button.act { width: 100%; background: #ea580c; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; margin-top: 8px; }
+</style>
+</head>
+<body>
+  <h2><span>💼 StreakCRM</span><span class="badge">Streak Pro Free</span></h2>
+  <p class="sub">In-Browser Kanban Deal Pipeline & Contact Revenue Tracker</p>
+
+  <div class="stats">
+    <span id="dealCount">📌 Active Deals: 2</span>
+    <span id="pipeVal" style="color:#4ade80;font-weight:700;">💰 Pipeline: $30,500</span>
+  </div>
+
+  <div class="form">
+    <input id="nameInp" placeholder="Account Name" style="width:42%;" />
+    <select id="stageSel" style="width:30%;">
+      <option value="Lead">Lead</option>
+      <option value="Contacted">Contacted</option>
+      <option value="Demo">Demo</option>
+      <option value="Proposal">Proposal</option>
+      <option value="Won">Won</option>
+    </select>
+    <input id="valInp" placeholder="$ Value" value="15000" style="width:28%;" />
+  </div>
+
+  <div id="dealList" class="box"></div>
+  <button id="addBtn" class="act">➕ Add Deal to Kanban Pipeline</button>
+  <script src="popup.js"></script>
+</body>
+</html>

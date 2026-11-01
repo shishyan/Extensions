@@ -1,0 +1,24 @@
+#streakcrm-drawer {
+  background: linear-gradient(135deg, #0f172a 0%, #431407 100%);
+  color: #f8fafc;
+  border: 1px solid #f97316;
+  border-radius: 10px;
+  padding: 9px 14px;
+  margin-bottom: 10px;
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+#streakcrm-drawer button.sc-btn {
+  background: #ea580c;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}

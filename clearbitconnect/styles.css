@@ -1,0 +1,23 @@
+#clearbitconnect-card {
+  background: linear-gradient(145deg, #0f172a 0%, #082f49 100%);
+  color: #f8fafc;
+  border: 1px solid #0ea5e9;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+#clearbitconnect-card .cb-pill {
+  background: rgba(14, 165, 233, 0.22);
+  color: #7dd3fc;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+}

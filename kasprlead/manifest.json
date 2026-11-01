@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "KasprLead \u2014 Free Profile Contact Enricher & 300-Char Connection Composer",
+  "short_name": "KasprLead",
+  "version": "1.0.0",
+  "description": "100% Free Kaspr Pro alternative: Instant profile contact enricher, 300-character LinkedIn/GitHub connection note composer & direct outreach launcher.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "KasprLead \u2014 Profile Enricher & 300-Char Connection Composer",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

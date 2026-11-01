@@ -1,0 +1,22 @@
+#boomerangmail-meter {
+  background: linear-gradient(135deg, #0f172a 0%, #3b0712 100%);
+  color: #f8fafc;
+  border: 1px solid #ef4444;
+  border-radius: 10px;
+  padding: 9px 14px;
+  margin-bottom: 10px;
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+#boomerangmail-meter .bm-pill {
+  background: #16a34a;
+  color: #ffffff;
+  font-weight: 800;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+}

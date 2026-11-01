@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "SnovFinder \u2014 Free Bulk Domain Email Harvester & 3-Step Drip Builder",
+  "short_name": "SnovFinder",
+  "version": "1.0.0",
+  "description": "100% Free Snov.io alternative: Bulk domain email harvester, 3-step cold drip sequence builder (Day 1 Intro, Day 3 Value, Day 7 Breakup) & CSV exporter.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "SnovFinder \u2014 Domain Email Harvester & Drip Campaign Builder",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "snovfinder@gurukuladesam.org",
+      "strict_min_version": "109.0"
+    }
+  }
+}

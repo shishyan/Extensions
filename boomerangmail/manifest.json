@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "BoomerangMail \u2014 Free AI Respondable Scorer, Send-Later & Inbox Pause",
+  "short_name": "BoomerangMail",
+  "version": "1.0.0",
+  "description": "100% Free Boomerang Pro alternative: Real-time Respondable reply-likelihood meter, reading grade analyzer, timezone Send-Later scheduler & Inbox Pause.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "BoomerangMail \u2014 Respondable AI Scorer & Send-Later",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}
