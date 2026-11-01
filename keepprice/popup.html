@@ -3,20 +3,64 @@
 <head>
 <meta charset="utf-8">
 <style>
-  body { width: 350px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, sans-serif; }
-  h2 { margin: 0 0 4px; font-size: 16px; color: #eab308; display: flex; justify-content: space-between; }
+  body { width: 370px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 2px; font-size: 16px; color: #eab308; display: flex; justify-content: space-between; align-items: center; }
   p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 9px; margin-bottom: 8px; font-size: 12px; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px; margin-bottom: 8px; font-size: 12px; }
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+  .badge { background: #16a34a; color: #fff; padding: 2px 7px; border-radius: 99px; font-size: 10px; font-weight: 700; }
   .code { display: inline-block; background: #ca8a04; color: #fff; padding: 3px 7px; border-radius: 4px; margin: 2px; font-family: monospace; font-weight: 700; cursor: pointer; font-size: 11px; }
-  button { width: 100%; background: #eab308; color: #422006; border: none; padding: 8px; border-radius: 6px; font-weight: 700; cursor: pointer; }
+  .code:hover { background: #eab308; color: #422006; }
+  .input-row { display: flex; gap: 6px; margin-top: 6px; }
+  input { flex: 1; background: #0f172a; border: 1px solid #475569; color: #f8fafc; padding: 6px 8px; border-radius: 6px; font-size: 11px; }
+  button { width: 100%; background: #eab308; color: #422006; border: none; padding: 8px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 11px; margin-bottom: 6px; }
+  button.sec { background: #334155; color: #f8fafc; }
+  .watchlist { max-height: 115px; overflow-y: auto; font-size: 11px; }
+  .wl-item { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #334155; }
+  .wl-item:last-child { border-bottom: none; }
+  .del-btn { background: transparent; color: #f87171; width: auto; padding: 2px 5px; margin: 0; font-size: 11px; }
+  svg.spark { width: 100%; height: 42px; margin-top: 6px; background: #0f172a; border-radius: 6px; border: 1px solid #334155; }
 </style>
 </head>
 <body>
-  <h2><span>🏷️ KeepPrice</span><span style="font-size:11px;color:#fde047;">Zero Tracking</span></h2>
-  <p class="sub">Free Keepa & Honey Pro Alternative • Price Watchlist & Coupon Tester</p>
-  <div id="info" class="card">Scanning product prices on active tab...</div>
-  <div id="coupons" class="card">Universal Promo Codes (Click to copy):</div>
-  <button id="trackBtn">Save Product to Price Drop Watchlist</button>
+  <h2><span>🏷️ KeepPrice Pro</span><span style="font-size:11px;color:#fde047;">Zero Affiliate Hijack</span></h2>
+  <p class="sub">Free Keepa, CamelCamelCamel & Honey Alternative</p>
+
+  <div id="info" class="card">Scanning active product tab...</div>
+
+  <div class="card">
+    <div class="row">
+      <strong>📈 30-Day Price History & Deal Score</strong>
+      <span id="dealBadge" class="badge">Deal 88/100</span>
+    </div>
+    <svg id="sparkline" class="spark" viewBox="0 0 240 42" preserveAspectRatio="none">
+      <polyline id="sparkPoly" fill="none" stroke="#eab308" stroke-width="2.2" points="8,14 65,20 120,34 175,18 232,24" />
+    </svg>
+    <div id="historyMeta" style="font-size:10px;color:#94a3b8;margin-top:4px;display:flex;justify-content:space-between;">
+      <span>30d Low: <strong id="lowVal">$44.99</strong></span>
+      <span>30d Avg: <strong id="avgVal">$54.99</strong></span>
+      <span>30d High: <strong id="highVal">$59.99</strong></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row" style="margin-bottom:4px;">
+      <strong>🎟️ Universal Auto-Coupon Tester</strong>
+      <span id="couponStatus" style="font-size:10px;color:#fde047;">8 Promo Codes Ready</span>
+    </div>
+    <div id="coupons"></div>
+    <button id="autoTestBtn" class="sec" style="margin-top:6px;margin-bottom:0;">⚡ 1-Click Auto-Test & Apply Best Coupon</button>
+  </div>
+
+  <div class="card">
+    <strong>🔔 Local Price Drop Watchlist & Target Alert</strong>
+    <div class="input-row">
+      <input id="targetPriceInput" type="number" step="0.01" placeholder="Target Alert Price (e.g. 39.99)">
+      <button id="trackBtn" style="width:auto;margin:0;padding:6px 10px;">+ Watch Drop</button>
+    </div>
+    <div id="watchlistBox" class="watchlist" style="margin-top:6px;"></div>
+  </div>
+
   <script src="popup.js"></script>
 </body>
 </html>

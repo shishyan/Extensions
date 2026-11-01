@@ -1,28 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
+<title>GrammFix Pro — Free AI Grammar, Style & Tone Rewriter</title>
 <style>
-  body { width: 350px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, sans-serif; }
-  h2 { margin: 0 0 6px; font-size: 16px; color: #10b981; display: flex; justify-content: space-between; }
+  * { box-sizing: border-box; }
+  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 16px; color: #10b981; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(16,185,129,0.18); color: #34d399; border: 1px solid rgba(16,185,129,0.4); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
   p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  textarea { width: 100%; height: 110px; box-sizing: border-box; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: #fff; padding: 8px; font-size: 12px; resize: vertical; }
-  .btns { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
-  button { flex: 1; background: #10b981; color: #052e16; border: none; padding: 7px 10px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
-  button.sec { background: #334155; color: #e2e8f0; }
-  #stats { margin-top: 10px; font-size: 11px; color: #cbd5e1; background: #1e293b; padding: 8px; border-radius: 6px; }
+  textarea { width: 100%; height: 120px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: #fff; padding: 9px; font-size: 12px; resize: vertical; outline: none; line-height: 1.45; }
+  textarea:focus { border-color: #10b981; }
+  .btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
+  button { background: #10b981; color: #052e16; border: none; padding: 7px 8px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
+  button.sec { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; }
+  button:hover { opacity: 0.92; }
+  #stats { margin-top: 10px; font-size: 11px; color: #cbd5e1; background: #1e293b; border: 1px solid #334155; padding: 8px 10px; border-radius: 6px; line-height: 1.5; }
+  #issues-list { margin-top: 8px; font-size: 11px; color: #fbbf24; max-height: 90px; overflow-y: auto; }
 </style>
 </head>
 <body>
-  <h2><span>GrammFix Pro</span><span style="font-size:11px;color:#34d399;">100% Free</span></h2>
-  <p class="sub">Free Grammarly + Wordtune Alternative • Grammar, Conciseness & Tone</p>
-  <textarea id="input" placeholder="Paste or type any sentence, email, or paragraph to proofread & rewrite..."></textarea>
+  <h2><span>✨ GrammFix Pro</span><span class="badge">Grammarly + Wordtune Unlocked</span></h2>
+  <p class="sub">Real-time Grammar, Spelling, Passive Voice Fixer, Conciseness & Tone</p>
+  <textarea id="input" placeholder="Paste or type any sentence, email, or paragraph to proofread & rewrite...">In order to make a decision at this point in time, we really need to recieve teh report that was written by the team.</textarea>
   <div class="btns">
-    <button id="checkBtn">Fix Grammar</button>
-    <button id="conciseBtn" class="sec">Make Concise</button>
-    <button id="formalBtn" class="sec">Executive Tone</button>
+    <button id="checkBtn">✅ Fix Grammar</button>
+    <button id="conciseBtn" class="sec">✂️ Make Concise</button>
+    <button id="passiveBtn" class="sec">⚡ Active Voice</button>
+    <button id="formalBtn" class="sec">👔 Executive</button>
+    <button id="friendlyBtn" class="sec">😊 Friendly</button>
+    <button id="copyBtn" class="sec">📋 Copy Text</button>
   </div>
   <div id="stats">Ready — Type above or click inside any webpage input field.</div>
+  <div id="issues-list"></div>
   <script src="popup.js"></script>
 </body>
 </html>

@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "TubeIQ \u2014 Free YouTube SEO, Outlier Finder & Studio Toolkit",
+  "name": "TubeIQ Max \u2014 Free YouTube SEO, Outlier Finder & Studio AI Suite",
   "short_name": "TubeIQ",
-  "version": "1.0.0",
-  "description": "100% Free vidIQ, TubeBuddy & 1of10 alternative: Outlier Multiplier & VPH badges, Live Keyword Explorer, Tag Extractor & 100-pt SEO Scorecard.",
+  "version": "99.0.0",
+  "description": "Surpasses vidIQ Max, TubeBuddy Legend & 1of10: Top-bar Live VPH, Search Keyword Inspector, 100-pt SEO Scorecard, Tag Generator, AI Title Studio & Thumbnail Downloader.",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -11,7 +11,7 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "TubeIQ \u2014 Free YouTube SEO & Outlier Toolkit",
+    "default_title": "TubeIQ Max \u2014 Free YouTube SEO & Outlier Suite",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
@@ -40,15 +40,17 @@
     }
   ],
   "permissions": [
-    "storage"
+    "storage",
+    "clipboardWrite"
   ],
   "host_permissions": [
     "https://suggestqueries.google.com/*",
-    "https://www.youtube.com/*"
+    "https://www.youtube.com/*",
+    "https://studio.youtube.com/*"
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "tubeiq@gurukuladesam.org",
+      "id": "tubeiq@influenzian.org",
       "strict_min_version": "109.0"
     }
   }

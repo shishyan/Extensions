@@ -3,27 +3,55 @@
 <head>
 <meta charset="utf-8">
 <style>
-  body { width: 320px; margin: 0; padding: 14px; background: #090d16; color: #f8fafc; font-family: system-ui, sans-serif; }
-  h2 { margin: 0 0 4px; font-size: 16px; color: #c084fc; display: flex; justify-content: space-between; }
-  p.sub { margin: 0 0 12px; font-size: 11px; color: #94a3b8; }
-  .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 12px; }
-  button { width: 100%; background: #9333ea; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; cursor: pointer; margin-top: 6px; }
-  button.sec { background: #1e293b; border: 1px solid #475569; }
+  body { width: 345px; margin: 0; padding: 14px; background: #090d16; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 2px; font-size: 16px; color: #c084fc; display: flex; justify-content: space-between; align-items: center; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px; margin-bottom: 8px; font-size: 12px; }
+  .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 11px; }
+  .row:last-child { margin-bottom: 0; }
+  input[type="range"] { width: 145px; accent-color: #a855f7; cursor: pointer; }
+  button { width: 100%; background: #9333ea; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; cursor: pointer; margin-bottom: 6px; font-size: 11px; }
+  button.sec { background: #1e293b; border: 1px solid #475569; color: #e2e8f0; }
+  button.active-mode { background: #16a34a; color: #ffffff; }
+  .btn-grid { display: flex; gap: 6px; }
+  .site-pill { font-size: 10px; background: #334155; color: #d8b4fe; padding: 2px 7px; border-radius: 99px; }
 </style>
 </head>
 <body>
-  <h2><span>🌙 DarkZen</span><span style="font-size:11px;color:#d8b4fe;">OLED + Reader</span></h2>
-  <p class="sub">Free Dark Reader Pro & Helperbird Alternative • Smart Dark Theme & Zen Mode</p>
-  <div class="row">
-    <span>Contrast (<span id="cVal">100</span>%)</span>
-    <input type="range" id="contrast" min="80" max="130" value="100">
+  <h2>
+    <span>🌙 DarkZen Pro</span>
+    <span id="siteBadge" class="site-pill">Per-Site Memory</span>
+  </h2>
+  <p class="sub">Free Dark Reader Pro & Helperbird Alternative • OLED + Dyslexia + Zen</p>
+
+  <button id="toggleDark">⚡ Enable OLED Dark Mode on This Site</button>
+
+  <div class="card">
+    <div class="row">
+      <span>Contrast (<strong id="cVal">100</strong>%)</span>
+      <input type="range" id="contrast" min="75" max="135" value="100">
+    </div>
+    <div class="row">
+      <span>Brightness (<strong id="bVal">100</strong>%)</span>
+      <input type="range" id="brightness" min="65" max="125" value="100">
+    </div>
+    <div class="row">
+      <span>Warmth / Blue-Light (<strong id="sVal">10</strong>%)</span>
+      <input type="range" id="sepia" min="0" max="70" value="10">
+    </div>
+    <div class="row">
+      <span>Grayscale E-Ink (<strong id="gVal">0</strong>%)</span>
+      <input type="range" id="grayscale" min="0" max="100" value="0">
+    </div>
   </div>
-  <div class="row">
-    <span>Warmth / Blue-Light (<span id="sVal">10</span>%)</span>
-    <input type="range" id="sepia" min="0" max="60" value="10">
+
+  <div class="btn-grid">
+    <button id="dyslexiaBtn" class="sec">🔤 Dyslexia Font: OFF</button>
+    <button id="resetBtn" class="sec" style="flex:0.65;">↺ Reset</button>
   </div>
-  <button id="toggleDark">Toggle OLED Dark Mode on Tab</button>
-  <button id="readerBtn" class="sec">Open Distraction-Free Zen Reader</button>
+
+  <button id="readerBtn" class="sec" style="margin-bottom:0;border-color:#a855f7;color:#d8b4fe;">📖 Open Distraction-Free Zen Reader</button>
+
   <script src="popup.js"></script>
 </body>
 </html>

@@ -1,27 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
+<title>SurfSEO — 100-Pt On-Page SEO Audit & SERP Keyword Explorer</title>
 <style>
-  body { width: 360px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, sans-serif; }
-  h2 { margin: 0 0 4px; font-size: 16px; color: #38bdf8; display: flex; justify-content: space-between; }
+  * { box-sizing: border-box; }
+  body { width: 390px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 16px; color: #38bdf8; display: flex; justify-content: space-between; align-items: center; }
   p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 9px; margin-bottom: 8px; font-size: 11px; line-height: 1.45; }
-  .kw { display: inline-block; background: #0284c7; color: #fff; padding: 2px 6px; border-radius: 4px; margin: 2px; font-size: 10px; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 9px; margin-bottom: 8px; font-size: 11px; line-height: 1.5; }
+  .kw { display: inline-block; background: #0284c7; color: #fff; padding: 2px 6px; border-radius: 4px; margin: 2px; font-size: 10px; cursor: pointer; }
+  .kw.bg2 { background: #4f46e5; }
   .search { display: flex; gap: 6px; margin-top: 6px; }
-  input { flex: 1; background: #1e293b; border: 1px solid #334155; color: #fff; padding: 6px 8px; border-radius: 6px; font-size: 11px; }
-  button { background: #38bdf8; color: #082f49; border: none; padding: 6px 10px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
+  input { flex: 1; background: #1e293b; border: 1px solid #334155; color: #fff; padding: 7px 9px; border-radius: 6px; font-size: 11px; outline: none; }
+  button { background: #38bdf8; color: #082f49; border: none; padding: 7px 12px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
 </style>
 </head>
 <body>
-  <h2><span>🌊 SurfSEO</span><span id="scoreBadge" style="font-size:12px;color:#34d399;">SEO: --/100</span></h2>
-  <p class="sub">Free Keywords Everywhere, Surfer SEO & Detailed SEO Alternative</p>
-  <div id="audit" class="card">Running On-Page SEO Audit...</div>
+  <h2><span>🌊 SurfSEO Pro</span><span id="scoreBadge" style="font-size:12px;color:#34d399;background:rgba(16,185,129,0.15);padding:2px 8px;border-radius:999px;">SEO: --/100</span></h2>
+  <p class="sub">100-Pt On-Page SEO Audit, NLP 1w/2w Density & SERP Keyword Explorer</p>
+  <div id="audit" class="card">Running 100-Point On-Page SEO Audit...</div>
   <div class="search">
-    <input id="kwInput" placeholder="Enter seed keyword for Google SERP ideas...">
+    <input id="kwInput" placeholder="Enter seed keyword for Google SERP ideas..." value="youtube seo">
     <button id="kwBtn">Explore</button>
   </div>
-  <div id="kwOut" class="card" style="margin-top:8px;">Type a keyword above for instant autocomplete suggestions.</div>
+  <div id="kwOut" class="card" style="margin-top:8px;max-height:130px;overflow-y:auto;">Type a keyword above for instant autocomplete volume & CPC.</div>
   <script src="popup.js"></script>
 </body>
 </html>

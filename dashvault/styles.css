@@ -1,1 +1,6 @@
-/* DashVault styles */
+/* DashVault Field Highlight Styles */
+input.dashvault-filled-field {
+  outline: 2px solid #14b8a6 !important;
+  background-color: rgba(20, 184, 166, 0.08) !important;
+  transition: outline 0.25s ease;
+}

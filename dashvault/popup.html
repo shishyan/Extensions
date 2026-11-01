@@ -3,28 +3,65 @@
 <head>
 <meta charset="utf-8">
 <style>
-  body { width: 350px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, sans-serif; }
-  h2 { margin: 0 0 4px; font-size: 16px; color: #2dd4bf; display: flex; justify-content: space-between; }
+  body { width: 375px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 2px; font-size: 16px; color: #2dd4bf; display: flex; justify-content: space-between; align-items: center; }
   p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  .pw-box { background: #1e293b; border: 1px solid #14b8a6; border-radius: 8px; padding: 10px; font-family: monospace; font-size: 13px; word-break: break-all; text-align: center; color: #5eead4; margin-bottom: 8px; }
-  .row { display: flex; gap: 6px; margin-bottom: 8px; }
-  button { flex: 1; background: #14b8a6; color: #042f2e; border: none; padding: 8px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 11px; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 9px; margin-bottom: 8px; font-size: 11px; }
+  .pw-box { background: #0f172a; border: 1px solid #14b8a6; border-radius: 7px; padding: 9px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; word-break: break-all; text-align: center; color: #5eead4; margin-bottom: 7px; }
+  .row { display: flex; gap: 6px; margin-bottom: 6px; align-items: center; }
+  button { flex: 1; background: #14b8a6; color: #042f2e; border: none; padding: 7px 8px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 11px; }
   button.sec { background: #334155; color: #e2e8f0; }
-  input { width: 100%; box-sizing: border-box; background: #1e293b; border: 1px solid #334155; color: #fff; padding: 7px; border-radius: 6px; font-size: 11px; margin-bottom: 6px; }
+  input { width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid #475569; color: #fff; padding: 6px 8px; border-radius: 6px; font-size: 11px; margin-bottom: 6px; }
+  .vault-list { max-height: 110px; overflow-y: auto; margin-top: 4px; }
+  .vault-item { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #334155; font-size: 11px; }
+  .vault-item:last-child { border-bottom: none; }
+  .mini-btn { flex: 0; width: auto; padding: 3px 7px; font-size: 10px; margin-left: 4px; }
 </style>
 </head>
 <body>
-  <h2><span>🔐 DashVault</span><span style="font-size:11px;color:#5eead4;">Zero-Cloud AES</span></h2>
-  <p class="sub">Free 1Password & Dashlane Alternative • Cryptographic Generator & Local Vault</p>
-  <div id="pwOut" class="pw-box">Generating 24-char cryptographic key...</div>
-  <div class="row">
-    <button id="genBtn">🎲 Regenerate (24c)</button>
-    <button id="copyBtn" class="sec">📋 Copy</button>
-    <button id="fillBtn" class="sec">⚡ Auto-Fill Tab</button>
+  <h2><span>🔐 DashVault Pro</span><span style="font-size:10px;color:#5eead4;">WebCrypto AES-256-GCM</span></h2>
+  <p class="sub">Free 1Password & Dashlane Alternative • Local Encrypted Vault & Breach Auditor</p>
+
+  <div class="card">
+    <div id="pwOut" class="pw-box">Generating 24-char cryptographic key...</div>
+    <div class="row" style="justify-content:space-between;font-size:10px;color:#94a3b8;margin-bottom:6px;">
+      <span>Length: <strong id="lenVal">24</strong> chars</span>
+      <input type="range" id="lenSlider" min="12" max="40" value="24" style="width:120px;margin:0;">
+      <span id="entropyBadge" style="color:#34d399;font-weight:700;">148 bits</span>
+    </div>
+    <div class="row" style="margin-bottom:0;">
+      <button id="genBtn">🎲 Random Key</button>
+      <button id="phraseBtn" class="sec">📝 Passphrase</button>
+      <button id="copyBtn" class="sec">📋 Copy</button>
+      <button id="fillBtn" class="sec">⚡ Auto-Fill</button>
+    </div>
   </div>
-  <input id="breachInput" placeholder="Enter password to check HIBP k-Anonymity breach count...">
-  <button id="breachBtn" class="sec" style="width:100%;">🛡️ Check Password Breach Exposure (SHA-1 Prefix Only)</button>
-  <div id="breachOut" style="font-size:11px;color:#cbd5e1;margin-top:6px;">100% private: only first 5 SHA-1 hex chars leave your browser.</div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <strong>🗄️ AES-GCM Encrypted Local Vault</strong>
+      <span id="vaultDomain" style="font-size:10px;color:#5eead4;">local.site</span>
+    </div>
+    <div class="row">
+      <input id="vaultUser" placeholder="Username / Email (e.g. dev@company.com)" style="margin:0;">
+      <input id="vaultMaster" type="password" placeholder="Vault PIN/Key (optional)" style="margin:0;width:130px;">
+    </div>
+    <div class="row">
+      <button id="saveVaultBtn">🔒 Encrypt & Save Login to Vault</button>
+    </div>
+    <input id="vaultSearch" placeholder="🔍 Search saved domains or usernames..." style="margin-bottom:4px;">
+    <div id="vaultList" class="vault-list"></div>
+  </div>
+
+  <div class="card" style="margin-bottom:0;">
+    <strong>🛡️ HIBP k-Anonymity Breach Auditor (SHA-1 Prefix)</strong>
+    <div class="row" style="margin-top:5px;margin-bottom:0;">
+      <input id="breachInput" placeholder="Password to audit (or leave blank for current)" style="margin:0;">
+      <button id="breachBtn" class="sec" style="flex:0.55;">Audit Now</button>
+    </div>
+    <div id="breachOut" style="font-size:10px;color:#cbd5e1;margin-top:5px;">Zero-knowledge: only first 5 SHA-1 hex chars are queried.</div>
+  </div>
+
   <script src="popup.js"></script>
 </body>
 </html>

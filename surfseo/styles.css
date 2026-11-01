@@ -1,1 +1,43 @@
-/* SurfSEO Styles */
+/* SurfSEO In-Page Google SERP Bar Styles */
+.surfseo-serp-bar {
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #38bdf8;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin: 10px 0 14px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+.surfseo-serp-bar .ss-hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  color: #38bdf8;
+}
+.surfseo-serp-bar .ss-metrics {
+  color: #cbd5e1;
+  font-size: 11px;
+}
+.surfseo-serp-bar .ss-metrics strong {
+  color: #34d399;
+}
+.surfseo-serp-bar .ss-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.surfseo-serp-bar .ss-chip {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #e2e8f0;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.surfseo-serp-bar .ss-chip strong {
+  color: #38bdf8;
+}

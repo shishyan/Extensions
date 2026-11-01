@@ -3,30 +3,59 @@
 <head>
 <meta charset="utf-8">
 <style>
-  body { width: 350px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, sans-serif; }
-  h2 { margin: 0 0 4px; font-size: 16px; color: #60a5fa; display: flex; justify-content: space-between; }
-  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  select, textarea, input { width: 100%; box-sizing: border-box; background: #1e293b; border: 1px solid #334155; color: #fff; padding: 7px; border-radius: 6px; font-size: 11px; margin-bottom: 6px; }
-  textarea { height: 95px; resize: vertical; }
-  .btns { display: flex; gap: 6px; }
-  button { flex: 1; background: #3b82f6; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 11px; }
-  button.sec { background: #334155; }
+  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 2px; font-size: 16px; color: #60a5fa; display: flex; justify-content: space-between; align-items: center; }
+  p.sub { margin: 0 0 8px; font-size: 11px; color: #94a3b8; }
+  label { display: block; font-size: 10px; font-weight: 700; color: #93c5fd; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.04em; }
+  select, textarea, input { width: 100%; box-sizing: border-box; background: #1e293b; border: 1px solid #334155; color: #fff; padding: 6px 8px; border-radius: 6px; font-size: 11px; margin-bottom: 6px; font-family: inherit; }
+  textarea#csvBox { height: 54px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; }
+  textarea#bodyBox { height: 86px; resize: vertical; line-height: 1.4; }
+  .preview-bar { display: flex; justify-content: space-between; align-items: center; background: #1e293b; border: 1px solid #334155; padding: 5px 8px; border-radius: 6px; margin-bottom: 6px; font-size: 11px; }
+  .nav-btn { background: #334155; color: #f8fafc; border: none; padding: 3px 8px; border-radius: 4px; cursor: pointer; font-size: 10px; font-weight: 700; }
+  .btns { display: flex; gap: 6px; margin-top: 2px; }
+  button.primary { flex: 1; background: #3b82f6; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 11px; }
+  button.sec { flex: 1; background: #334155; color: #f8fafc; border: none; padding: 8px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 11px; }
+  #queueBox { margin-top: 6px; max-height: 68px; overflow-y: auto; font-size: 10px; background: #1e293b; border-radius: 6px; padding: 6px; display: none; border: 1px solid #334155; }
+  .q-item { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; border-bottom: 1px solid #334155; }
+  .q-item:last-child { border-bottom: none; }
+  .q-item a { color: #60a5fa; text-decoration: none; font-weight: 700; }
 </style>
 </head>
 <body>
-  <h2><span>✉️ MassMail</span><span style="font-size:11px;color:#93c5fd;">Zero Watermark</span></h2>
-  <p class="sub">Free GMass & Mailtrack Alternative • Merge Templates & Follow-Up Composer</p>
+  <h2><span>✉️ MassMail Pro</span><span style="font-size:11px;color:#93c5fd;">Zero Watermark</span></h2>
+  <p class="sub">Free GMass & Mailtrack Pro Alternative • CSV Mail-Merge & Compose Injector</p>
+
+  <label>1. Select Outreach / Follow-Up Template</label>
   <select id="tplSelect">
     <option value="founder">Template 1: Cold B2B Founder Intro</option>
     <option value="followup">Template 2: 3-Day Gentle Follow-Up</option>
     <option value="collab">Template 3: Creator / Channel Collaboration</option>
+    <option value="sales">Template 4: SaaS Demo & ROI Pitch</option>
+    <option value="recruiting">Template 5: Executive / Engineering Talent Outreach</option>
   </select>
-  <input id="vars" placeholder="Variables: FirstName=Arun, Company=Acme">
-  <textarea id="bodyBox"></textarea>
-  <div class="btns">
-    <button id="insertBtn">⚡ Insert into Gmail / Compose</button>
-    <button id="mailtoBtn" class="sec">📤 Launch Batch Mailto</button>
+
+  <label>2. Multi-Recipient CSV List (Email, FirstName, Company, Role)</label>
+  <textarea id="csvBox" spellcheck="false">arun@acme.io, Arun, Acme Corp, CTO
+priya@zenith.ai, Priya, Zenith AI, Founder
+dev@nova.co, Dev, Nova Labs, Head of Growth</textarea>
+
+  <div class="preview-bar">
+    <button class="nav-btn" id="prevBtn">◀ Prev</button>
+    <span id="recipientBadge" style="color:#cbd5e1;font-weight:600;">Recipient 1 of 3: Arun (Acme Corp)</span>
+    <button class="nav-btn" id="nextBtn">Next ▶</button>
   </div>
+
+  <label>3. Personalized Subject & Body Preview ({{FirstName}}, {{Company}}, {{Role}})</label>
+  <input id="subjectBox" placeholder="Subject line...">
+  <textarea id="bodyBox"></textarea>
+
+  <div class="btns">
+    <button id="insertBtn" class="primary">⚡ Insert into Gmail / Compose</button>
+    <button id="mailtoBtn" class="sec">📤 Launch Batch Sequence</button>
+  </div>
+
+  <div id="queueBox"></div>
+
   <script src="popup.js"></script>
 </body>
 </html>

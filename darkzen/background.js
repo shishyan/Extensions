@@ -1,3 +1,7 @@
 chrome.runtime.onInstalled.addListener(() => {
-  console.log('DarkZen Pro Ready');
+  chrome.storage.local.get({ darkzenSites: {}, darkzenDefault: null }, (data) => {
+    if (!data.darkzenSites) {
+      chrome.storage.local.set({ darkzenSites: {} });
+    }
+  });
 });

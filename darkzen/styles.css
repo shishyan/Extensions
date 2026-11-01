@@ -1,1 +1,40 @@
-/* DarkZen styles */
+/* DarkZen Pro Styles */
+#darkzen-reader-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  background: #090d16;
+  color: #e2e8f0;
+  overflow-y: auto;
+  padding: 40px 20px;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.8;
+  font-size: 19px;
+}
+#darkzen-reader-modal .dz-container {
+  max-width: 720px;
+  margin: 0 auto;
+}
+#darkzen-reader-modal .dz-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+}
+#darkzen-reader-modal button {
+  background: #334155;
+  color: #f8fafc;
+  border: 1px solid #475569;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-left: 6px;
+}
+#darkzen-reader-modal button:hover {
+  background: #475569;
+}

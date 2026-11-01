@@ -1,3 +1,7 @@
 chrome.runtime.onInstalled.addListener(() => {
-  console.log('MassMail Ready');
+  chrome.storage.local.get({ massmailDrafts: {} }, (data) => {
+    if (!data.massmailDrafts) {
+      chrome.storage.local.set({ massmailDrafts: {} });
+    }
+  });
 });

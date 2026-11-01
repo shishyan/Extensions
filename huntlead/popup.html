@@ -1,22 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
+<title>HuntLead — Free B2B Email Finder & Lead Extractor</title>
 <style>
-  body { width: 350px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, sans-serif; }
-  h2 { margin: 0 0 4px; font-size: 16px; color: #f97316; display: flex; justify-content: space-between; }
+  * { box-sizing: border-box; }
+  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 16px; color: #f97316; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(249,115,22,0.18); color: #fb923c; border: 1px solid rgba(249,115,22,0.4); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
   p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 9px; margin-bottom: 8px; font-size: 12px; }
-  .tag { display: inline-block; background: #334155; padding: 3px 7px; border-radius: 4px; margin: 2px; font-family: monospace; font-size: 11px; }
-  button { width: 100%; background: #f97316; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; cursor: pointer; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 9px; margin-bottom: 8px; font-size: 11px; max-height: 120px; overflow-y: auto; }
+  .tag { display: inline-block; background: #334155; color: #f8fafc; padding: 3px 7px; border-radius: 4px; margin: 2px; font-family: monospace; font-size: 11px; cursor: pointer; }
+  .tag:hover { background: #f97316; color: #fff; }
+  .perm-box { display: flex; gap: 6px; margin-bottom: 8px; }
+  input { flex: 1; background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 6px 8px; color: #fff; font-size: 11px; outline: none; }
+  .btns { display: flex; gap: 6px; }
+  button { flex: 1; background: #f97316; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; font-size: 11px; cursor: pointer; }
+  button.sec { background: #334155; }
 </style>
 </head>
 <body>
-  <h2><span>🎯 HuntLead</span><span style="font-size:11px;color:#fb923c;">Unlimited Credits</span></h2>
-  <p class="sub">Free Hunter.io & Apollo Alternative • B2B Email & Domain Lead Finder</p>
+  <h2><span>🎯 HuntLead Pro</span><span class="badge">Hunter + Apollo Unlocked</span></h2>
+  <p class="sub">DOM/Mailto Email Extractor, Phone & Social Finder & Permutator</p>
   <div id="emails" class="card">Scanning page for verified emails...</div>
+  <div id="phones-socials" class="card">Scanning phones & social profiles...</div>
+  <div class="perm-box">
+    <input id="personName" placeholder="Full Name (e.g. Sundar Pichai)" value="Alex Morgan">
+    <input id="domainInput" placeholder="domain.com" value="company.com">
+  </div>
   <div id="patterns" class="card">Corporate domain patterns...</div>
-  <button id="exportBtn">Export Leads CSV</button>
+  <div class="btns">
+    <button id="copyBtn">📋 Copy CSV</button>
+    <button id="exportBtn" class="sec">⬇️ Download Leads CSV</button>
+  </div>
   <script src="popup.js"></script>
 </body>
 </html>

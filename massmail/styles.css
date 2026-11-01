@@ -1,1 +1,5 @@
-/* MassMail styles */
+/* MassMail Compose Highlight Styles */
+.massmail-injected-highlight {
+  outline: 2px solid #3b82f6 !important;
+  transition: outline 0.3s ease;
+}

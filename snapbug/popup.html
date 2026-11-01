@@ -3,23 +3,53 @@
 <head>
 <meta charset="utf-8">
 <style>
-  body { width: 350px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, sans-serif; }
-  h2 { margin: 0 0 4px; font-size: 16px; color: #fb7185; display: flex; justify-content: space-between; }
+  body { width: 370px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 2px; font-size: 16px; color: #fb7185; display: flex; justify-content: space-between; align-items: center; }
   p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
-  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 9px; margin-bottom: 8px; font-size: 11px; font-family: monospace; }
-  button { width: 100%; background: #f43f5e; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; cursor: pointer; margin-bottom: 6px; }
-  button.sec { background: #334155; }
-  img { width: 100%; border-radius: 6px; margin-top: 6px; display: none; border: 1px solid #475569; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 9px; margin-bottom: 8px; font-size: 11px; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .swatches { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+  .swatch { display: inline-flex; align-items: center; gap: 4px; background: #0f172a; border: 1px solid #475569; border-radius: 5px; padding: 3px 6px; font-family: monospace; font-size: 10px; cursor: pointer; }
+  .swatch-dot { width: 10px; height: 10px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.3); }
+  .assets-list { max-height: 75px; overflow-y: auto; margin-top: 5px; font-size: 10px; color: #cbd5e1; }
+  .asset-row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #334155; }
+  .btn-row { display: flex; gap: 6px; margin-bottom: 6px; }
+  button { width: 100%; background: #f43f5e; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 11px; margin-bottom: 6px; }
+  button.sec { background: #334155; color: #f8fafc; }
+  img#preview { width: 100%; max-height: 110px; object-fit: cover; border-radius: 6px; margin-top: 4px; display: none; border: 1px solid #475569; }
 </style>
 </head>
 <body>
-  <h2><span>🐞 SnapBug</span><span style="font-size:11px;color:#fda4af;">Dev & QA Suite</span></h2>
+  <h2><span>🐞 SnapBug Pro</span><span style="font-size:11px;color:#fda4af;">QA + CSS Peeper</span></h2>
   <p class="sub">Free Usersnap, GoFullPage & CSS Peeper Alternative</p>
-  <div id="meta" class="card">Collecting viewport & console telemetry...</div>
-  <button id="snapBtn">📸 Capture HD Screenshot (Download PNG)</button>
-  <button id="inspectBtn" class="sec">🔍 Toggle Live CSS & Box-Model Inspector</button>
-  <button id="copyBugBtn" class="sec">📋 Copy Markdown QA Bug Report</button>
+
+  <div id="meta" class="card mono">Collecting viewport & console telemetry...</div>
+
+  <div class="btn-row">
+    <button id="snapBtn" style="margin:0;">📸 Capture HD PNG</button>
+    <button id="inspectBtn" class="sec" style="margin:0;">🔍 Live CSS Inspector</button>
+  </div>
+
   <img id="preview" alt="Screenshot preview">
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <strong>🎨 CSS Peeper Palette (Click to Copy HEX)</strong>
+      <span id="fontBadge" style="font-size:10px;color:#94a3b8;">Fonts</span>
+    </div>
+    <div id="paletteBox" class="swatches"></div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <strong>🖼️ Page Assets & SVGs (<span id="assetCount">0</span>)</strong>
+      <button id="exportAssetsBtn" class="sec" style="width:auto;padding:2px 7px;margin:0;font-size:10px;">Copy JSON</button>
+    </div>
+    <div id="assetsBox" class="assets-list"></div>
+  </div>
+
+  <button id="copyBugBtn" class="sec" style="margin-bottom:0;border:1px solid #f43f5e;color:#fda4af;">📋 Copy Full Markdown QA Bug Report</button>
+
   <script src="popup.js"></script>
 </body>
 </html>

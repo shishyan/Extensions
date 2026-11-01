@@ -1,3 +1,7 @@
 chrome.runtime.onInstalled.addListener(() => {
-  console.log('DashVault Ready');
+  chrome.storage.local.get({ dashvaultRecords: [], dashvaultSalt: null }, (data) => {
+    if (!data.dashvaultRecords) {
+      chrome.storage.local.set({ dashvaultRecords: [] });
+    }
+  });
 });
