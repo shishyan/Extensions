@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "MomenFocus \u2014 Free Top-3 MIT Focus Bar, Pomodoro Timer & Habit Tracker",
+  "short_name": "MomenFocus",
+  "version": "1.0.0",
+  "description": "100% Free Momentum Plus alternative: Daily Top-3 MIT focus bar, live 25/5 Pomodoro sprint timer, habit streak counter & persistent scratchpad.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "MomenFocus \u2014 Top-3 MIT Focus & Pomodoro Timer",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

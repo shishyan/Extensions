@@ -1,0 +1,55 @@
+{
+  "manifest_version": 3,
+  "name": "OneTab \u2014 Free 1-Click Tab Session Manager, Duplicate Closer & RAM Saver",
+  "short_name": "OneTab",
+  "version": "1.0.0",
+  "description": "100% Free OneTab & Workona Pro alternative: 1-click tab workspace manager, duplicate tab closer, RAM memory saver estimator & Markdown session exporter.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "OneTab \u2014 Tab Session Manager & RAM Saver",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "onetab@gurukuladesam.org",
+      "strict_min_version": "109.0"
+    }
+  }
+}

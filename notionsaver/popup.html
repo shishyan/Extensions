@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NotionSaver — Article-to-Notion Markdown Clipper</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 385px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #f8fafc; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(148,163,184,0.2); color: #e2e8f0; border: 1px solid rgba(148,163,184,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  pre { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; max-height: 205px; overflow-y: auto; font-size: 11px; color: #e2e8f0; white-space: pre-wrap; margin: 0 0 8px; }
+  .btns { display: flex; gap: 6px; }
+  button.act { flex: 1; background: #f8fafc; color: #0f172a; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+  button.act.sec { background: #334155; color: #f8fafc; }
+</style>
+</head>
+<body>
+  <h2><span>📓 NotionSaver</span><span class="badge">Save to Notion Pro</span></h2>
+  <p class="sub">Article-to-Notion Markdown Converter & YAML Frontmatter Exporter</p>
+
+  <pre id="mdOut">---\ntitle: "Web Knowledge Clip"\ntags: ["notion-clip"]\n---</pre>
+
+  <div class="btns">
+    <button id="copyBtn" class="act">📋 Copy Notion .MD</button>
+    <button id="dlBtn" class="act sec">⬇️ Export .MD File</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

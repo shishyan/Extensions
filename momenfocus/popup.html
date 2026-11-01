@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MomenFocus — Top-3 MIT Focus & Pomodoro Timer</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 380px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #c4b5fd; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(139,92,246,0.22); color: #ddd6fe; border: 1px solid rgba(139,92,246,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .pomo { background: #1e293b; border: 1px solid #7c3aed; border-radius: 8px; padding: 10px; text-align: center; margin-bottom: 8px; }
+  .time { font-size: 22px; font-weight: 900; font-family: monospace; color: #c4b5fd; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; margin-bottom: 8px; font-size: 11px; }
+  input { width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 6px 8px; font-size: 11px; margin-bottom: 5px; }
+  button.act { width: 100%; background: #7c3aed; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <h2><span>🎯 MomenFocus</span><span class="badge">Momentum Plus Free</span></h2>
+  <p class="sub">Daily Top-3 MIT Focus Goals, 25/5 Pomodoro Sprint & Streak Tracker</p>
+
+  <div class="pomo">
+    <div class="time" id="pomoClock">25:00</div>
+    <div style="font-size:10px;color:#94a3b8;margin-top:2px;">🔥 7-Day Deep-Work Habit Streak</div>
+  </div>
+
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:5px;">🏆 Today's #1 Most Important Task (MIT)</div>
+    <input id="goalInp" value="Ship zero-error production release" />
+    <button id="saveGoalBtn" class="act">⚡ Sync Focus Goal to Active Tab</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

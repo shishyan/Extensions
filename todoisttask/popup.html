@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TodoistTask — Webpage Task Clipper & Priority Manager</title>
+<style>
+  * { box-sizing: border-box; }
+  body { width: 385px; margin: 0; padding: 14px; background: #0f172a; color: #f8fafc; font-family: system-ui, -apple-system, sans-serif; }
+  h2 { margin: 0 0 4px; font-size: 15px; color: #fca5a5; display: flex; justify-content: space-between; align-items: center; }
+  .badge { background: rgba(220,38,38,0.2); color: #fecaca; border: 1px solid rgba(220,38,38,0.45); padding: 2px 8px; border-radius: 999px; font-size: 10px; }
+  p.sub { margin: 0 0 10px; font-size: 11px; color: #94a3b8; }
+  .form { display: flex; gap: 5px; margin-bottom: 8px; }
+  input, select { background: #1e293b; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 6px; font-size: 11px; }
+  .box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 8px; max-height: 190px; overflow-y: auto; font-size: 11px; margin-bottom: 8px; }
+  .row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .row:last-child { border-bottom: none; }
+  .p-tag { background: #dc2626; color: #fff; font-weight: 800; font-size: 10px; padding: 1px 6px; border-radius: 4px; }
+  button.act { width: 100%; background: #dc2626; color: #fff; border: none; padding: 8px; border-radius: 6px; font-weight: 800; font-size: 11px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <h2><span>✅ TodoistTask</span><span class="badge">Todoist Pro Free</span></h2>
+  <p class="sub">1-Click Webpage/Selection Task Clipper & P1–P4 Priority Manager</p>
+
+  <div class="form">
+    <input id="taskInp" placeholder="Task title..." style="width:52%;" />
+    <select id="prioSel" style="width:22%;">
+      <option value="P1">P1</option>
+      <option value="P2">P2</option>
+      <option value="P3">P3</option>
+      <option value="P4">P4</option>
+    </select>
+    <select id="dueSel" style="width:26%;">
+      <option value="Today">Today</option>
+      <option value="Tomorrow">Tomorrow</option>
+      <option value="Next Week">Next Week</option>
+    </select>
+  </div>
+
+  <div id="taskList" class="box"></div>
+  <button id="addBtn" class="act">➕ Add Actionable Task</button>
+  <script src="popup.js"></script>
+</body>
+</html>

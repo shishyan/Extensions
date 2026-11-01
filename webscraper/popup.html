@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WebScraper Studio</title>
+  <style>
+    body {
+      width: 380px;
+      margin: 0;
+      padding: 14px;
+      background: #064e3b;
+      color: #ecfdf5;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 12px;
+    }
+    h2 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      color: #34d399;
+    }
+    .toolbar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    button {
+      background: #10b981;
+      color: #022c22;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      flex: 1;
+    }
+    button:hover {
+      background: #34d399;
+    }
+    pre {
+      background: #022c22;
+      border: 1px solid #047857;
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 10px;
+      max-height: 180px;
+      overflow: auto;
+      color: #a7f3d0;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <h2>🕷️ WebScraper — Auto Pattern Extractor</h2>
+  <div class="toolbar">
+    <button id="ws-csv">Export CSV</button>
+    <button id="ws-json">Export JSON</button>
+    <button id="ws-md">Markdown Table</button>
+  </div>
+  <pre id="ws-output">Scanning DOM for repeating tables & lists...</pre>
+  <script src="popup.js"></script>
+</body>
+</html>

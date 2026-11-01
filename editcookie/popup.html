@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EditCookie Inspector</title>
+  <style>
+    body {
+      width: 370px;
+      margin: 0;
+      padding: 14px;
+      background: #1c1917;
+      color: #f5f5f4;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 12px;
+    }
+    h2 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      color: #fbbf24;
+    }
+    .card {
+      background: #292524;
+      border: 1px solid #44403c;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    input, select {
+      background: #1c1917;
+      border: 1px solid #57534e;
+      color: #f5f5f4;
+      border-radius: 5px;
+      padding: 5px 7px;
+      font-size: 11px;
+      flex: 1;
+    }
+    button {
+      background: #d97706;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.secondary {
+      background: #44403c;
+    }
+    button.danger {
+      background: #dc2626;
+    }
+    pre {
+      background: #0c0a09;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 10px;
+      max-height: 110px;
+      overflow: auto;
+      color: #fcd34d;
+      margin: 6px 0 0;
+    }
+  </style>
+</head>
+<body>
+  <h2>🍪 EditCookie & Storage Studio</h2>
+  <div class="card">
+    <div style="font-weight:600;margin-bottom:6px;">Set Cookie or LocalStorage Item</div>
+    <div class="row">
+      <select id="ec-target" style="flex:0.8">
+        <option value="cookie">Cookie</option>
+        <option value="localStorage">localStorage</option>
+      </select>
+      <input id="ec-key" placeholder="Key (e.g. session_id)" value="debug_session" />
+      <input id="ec-val" placeholder="Value" value="active_2026" />
+    </div>
+    <div class="row">
+      <button id="ec-save-btn">Save Key-Value</button>
+      <button id="ec-export-btn" class="secondary">Export JSON</button>
+      <button id="ec-clear-btn" class="danger">Wipe Site Storage</button>
+    </div>
+  </div>
+  <div class="card">
+    <div style="font-weight:600;">Live Storage Snapshot</div>
+    <pre id="ec-output">Loading active tab cookies & storage...</pre>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

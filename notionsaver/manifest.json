@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "NotionSaver \u2014 Free Article-to-Notion Markdown Clipper & YAML Frontmatter",
+  "short_name": "NotionSaver",
+  "version": "1.0.0",
+  "description": "100% Free Save to Notion Pro alternative: 1-click article-to-clean-Markdown converter, YAML frontmatter generator, callout blocks & .MD exporter.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "NotionSaver \u2014 Article-to-Notion Markdown Clipper",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "ForestBlock \u2014 Free Distraction Site Shield & Deep-Work Tree Grower",
+  "short_name": "ForestBlock",
+  "version": "1.0.0",
+  "description": "100% Free BlockSite Premium & Forest alternative: Distraction site shield, deep-work focus tree grower & domain time-budget enforcer.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ForestBlock \u2014 Distraction Blocker & Focus Tree Grower",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "forestblock@gurukuladesam.org",
+      "strict_min_version": "109.0"
+    }
+  }
+}
