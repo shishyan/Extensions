@@ -1,431 +1,637 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Influenzian Open Extensions — 100% Free Store & Direct Sideload Hub</title>
-  <meta name="description" content="Download and sideload 100 production-ready, zero-paywall browser extensions replacing the top 100 commercial paid extensions for Chrome, Edge, and Firefox." />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#fafafa">
+  <meta name="description" content="100% Free, zero-paywall browser extensions hub replacing top paid commercial extensions for Chrome, Edge, and Firefox.">
+  <title>Influenzian Open Extensions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     :root {
-      --bg: #070b14;
-      --card: #0f172a;
-      --card-hover: #1e293b;
-      --border: #334155;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --accent: #6366f1;
-      --emerald: #10b981;
-      --sky: #38bdf8;
-      --amber: #f59e0b;
-      --rose: #f43f5e;
+      color-scheme: light;
+      --app-bg: transparent;
+      --ink: #172033;
+      --ink-soft: #344054;
+      --muted: #667085;
+      --line: rgba(15, 23, 42, .10);
+      --line-strong: rgba(15, 23, 42, .17);
+      --glass-strong: rgba(255, 255, 255, .97);
+      --glass: rgba(255, 255, 255, .93);
+      --glass-soft: rgba(248, 250, 252, .92);
+      --glass-hover: #ffffff;
+      --solid: #ffffff;
+      --accent: #0f766e;
+      --accent-hover: #0b5f59;
+      --accent-soft: rgba(15, 118, 110, .09);
+      --study: #7c3aed;
+      --study-soft: rgba(124, 58, 237, .09);
+      --green: #15803d;
+      --green-soft: rgba(21, 128, 61, .09);
+      --amber: #c47a0a;
+      --amber-soft: rgba(196, 122, 10, .09);
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, .05), 0 1px 4px rgba(15, 23, 42, .04);
+      --shadow: 0 18px 48px rgba(15, 23, 42, .08);
+      --radius: 13px;
+      --sidebar: 260px;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { min-width: 320px; background-color: #fafafa; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
-      background: radial-gradient(circle at top, #172554 0%, var(--bg) 60%);
-      color: var(--text);
-      line-height: 1.55;
-      padding-bottom: 80px;
-    }
-    a { color: var(--sky); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    header {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 50px 24px 24px;
-      text-align: center;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 18px;
-      border-radius: 999px;
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      color: #34d399;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-    h1 {
-      font-size: clamp(30px, 4.5vw, 52px);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      margin-bottom: 12px;
-      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #38bdf8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .subtitle {
-      max-width: 800px;
-      margin: 0 auto 28px;
-      color: var(--muted);
-      font-size: 17px;
+      min-height: 100vh;
+      background-color: #fafafa;
+      background-image:
+        radial-gradient(circle 800px at 10% 10%, rgba(13, 148, 136, 0.035), transparent),
+        radial-gradient(circle 800px at 90% 20%, rgba(124, 58, 237, 0.035), transparent),
+        linear-gradient(rgba(15, 23, 42, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+      background-attachment: fixed;
+      color: var(--ink);
+      font: 14px/1.55 Manrope, "Segoe UI", system-ui, sans-serif;
+      display: flex;
     }
 
-    /* Direct Sideload Instructions Box */
-    .guide-box {
-      max-width: 1240px;
-      margin: 0 auto 36px;
-      padding: 24px;
-      border-radius: 16px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    /* Left Sidebar Navigation */
+    aside#sidebar {
+      width: var(--sidebar);
+      flex: 0 0 var(--sidebar);
+      min-height: 100vh;
+      background: var(--glass-strong);
+      border-right: 1px solid var(--line);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      backdrop-filter: blur(12px);
     }
-    .guide-title {
-      font-size: 18px;
-      font-weight: 800;
-      color: #38bdf8;
+    .brand {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
+      gap: 10px;
+      padding: 0 8px 20px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 18px;
     }
-    .guide-steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .step-card {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid rgba(71, 85, 105, 0.4);
-      border-radius: 10px;
-      padding: 16px;
-    }
-    .step-num {
-      font-size: 12px;
+    .brand-copy b {
+      font-size: 15px;
       font-weight: 800;
-      color: #a5b4fc;
+      color: var(--ink);
+      display: block;
+      line-height: 1.2;
+    }
+    .brand-copy small {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .nav-section-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 10px 10px 6px;
+    }
+    .nav-list {
+      list-style: none;
+      margin-bottom: 16px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: var(--ink-soft);
+      font-weight: 600;
+      font-size: 13.5px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .nav-item:hover, .nav-item.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .nav-badge {
+      margin-left: auto;
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.12);
+      color: var(--accent);
+    }
+
+    /* Main App Shell */
+    .app-shell {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    header.app-header {
+      background: var(--glass);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 28px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .persona-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: var(--green-soft);
+      border: 1px solid rgba(21, 128, 61, 0.2);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .topbar-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .topbar-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--ink-soft);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 7px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .topbar-link:hover {
+      background: var(--line);
+      color: var(--ink);
+    }
+
+    main.content {
+      padding: 32px 36px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Sideload Instruction Card */
+    .guide-card {
+      background: var(--glass-strong);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+    .guide-card-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .guide-card-head h2 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+    .step-box {
+      background: var(--solid);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .step-badge {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent);
       text-transform: uppercase;
       margin-bottom: 4px;
     }
-    .step-text {
-      font-size: 13.5px;
-      color: #e2e8f0;
+    .step-desc {
+      font-size: 13px;
+      color: var(--ink-soft);
     }
-    .step-code {
-      display: inline-block;
-      background: #090d16;
-      border: 1px solid #1e293b;
-      border-radius: 4px;
-      padding: 2px 6px;
+    .code-pill {
       font-family: monospace;
-      color: #38bdf8;
-      font-size: 12px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-weight: 700;
     }
 
-    /* Featured Hero Section: TubeMetrix */
-    .hero-card {
-      max-width: 1240px;
-      margin: 0 auto 40px;
+    /* Featured Flagship Hero */
+    .hero-box {
+      background: var(--solid);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       padding: 32px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(30, 58, 138, 0.35) 0%, rgba(15, 23, 42, 0.95) 70%);
-      border: 2px solid #38bdf8;
-      box-shadow: 0 16px 40px rgba(56, 189, 248, 0.15);
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 28px;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 32px;
       align-items: center;
+      margin-bottom: 36px;
     }
-    @media (max-width: 900px) {
-      .hero-card { grid-template-columns: 1fr; }
+    @media (max-width: 990px) {
+      .hero-box { grid-template-columns: 1fr; }
+      aside#sidebar { display: none; }
     }
     .hero-tag {
       display: inline-block;
-      padding: 4px 12px;
-      border-radius: 6px;
-      background: #dc2626;
-      color: #fff;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--accent);
+      color: #fff;
       text-transform: uppercase;
       margin-bottom: 12px;
     }
     .hero-title {
-      font-size: 32px;
+      font-size: 30px;
       font-weight: 900;
-      line-height: 1.2;
-      margin-bottom: 12px;
+      color: var(--ink);
+      line-height: 1.25;
+      margin-bottom: 10px;
     }
     .hero-desc {
-      color: #cbd5e1;
-      font-size: 15px;
-      margin-bottom: 20px;
+      font-size: 14.5px;
+      color: var(--ink-soft);
+      margin-bottom: 18px;
     }
-    .hero-features {
-      list-style: none;
-      margin-bottom: 24px;
+    .hero-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 8px 16px;
+      margin-bottom: 22px;
     }
-    .hero-features li {
-      font-size: 13px;
-      color: #e2e8f0;
+    .hero-grid div {
       display: flex;
       align-items: center;
       gap: 6px;
+      font-size: 13px;
+      color: var(--ink-soft);
+      font-weight: 600;
     }
-    .hero-actions {
+    .hero-btns {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 10px 20px;
+      gap: 7px;
+      padding: 9px 18px;
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 700;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s;
       text-decoration: none !important;
+      transition: all 0.15s;
     }
-    .btn-primary { background: #3b82f6; color: #fff; }
-    .btn-primary:hover { background: #2563eb; }
-    .btn-emerald { background: #10b981; color: #fff; }
-    .btn-emerald:hover { background: #059669; }
-    .btn-secondary { background: #1e293b; color: #f8fafc; border: 1px solid #475569; }
-    .btn-secondary:hover { background: #334155; }
-    .hero-preview {
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: var(--glass-soft); color: var(--ink-soft); border: 1px solid var(--line-strong); }
+    .btn-secondary:hover { background: var(--solid); color: var(--ink); }
+    .btn-subtle { background: var(--accent-soft); color: var(--accent); }
+    .btn-subtle:hover { background: rgba(15, 118, 110, 0.15); }
+    .hero-img {
       width: 100%;
-      border-radius: 12px;
-      border: 1px solid #334155;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      border-radius: 10px;
+      border: 1px solid var(--line-strong);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
     }
 
-    /* Search & Filter Toolbar */
-    .toolbar {
-      max-width: 1240px;
-      margin: 0 auto 24px;
+    /* Filter & Search Bar */
+    .filter-bar {
       display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
     }
-    .search-input {
+    .search-box {
       flex: 1;
       min-width: 280px;
-      padding: 12px 18px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: #fff;
-      font-size: 15px;
-      outline: none;
+      position: relative;
     }
-    .search-input:focus { border-color: var(--sky); }
+    .search-box input {
+      width: 100%;
+      padding: 11px 16px 11px 40px;
+      background: var(--solid);
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      font-size: 14px;
+      outline: none;
+      box-shadow: var(--shadow-sm);
+    }
+    .search-box input:focus { border-color: var(--accent); }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+    .count-badge {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
 
-    /* Catalog Grid */
-    .grid {
-      max-width: 1240px;
-      margin: 0 auto;
+    /* Catalog Cards Grid */
+    .catalog-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
       gap: 20px;
     }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
+    .item-card {
+      background: var(--solid);
+      border: 1px solid var(--line);
+      border-radius: 12px;
       padding: 20px;
+      box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.15s, border-color 0.15s;
+      transition: all 0.15s;
     }
-    .card:hover {
+    .item-card:hover {
+      box-shadow: var(--shadow);
+      border-color: rgba(15, 118, 110, 0.35);
       transform: translateY(-2px);
-      border-color: rgba(56, 189, 248, 0.4);
     }
-    .card-top {
+    .card-head {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .card-title {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
-      color: #fff;
+      color: var(--ink);
     }
-    .badge {
+    .card-ver {
       font-size: 11px;
       font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 6px;
-      background: rgba(99, 102, 241, 0.2);
-      color: #a5b4fc;
-      border: 1px solid rgba(99, 102, 241, 0.4);
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 2px 7px;
+      border-radius: 5px;
     }
-    .card-desc {
+    .card-body {
+      font-size: 13px;
       color: var(--muted);
-      font-size: 13.5px;
-      margin-bottom: 16px;
       line-height: 1.5;
+      margin-bottom: 16px;
     }
-    .card-actions {
+    .card-foot {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      padding-top: 14px;
-      border-top: 1px solid rgba(51, 65, 85, 0.6);
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
     }
     .btn-sm {
-      padding: 6px 12px;
+      padding: 5px 11px;
       font-size: 12px;
       border-radius: 6px;
     }
 
-    footer {
-      max-width: 1240px;
-      margin: 60px auto 0;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
+    /* Footer */
+    footer.app-footer {
+      max-width: 1400px;
+      margin: 40px auto 0;
+      padding: 24px 36px 0;
+      border-top: 1px solid var(--line);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 14px;
+      font-size: 13px;
+      color: var(--muted);
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="pill">⚡ 100% Free • Open Source • Zero Telemetry</div>
-    <h1>Influenzian Open Extensions Hub</h1>
-    <p class="subtitle">
-      Direct downloads and 1-click sideload packages for all 100 extensions replacing famous paid extensions (vidIQ, Grammarly Pro, Hunter.io, SurferSEO, Keepa, Apollo.io, Loom, and 93 more).
-    </p>
-  </header>
+  <!-- Left Sidebar Navigation Shell -->
+  <aside id="sidebar" aria-label="Primary navigation">
+    <div class="brand">
+      <span class="brand-mark"><i data-lucide="blocks"></i></span>
+      <div class="brand-copy">
+        <b>Influenzian</b>
+        <small>Extensions Hub</small>
+      </div>
+    </div>
 
-  <!-- Sideload Guide -->
-  <section class="guide-box">
-    <div class="guide-title">
-      <span>🚀 How to Sideload & Install Any Extension in 30 Seconds</span>
-    </div>
-    <div class="guide-steps">
-      <div class="step-card">
-        <div class="step-num">Step 1 — Download & Unzip</div>
-        <div class="step-text">Click <strong>Download Chrome ZIP</strong> on any extension below. Right-click the downloaded file and select <strong>Extract All</strong>.</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">Step 2 — Open Extensions Page</div>
-        <div class="step-text">Open Google Chrome or Edge and navigate to <span class="step-code">chrome://extensions</span> (or <span class="step-code">edge://extensions</span>).</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">Step 3 — Turn On Developer Mode</div>
-        <div class="step-text">Toggle the <strong>Developer mode</strong> switch in the top right corner of the extensions page.</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">Step 4 — Load Unpacked</div>
-        <div class="step-text">Click <strong>Load unpacked</strong> (top left) and select the extracted folder. That's it—active immediately!</div>
-      </div>
-    </div>
-  </section>
+    <div class="nav-section-title">Navigation</div>
+    <ul class="nav-list">
+      <li><a class="nav-item active" href="#"><i data-lucide="layout-grid"></i> All Extensions <span class="nav-badge">100</span></a></li>
+      <li><a class="nav-item" href="#sideload"><i data-lucide="download"></i> Sideload Guide</a></li>
+      <li><a class="nav-item" href="#tubemetrix"><i data-lucide="zap"></i> TubeMetrix Pro</a></li>
+    </ul>
 
-  <!-- Featured TubeMetrix Showcase -->
-  <section class="hero-card">
-    <div>
-      <span class="hero-tag">🔥 Featured Flagship Extension (#1)</span>
-      <h2 class="hero-title">TubeMetrix — Complete YouTube SEO & Outlier Suite</h2>
-      <p class="hero-desc">
-        Full 100% free parity replacement for vidIQ Max, TubeBuddy Legend, and 1of10. Real SERP demand vs competition metrics, viral outlier badges on video thumbnails, speaking pace WPM, and live YouTube Studio upload optimizer.
-      </p>
-      <ul class="hero-features">
-        <li>⚡ Real-time SERP Demand/Competition score</li>
-        <li>🔥 Thumbnail Outlier & VPH Badges (2.5x+)</li>
-        <li>📜 Instant Transcript & 1-Click Auto Chapters</li>
-        <li>🏷️ Live Top-20 Tag Ranks & Tripled Keywords</li>
-        <li>📈 Channel Health Card & 5 vidIQ Presets</li>
-        <li>💬 Comment Intelligence & Canned Replies</li>
-      </ul>
-      <div class="hero-actions">
-        <a class="btn btn-emerald" href="downloads/tubemetrix-chrome-edge.zip" download>⬇ Download Chrome/Edge ZIP</a>
-        <a class="btn btn-primary" href="downloads/tubemetrix-firefox.zip" download>⬇ Download Firefox ZIP</a>
-        <a class="btn btn-secondary" href="downloads/tubemetrix-cws.zip" download>📦 Clean CWS Upload ZIP</a>
-      </div>
-    </div>
-    <div>
-      <img class="hero-preview" src="assets/store-assets/tubemetrix/screenshot-1-watch-inspector.png" alt="TubeMetrix Watch Inspector Screenshot" />
-    </div>
-  </section>
+    <div class="nav-section-title">Ecosystem Links</div>
+    <ul class="nav-list">
+      <li><a class="nav-item" href="https://shishyan.github.io/Home-Manager/" target="_blank"><i data-lucide="home"></i> Home Manager</a></li>
+      <li><a class="nav-item" href="https://guru.shishyan.in" target="_blank"><i data-lucide="globe"></i> Guru Kula Desam</a></li>
+      <li><a class="nav-item" href="https://games.shishyan.in" target="_blank"><i data-lucide="gamepad-2"></i> World of Dharma</a></li>
+      <li><a class="nav-item" href="https://github.com/shishyan/Extensions" target="_blank"><i data-lucide="github"></i> GitHub Source</a></li>
+    </ul>
 
-  <!-- Catalog Toolbar -->
-  <div class="toolbar">
-    <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search 100 extensions by name, replacement (e.g. vidIQ, Grammarly, Apollo), or feature..." />
-    <span id="counter" style="color:var(--muted);font-size:14px;font-weight:700;">Showing 100 extensions</span>
+    <div style="margin-top:auto;padding-top:16px;border-top:1px solid var(--line);">
+      <a class="nav-item" href="https://paypal.me/influenzian" target="_blank" style="color:var(--green);"><i data-lucide="heart"></i> Support & Donate</a>
+    </div>
+  </aside>
+
+  <!-- Main Shell -->
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="topbar">
+        <div class="topbar-left">
+          <span class="persona-badge"><i data-lucide="shield-check" style="width:14px;height:14px;"></i> 100% Free & Open Source</span>
+          <span style="font-size:13.5px;font-weight:700;color:var(--ink-soft);">Zero Paywalls • Zero Telemetry</span>
+        </div>
+        <div class="topbar-links">
+          <a href="https://github.com/shishyan/Extensions" target="_blank" class="topbar-link"><i data-lucide="github"></i> GitHub</a>
+          <a href="privacy.html" class="topbar-link"><i data-lucide="shield"></i> Privacy</a>
+          <a href="https://paypal.me/influenzian" target="_blank" class="topbar-link" style="color:var(--green);font-weight:800;"><i data-lucide="heart"></i> Donate</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <!-- Sideload Guide Card -->
+      <section id="sideload" class="guide-card">
+        <div class="guide-card-head">
+          <i data-lucide="terminal" style="color:var(--accent);"></i>
+          <h2>How to Sideload Any Extension in 30 Seconds</h2>
+        </div>
+        <div class="steps-grid">
+          <div class="step-box">
+            <div class="step-badge">Step 1 — Download & Extract</div>
+            <div class="step-desc">Click <strong>Chrome / Edge</strong> on any card below to download the ZIP. Extract it to a folder.</div>
+          </div>
+          <div class="step-box">
+            <div class="step-badge">Step 2 — Open Extensions</div>
+            <div class="step-desc">Navigate to <span class="code-pill">chrome://extensions</span> or <span class="code-pill">edge://extensions</span> in your browser.</div>
+          </div>
+          <div class="step-box">
+            <div class="step-badge">Step 3 — Developer Mode</div>
+            <div class="step-desc">Toggle the <strong>Developer mode</strong> switch in the top-right corner of the page.</div>
+          </div>
+          <div class="step-box">
+            <div class="step-badge">Step 4 — Load Unpacked</div>
+            <div class="step-desc">Click <strong>Load unpacked</strong> and select the extracted folder. Active immediately!</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Flagship Hero -->
+      <section id="tubemetrix" class="hero-box">
+        <div>
+          <span class="hero-tag">Flagship #1</span>
+          <h1 class="hero-title">TubeMetrix — Complete YouTube SEO & Outlier Suite</h1>
+          <p class="hero-desc">
+            100% free parity replacement for vidIQ Max, TubeBuddy Legend, and 1of10. Real SERP demand/competition scores, live viral outlier badges on video thumbnails, speaking pace WPM, and studio upload optimizer.
+          </p>
+          <div class="hero-grid">
+            <div><i data-lucide="check" style="color:var(--green);"></i> Real Demand/Comp Score</div>
+            <div><i data-lucide="check" style="color:var(--green);"></i> Thumbnail Outlier & VPH Badges</div>
+            <div><i data-lucide="check" style="color:var(--green);"></i> TimedText Transcript & Chapters</div>
+            <div><i data-lucide="check" style="color:var(--green);"></i> Live #1-#20 Search Tag Ranks</div>
+            <div><i data-lucide="check" style="color:var(--green);"></i> 5 vidIQ Channel Preset Sorters</div>
+            <div><i data-lucide="check" style="color:var(--green);"></i> Comment Sentiment & Filter Bar</div>
+          </div>
+          <div class="hero-btns">
+            <a class="btn btn-primary" href="downloads/tubemetrix-chrome-edge.zip" download><i data-lucide="download"></i> Download Chrome / Edge</a>
+            <a class="btn btn-secondary" href="downloads/tubemetrix-firefox.zip" download><i data-lucide="download"></i> Download Firefox</a>
+            <a class="btn btn-subtle" href="downloads/tubemetrix-cws.zip" download><i data-lucide="archive"></i> Clean CWS ZIP</a>
+          </div>
+        </div>
+        <div>
+          <img class="hero-img" src="assets/store-assets/tubemetrix/screenshot-1-watch-inspector.png" alt="TubeMetrix Watch Inspector UI" />
+        </div>
+      </section>
+
+      <!-- Catalog Filter Bar -->
+      <div class="filter-bar">
+        <div class="search-box">
+          <i data-lucide="search" class="search-icon"></i>
+          <input type="text" id="searchInput" placeholder="Search 100 extensions (e.g. vidIQ, Grammarly, Hunter, Keepa, Apollo)..." />
+        </div>
+        <span class="count-badge" id="countBadge">Showing 100 extensions</span>
+      </div>
+
+      <!-- Catalog Grid -->
+      <div class="catalog-grid" id="catalogGrid"></div>
+
+      <footer class="app-footer">
+        <div>© Influenzian Group • Built with Google DeepMind Antigravity</div>
+        <div style="display:flex;gap:16px;">
+          <a href="https://github.com/shishyan/Extensions" target="_blank" style="color:var(--ink-soft);text-decoration:none;">GitHub</a>
+          <a href="privacy.html" style="color:var(--ink-soft);text-decoration:none;">Privacy Policy</a>
+          <a href="https://paypal.me/influenzian" target="_blank" style="color:var(--green);font-weight:700;text-decoration:none;">Donate</a>
+        </div>
+      </footer>
+    </main>
   </div>
 
-  <!-- Catalog Grid -->
-  <main class="grid" id="extensionsGrid"></main>
-
-  <footer>
-    <div>© Influenzian Group • Built with Google DeepMind Antigravity</div>
-    <div>
-      <a href="https://gitlab.com/influenzian-group/Extensions" target="_blank" style="margin-right:16px;">GitLab Repository</a>
-      <a href="privacy.html" style="margin-right:16px;">Privacy Policy</a>
-      <a href="https://paypal.me/influenzian" target="_blank" style="color:#34d399;font-weight:700;">Donate</a>
-    </div>
-  </footer>
-
   <script>
-    let allExtensions = [];
+    let extensionsData = [];
 
-    async function loadCatalog() {
+    async function initCatalog() {
       try {
-        const res = await fetch("extensions.json");
-        allExtensions = await res.json();
-        render(allExtensions);
-      } catch (e) {
-        console.error("Failed to load catalog", e);
+        const resp = await fetch("extensions.json");
+        extensionsData = await resp.json();
+        render(extensionsData);
+        lucide.createIcons();
+      } catch (err) {
+        console.error("Failed to load catalog", err);
       }
     }
 
     function render(list) {
-      const grid = document.getElementById("extensionsGrid");
-      const counter = document.getElementById("counter");
-      counter.textContent = `Showing ${list.length} extensions`;
+      const grid = document.getElementById("catalogGrid");
+      const badge = document.getElementById("countBadge");
+      badge.textContent = `Showing ${list.length} extensions`;
 
       grid.innerHTML = list.map((item, idx) => `
-        <div class="card">
+        <div class="item-card">
           <div>
-            <div class="card-top">
-              <div class="card-title">#${idx + 1} ${item.short_name || item.name}</div>
-              <span class="badge">v${item.version}</span>
+            <div class="card-head">
+              <span class="card-title">#${idx + 1} ${item.short_name || item.name}</span>
+              <span class="card-ver">v${item.version}</span>
             </div>
-            <p class="card-desc">${item.description}</p>
+            <p class="card-body">${item.description}</p>
           </div>
-          <div class="card-actions">
-            <a class="btn btn-primary btn-sm" href="${item.chrome_zip}" download>Chrome / Edge</a>
-            <a class="btn btn-secondary btn-sm" href="${item.firefox_zip}" download>Firefox</a>
-            <a class="btn btn-emerald btn-sm" href="${item.cws_zip}" download>Store ZIP</a>
+          <div class="card-foot">
+            <a class="btn btn-primary btn-sm" href="${item.chrome_zip}" download><i data-lucide="download" style="width:13px;height:13px;"></i> Chrome</a>
+            <a class="btn btn-secondary btn-sm" href="${item.firefox_zip}" download><i data-lucide="download" style="width:13px;height:13px;"></i> Firefox</a>
+            <a class="btn btn-subtle btn-sm" href="${item.cws_zip}" download>Store ZIP</a>
           </div>
         </div>
       `).join("");
+      lucide.createIcons();
     }
 
     document.getElementById("searchInput").addEventListener("input", (e) => {
       const q = e.target.value.toLowerCase().trim();
       if (!q) {
-        render(allExtensions);
+        render(extensionsData);
         return;
       }
-      const filtered = allExtensions.filter(it => 
+      const filtered = extensionsData.filter(it => 
         (it.name && it.name.toLowerCase().includes(q)) ||
         (it.short_name && it.short_name.toLowerCase().includes(q)) ||
         (it.description && it.description.toLowerCase().includes(q)) ||
@@ -434,7 +640,7 @@
       render(filtered);
     });
 
-    loadCatalog();
+    initCatalog();
   </script>
 </body>
 </html>
