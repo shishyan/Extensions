@@ -3,7 +3,6 @@ pages:
   script:
     - mkdir -p public
     - cp -r docs/* public/
-    - cp *.zip public/ || true
   artifacts:
     paths:
       - public
