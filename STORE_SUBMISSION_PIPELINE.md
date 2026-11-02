@@ -10,7 +10,7 @@
 
 | # | Extension ID | Full Name | Package (CWS) | Store Assets | Chrome Web Store Status |
 | :- | :--- | :--- | :--- | :--- | :--- |
-| **#1** | `tubemetrix` | TubeMetrix | `dist-cws/tubemetrix-cws.zip` | 128px, 440x280, 1400x560, 3x screenshots | **In Review (`Pending review`)** on CWS |
+| **#1** | `tubemetrix` | TubeMetrix | `dist-cws/tubemetrix-cws.zip` | 128px, 440x280, 1400x560, 3x screenshots | **PUBLISHED (Live on Chrome Web Store)** |
 | **#2** | `returnlikes` | ReturnLikes | `dist-cws/returnlikes-cws.zip` | 128px, 440x280, 1400x560, 3x screenshots | Packaged & Ready for Upload |
 | **#3** | `sponsorblock` | SponsorBlock | `dist-cws/sponsorblock-cws.zip` | 128px, 440x280, 1400x560, 3x screenshots | Packaged & Ready for Upload |
 | **#4** | `videospeed` | videospeed | `dist-cws/videospeed-cws.zip` | 128px, 440x280, 1400x560, 3x screenshots | Packaged & Ready for Upload |
