@@ -8,7 +8,7 @@
     "chrome_zip": "downloads/ahrefbacklink-chrome-edge.zip",
     "firefox_zip": "downloads/ahrefbacklink-firefox.zip",
     "cws_zip": "downloads/ahrefbacklink-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "aliinsiders",
@@ -19,7 +19,7 @@
     "chrome_zip": "downloads/aliinsiders-chrome-edge.zip",
     "firefox_zip": "downloads/aliinsiders-firefox.zip",
     "cws_zip": "downloads/aliinsiders-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "apolloprospect",
@@ -30,7 +30,7 @@
     "chrome_zip": "downloads/apolloprospect-chrome-edge.zip",
     "firefox_zip": "downloads/apolloprospect-firefox.zip",
     "cws_zip": "downloads/apolloprospect-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "autoclick",
@@ -41,7 +41,7 @@
     "chrome_zip": "downloads/autoclick-chrome-edge.zip",
     "firefox_zip": "downloads/autoclick-firefox.zip",
     "cws_zip": "downloads/autoclick-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "awesomeshot",
@@ -52,7 +52,7 @@
     "chrome_zip": "downloads/awesomeshot-chrome-edge.zip",
     "firefox_zip": "downloads/awesomeshot-firefox.zip",
     "cws_zip": "downloads/awesomeshot-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "bitlyshort",
@@ -63,7 +63,7 @@
     "chrome_zip": "downloads/bitlyshort-chrome-edge.zip",
     "firefox_zip": "downloads/bitlyshort-firefox.zip",
     "cws_zip": "downloads/bitlyshort-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "bitpass",
@@ -74,7 +74,7 @@
     "chrome_zip": "downloads/bitpass-chrome-edge.zip",
     "firefox_zip": "downloads/bitpass-firefox.zip",
     "cws_zip": "downloads/bitpass-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "blazesnippet",
@@ -85,7 +85,7 @@
     "chrome_zip": "downloads/blazesnippet-chrome-edge.zip",
     "firefox_zip": "downloads/blazesnippet-firefox.zip",
     "cws_zip": "downloads/blazesnippet-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "boomerangmail",
@@ -96,7 +96,7 @@
     "chrome_zip": "downloads/boomerangmail-chrome-edge.zip",
     "firefox_zip": "downloads/boomerangmail-firefox.zip",
     "cws_zip": "downloads/boomerangmail-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "buddystudio",
@@ -107,7 +107,7 @@
     "chrome_zip": "downloads/buddystudio-chrome-edge.zip",
     "firefox_zip": "downloads/buddystudio-firefox.zip",
     "cws_zip": "downloads/buddystudio-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "builtstack",
@@ -118,7 +118,7 @@
     "chrome_zip": "downloads/builtstack-chrome-edge.zip",
     "firefox_zip": "downloads/builtstack-firefox.zip",
     "cws_zip": "downloads/builtstack-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "calendmeet",
@@ -129,7 +129,7 @@
     "chrome_zip": "downloads/calendmeet-chrome-edge.zip",
     "firefox_zip": "downloads/calendmeet-firefox.zip",
     "cws_zip": "downloads/calendmeet-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "cameltracker",
@@ -140,7 +140,7 @@
     "chrome_zip": "downloads/cameltracker-chrome-edge.zip",
     "firefox_zip": "downloads/cameltracker-firefox.zip",
     "cws_zip": "downloads/cameltracker-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "clearbitconnect",
@@ -151,7 +151,7 @@
     "chrome_zip": "downloads/clearbitconnect-chrome-edge.zip",
     "firefox_zip": "downloads/clearbitconnect-firefox.zip",
     "cws_zip": "downloads/clearbitconnect-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "clocktime",
@@ -162,7 +162,7 @@
     "chrome_zip": "downloads/clocktime-chrome-edge.zip",
     "firefox_zip": "downloads/clocktime-firefox.zip",
     "cws_zip": "downloads/clocktime-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "colorzilla",
@@ -173,7 +173,7 @@
     "chrome_zip": "downloads/colorzilla-chrome-edge.zip",
     "firefox_zip": "downloads/colorzilla-firefox.zip",
     "cws_zip": "downloads/colorzilla-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "copytables",
@@ -184,7 +184,7 @@
     "chrome_zip": "downloads/copytables-chrome-edge.zip",
     "firefox_zip": "downloads/copytables-firefox.zip",
     "cws_zip": "downloads/copytables-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "crystalpersona",
@@ -195,7 +195,7 @@
     "chrome_zip": "downloads/crystalpersona-chrome-edge.zip",
     "firefox_zip": "downloads/crystalpersona-firefox.zip",
     "cws_zip": "downloads/crystalpersona-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "csspeeper",
@@ -206,7 +206,7 @@
     "chrome_zip": "downloads/csspeeper-chrome-edge.zip",
     "firefox_zip": "downloads/csspeeper-firefox.zip",
     "cws_zip": "downloads/csspeeper-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "darkzen",
@@ -217,7 +217,7 @@
     "chrome_zip": "downloads/darkzen-chrome-edge.zip",
     "firefox_zip": "downloads/darkzen-firefox.zip",
     "cws_zip": "downloads/darkzen-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "dashvault",
@@ -228,7 +228,7 @@
     "chrome_zip": "downloads/dashvault-chrome-edge.zip",
     "firefox_zip": "downloads/dashvault-firefox.zip",
     "cws_zip": "downloads/dashvault-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "deeptranslate",
@@ -239,7 +239,7 @@
     "chrome_zip": "downloads/deeptranslate-chrome-edge.zip",
     "firefox_zip": "downloads/deeptranslate-firefox.zip",
     "cws_zip": "downloads/deeptranslate-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "editcookie",
@@ -250,7 +250,7 @@
     "chrome_zip": "downloads/editcookie-chrome-edge.zip",
     "firefox_zip": "downloads/editcookie-firefox.zip",
     "cws_zip": "downloads/editcookie-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "eightysummary",
@@ -261,7 +261,7 @@
     "chrome_zip": "downloads/eightysummary-chrome-edge.zip",
     "firefox_zip": "downloads/eightysummary-firefox.zip",
     "cws_zip": "downloads/eightysummary-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "everclipper",
@@ -272,7 +272,7 @@
     "chrome_zip": "downloads/everclipper-chrome-edge.zip",
     "firefox_zip": "downloads/everclipper-firefox.zip",
     "cws_zip": "downloads/everclipper-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "fakespot",
@@ -283,7 +283,7 @@
     "chrome_zip": "downloads/fakespot-chrome-edge.zip",
     "firefox_zip": "downloads/fakespot-firefox.zip",
     "cws_zip": "downloads/fakespot-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "forestblock",
@@ -294,7 +294,7 @@
     "chrome_zip": "downloads/forestblock-chrome-edge.zip",
     "firefox_zip": "downloads/forestblock-firefox.zip",
     "cws_zip": "downloads/forestblock-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "fullcapture",
@@ -305,7 +305,7 @@
     "chrome_zip": "downloads/fullcapture-chrome-edge.zip",
     "firefox_zip": "downloads/fullcapture-firefox.zip",
     "cws_zip": "downloads/fullcapture-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "glaspnotes",
@@ -316,7 +316,7 @@
     "chrome_zip": "downloads/glaspnotes-chrome-edge.zip",
     "firefox_zip": "downloads/glaspnotes-firefox.zip",
     "cws_zip": "downloads/glaspnotes-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "grammfix",
@@ -327,7 +327,7 @@
     "chrome_zip": "downloads/grammfix-chrome-edge.zip",
     "firefox_zip": "downloads/grammfix-firefox.zip",
     "cws_zip": "downloads/grammfix-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "harpaautomate",
@@ -338,7 +338,7 @@
     "chrome_zip": "downloads/harpaautomate-chrome-edge.zip",
     "firefox_zip": "downloads/harpaautomate-firefox.zip",
     "cws_zip": "downloads/harpaautomate-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "heliumseller",
@@ -349,7 +349,7 @@
     "chrome_zip": "downloads/heliumseller-chrome-edge.zip",
     "firefox_zip": "downloads/heliumseller-firefox.zip",
     "cws_zip": "downloads/heliumseller-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "honeycoupon",
@@ -360,7 +360,7 @@
     "chrome_zip": "downloads/honeycoupon-chrome-edge.zip",
     "firefox_zip": "downloads/honeycoupon-firefox.zip",
     "cws_zip": "downloads/honeycoupon-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "huntlead",
@@ -371,7 +371,7 @@
     "chrome_zip": "downloads/huntlead-chrome-edge.zip",
     "firefox_zip": "downloads/huntlead-firefox.zip",
     "cws_zip": "downloads/huntlead-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "imagebatch",
@@ -382,7 +382,7 @@
     "chrome_zip": "downloads/imagebatch-chrome-edge.zip",
     "firefox_zip": "downloads/imagebatch-firefox.zip",
     "cws_zip": "downloads/imagebatch-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "instasaver",
@@ -393,7 +393,7 @@
     "chrome_zip": "downloads/instasaver-chrome-edge.zip",
     "firefox_zip": "downloads/instasaver-firefox.zip",
     "cws_zip": "downloads/instasaver-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "jsonviewer",
@@ -404,7 +404,7 @@
     "chrome_zip": "downloads/jsonviewer-chrome-edge.zip",
     "firefox_zip": "downloads/jsonviewer-firefox.zip",
     "cws_zip": "downloads/jsonviewer-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "junglescout",
@@ -415,7 +415,7 @@
     "chrome_zip": "downloads/junglescout-chrome-edge.zip",
     "firefox_zip": "downloads/junglescout-firefox.zip",
     "cws_zip": "downloads/junglescout-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "kamipdf",
@@ -426,7 +426,7 @@
     "chrome_zip": "downloads/kamipdf-chrome-edge.zip",
     "firefox_zip": "downloads/kamipdf-firefox.zip",
     "cws_zip": "downloads/kamipdf-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "kasprlead",
@@ -437,7 +437,7 @@
     "chrome_zip": "downloads/kasprlead-chrome-edge.zip",
     "firefox_zip": "downloads/kasprlead-firefox.zip",
     "cws_zip": "downloads/kasprlead-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "keepprice",
@@ -448,7 +448,7 @@
     "chrome_zip": "downloads/keepprice-chrome-edge.zip",
     "firefox_zip": "downloads/keepprice-firefox.zip",
     "cws_zip": "downloads/keepprice-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "koalashop",
@@ -459,7 +459,7 @@
     "chrome_zip": "downloads/koalashop-chrome-edge.zip",
     "firefox_zip": "downloads/koalashop-firefox.zip",
     "cws_zip": "downloads/koalashop-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "languagestudy",
@@ -470,7 +470,7 @@
     "chrome_zip": "downloads/languagestudy-chrome-edge.zip",
     "firefox_zip": "downloads/languagestudy-firefox.zip",
     "cws_zip": "downloads/languagestudy-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "loomrecord",
@@ -481,7 +481,7 @@
     "chrome_zip": "downloads/loomrecord-chrome-edge.zip",
     "firefox_zip": "downloads/loomrecord-firefox.zip",
     "cws_zip": "downloads/loomrecord-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "lushacontact",
@@ -492,7 +492,7 @@
     "chrome_zip": "downloads/lushacontact-chrome-edge.zip",
     "firefox_zip": "downloads/lushacontact-firefox.zip",
     "cws_zip": "downloads/lushacontact-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "magicaltext",
@@ -503,7 +503,7 @@
     "chrome_zip": "downloads/magicaltext-chrome-edge.zip",
     "firefox_zip": "downloads/magicaltext-firefox.zip",
     "cws_zip": "downloads/magicaltext-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "mailtracker",
@@ -514,7 +514,7 @@
     "chrome_zip": "downloads/mailtracker-chrome-edge.zip",
     "firefox_zip": "downloads/mailtracker-firefox.zip",
     "cws_zip": "downloads/mailtracker-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "massmail",
@@ -525,7 +525,7 @@
     "chrome_zip": "downloads/massmail-chrome-edge.zip",
     "firefox_zip": "downloads/massmail-firefox.zip",
     "cws_zip": "downloads/massmail-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "merlcopilot",
@@ -536,7 +536,7 @@
     "chrome_zip": "downloads/merlcopilot-chrome-edge.zip",
     "firefox_zip": "downloads/merlcopilot-firefox.zip",
     "cws_zip": "downloads/merlcopilot-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "modheader",
@@ -547,7 +547,7 @@
     "chrome_zip": "downloads/modheader-chrome-edge.zip",
     "firefox_zip": "downloads/modheader-firefox.zip",
     "cws_zip": "downloads/modheader-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "momenfocus",
@@ -558,7 +558,7 @@
     "chrome_zip": "downloads/momenfocus-chrome-edge.zip",
     "firefox_zip": "downloads/momenfocus-firefox.zip",
     "cws_zip": "downloads/momenfocus-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "moniassistant",
@@ -569,7 +569,7 @@
     "chrome_zip": "downloads/moniassistant-chrome-edge.zip",
     "firefox_zip": "downloads/moniassistant-firefox.zip",
     "cws_zip": "downloads/moniassistant-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "mozauthority",
@@ -580,7 +580,7 @@
     "chrome_zip": "downloads/mozauthority-chrome-edge.zip",
     "firefox_zip": "downloads/mozauthority-firefox.zip",
     "cws_zip": "downloads/mozauthority-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "naturalread",
@@ -591,7 +591,7 @@
     "chrome_zip": "downloads/naturalread-chrome-edge.zip",
     "firefox_zip": "downloads/naturalread-firefox.zip",
     "cws_zip": "downloads/naturalread-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "notionsaver",
@@ -602,7 +602,7 @@
     "chrome_zip": "downloads/notionsaver-chrome-edge.zip",
     "firefox_zip": "downloads/notionsaver-firefox.zip",
     "cws_zip": "downloads/notionsaver-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "octotree",
@@ -613,7 +613,7 @@
     "chrome_zip": "downloads/octotree-chrome-edge.zip",
     "firefox_zip": "downloads/octotree-firefox.zip",
     "cws_zip": "downloads/octotree-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "onetab",
@@ -624,7 +624,7 @@
     "chrome_zip": "downloads/onetab-chrome-edge.zip",
     "firefox_zip": "downloads/onetab-firefox.zip",
     "cws_zip": "downloads/onetab-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "otternotes",
@@ -635,7 +635,7 @@
     "chrome_zip": "downloads/otternotes-chrome-edge.zip",
     "firefox_zip": "downloads/otternotes-firefox.zip",
     "cws_zip": "downloads/otternotes-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "perplexsearch",
@@ -646,7 +646,7 @@
     "chrome_zip": "downloads/perplexsearch-chrome-edge.zip",
     "firefox_zip": "downloads/perplexsearch-firefox.zip",
     "cws_zip": "downloads/perplexsearch-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "pocketread",
@@ -657,7 +657,7 @@
     "chrome_zip": "downloads/pocketread-chrome-edge.zip",
     "firefox_zip": "downloads/pocketread-firefox.zip",
     "cws_zip": "downloads/pocketread-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "printclean",
@@ -668,7 +668,7 @@
     "chrome_zip": "downloads/printclean-chrome-edge.zip",
     "firefox_zip": "downloads/printclean-firefox.zip",
     "cws_zip": "downloads/printclean-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "privbadger",
@@ -679,7 +679,7 @@
     "chrome_zip": "downloads/privbadger-chrome-edge.zip",
     "firefox_zip": "downloads/privbadger-firefox.zip",
     "cws_zip": "downloads/privbadger-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "quillparaphrase",
@@ -690,7 +690,7 @@
     "chrome_zip": "downloads/quillparaphrase-chrome-edge.zip",
     "firefox_zip": "downloads/quillparaphrase-firefox.zip",
     "cws_zip": "downloads/quillparaphrase-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "rainbookmark",
@@ -701,7 +701,7 @@
     "chrome_zip": "downloads/rainbookmark-chrome-edge.zip",
     "firefox_zip": "downloads/rainbookmark-firefox.zip",
     "cws_zip": "downloads/rainbookmark-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "rakucash",
@@ -712,7 +712,7 @@
     "chrome_zip": "downloads/rakucash-chrome-edge.zip",
     "firefox_zip": "downloads/rakucash-firefox.zip",
     "cws_zip": "downloads/rakucash-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "redenhance",
@@ -723,7 +723,7 @@
     "chrome_zip": "downloads/redenhance-chrome-edge.zip",
     "firefox_zip": "downloads/redenhance-firefox.zip",
     "cws_zip": "downloads/redenhance-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "refgithub",
@@ -734,7 +734,7 @@
     "chrome_zip": "downloads/refgithub-chrome-edge.zip",
     "firefox_zip": "downloads/refgithub-firefox.zip",
     "cws_zip": "downloads/refgithub-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "requestrule",
@@ -745,7 +745,7 @@
     "chrome_zip": "downloads/requestrule-chrome-edge.zip",
     "firefox_zip": "downloads/requestrule-firefox.zip",
     "cws_zip": "downloads/requestrule-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "responsiveview",
@@ -756,7 +756,7 @@
     "chrome_zip": "downloads/responsiveview-chrome-edge.zip",
     "firefox_zip": "downloads/responsiveview-firefox.zip",
     "cws_zip": "downloads/responsiveview-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "returnlikes",
@@ -767,7 +767,7 @@
     "chrome_zip": "downloads/returnlikes-chrome-edge.zip",
     "firefox_zip": "downloads/returnlikes-firefox.zip",
     "cws_zip": "downloads/returnlikes-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "rockreach",
@@ -778,7 +778,7 @@
     "chrome_zip": "downloads/rockreach-chrome-edge.zip",
     "firefox_zip": "downloads/rockreach-firefox.zip",
     "cws_zip": "downloads/rockreach-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "scispace",
@@ -789,7 +789,7 @@
     "chrome_zip": "downloads/scispace-chrome-edge.zip",
     "firefox_zip": "downloads/scispace-firefox.zip",
     "cws_zip": "downloads/scispace-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "selectorgadget",
@@ -800,7 +800,7 @@
     "chrome_zip": "downloads/selectorgadget-chrome-edge.zip",
     "firefox_zip": "downloads/selectorgadget-firefox.zip",
     "cws_zip": "downloads/selectorgadget-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "semrank",
@@ -811,7 +811,7 @@
     "chrome_zip": "downloads/semrank-chrome-edge.zip",
     "firefox_zip": "downloads/semrank-firefox.zip",
     "cws_zip": "downloads/semrank-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "shazamtrack",
@@ -822,7 +822,7 @@
     "chrome_zip": "downloads/shazamtrack-chrome-edge.zip",
     "firefox_zip": "downloads/shazamtrack-firefox.zip",
     "cws_zip": "downloads/shazamtrack-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "siderchat",
@@ -833,7 +833,7 @@
     "chrome_zip": "downloads/siderchat-chrome-edge.zip",
     "firefox_zip": "downloads/siderchat-firefox.zip",
     "cws_zip": "downloads/siderchat-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "similarweb",
@@ -844,7 +844,7 @@
     "chrome_zip": "downloads/similarweb-chrome-edge.zip",
     "firefox_zip": "downloads/similarweb-firefox.zip",
     "cws_zip": "downloads/similarweb-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "snapbug",
@@ -855,7 +855,7 @@
     "chrome_zip": "downloads/snapbug-chrome-edge.zip",
     "firefox_zip": "downloads/snapbug-firefox.zip",
     "cws_zip": "downloads/snapbug-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "snovfinder",
@@ -866,7 +866,7 @@
     "chrome_zip": "downloads/snovfinder-chrome-edge.zip",
     "firefox_zip": "downloads/snovfinder-firefox.zip",
     "cws_zip": "downloads/snovfinder-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "socialstats",
@@ -877,7 +877,7 @@
     "chrome_zip": "downloads/socialstats-chrome-edge.zip",
     "firefox_zip": "downloads/socialstats-firefox.zip",
     "cws_zip": "downloads/socialstats-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "sortfeed",
@@ -888,7 +888,7 @@
     "chrome_zip": "downloads/sortfeed-chrome-edge.zip",
     "firefox_zip": "downloads/sortfeed-firefox.zip",
     "cws_zip": "downloads/sortfeed-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "speechvoice",
@@ -899,7 +899,7 @@
     "chrome_zip": "downloads/speechvoice-chrome-edge.zip",
     "firefox_zip": "downloads/speechvoice-firefox.zip",
     "cws_zip": "downloads/speechvoice-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "sponsorblock",
@@ -910,7 +910,7 @@
     "chrome_zip": "downloads/sponsorblock-chrome-edge.zip",
     "firefox_zip": "downloads/sponsorblock-firefox.zip",
     "cws_zip": "downloads/sponsorblock-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "streakcrm",
@@ -921,7 +921,7 @@
     "chrome_zip": "downloads/streakcrm-chrome-edge.zip",
     "firefox_zip": "downloads/streakcrm-firefox.zip",
     "cws_zip": "downloads/streakcrm-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "streamchat",
@@ -932,7 +932,7 @@
     "chrome_zip": "downloads/streamchat-chrome-edge.zip",
     "firefox_zip": "downloads/streamchat-firefox.zip",
     "cws_zip": "downloads/streamchat-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "styluscss",
@@ -943,7 +943,7 @@
     "chrome_zip": "downloads/styluscss-chrome-edge.zip",
     "firefox_zip": "downloads/styluscss-firefox.zip",
     "cws_zip": "downloads/styluscss-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "surfseo",
@@ -954,7 +954,7 @@
     "chrome_zip": "downloads/surfseo-chrome-edge.zip",
     "firefox_zip": "downloads/surfseo-firefox.zip",
     "cws_zip": "downloads/surfseo-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "tagassistant",
@@ -965,7 +965,7 @@
     "chrome_zip": "downloads/tagassistant-chrome-edge.zip",
     "firefox_zip": "downloads/tagassistant-firefox.zip",
     "cws_zip": "downloads/tagassistant-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "todoisttask",
@@ -976,7 +976,7 @@
     "chrome_zip": "downloads/todoisttask-chrome-edge.zip",
     "firefox_zip": "downloads/todoisttask-firefox.zip",
     "cws_zip": "downloads/todoisttask-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "toktrend",
@@ -987,7 +987,7 @@
     "chrome_zip": "downloads/toktrend-chrome-edge.zip",
     "firefox_zip": "downloads/toktrend-firefox.zip",
     "cws_zip": "downloads/toktrend-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "tubemetrix",
@@ -1009,7 +1009,7 @@
     "chrome_zip": "downloads/twitdownload-chrome-edge.zip",
     "firefox_zip": "downloads/twitdownload-firefox.zip",
     "cws_zip": "downloads/twitdownload-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "ubersuggest",
@@ -1020,7 +1020,7 @@
     "chrome_zip": "downloads/ubersuggest-chrome-edge.zip",
     "firefox_zip": "downloads/ubersuggest-firefox.zip",
     "cws_zip": "downloads/ubersuggest-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "ublockshield",
@@ -1031,7 +1031,7 @@
     "chrome_zip": "downloads/ublockshield-chrome-edge.zip",
     "firefox_zip": "downloads/ublockshield-firefox.zip",
     "cws_zip": "downloads/ublockshield-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "videospeed",
@@ -1042,7 +1042,7 @@
     "chrome_zip": "downloads/videospeed-chrome-edge.zip",
     "firefox_zip": "downloads/videospeed-firefox.zip",
     "cws_zip": "downloads/videospeed-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "volmaster",
@@ -1053,7 +1053,7 @@
     "chrome_zip": "downloads/volmaster-chrome-edge.zip",
     "firefox_zip": "downloads/volmaster-firefox.zip",
     "cws_zip": "downloads/volmaster-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "webscraper",
@@ -1064,7 +1064,7 @@
     "chrome_zip": "downloads/webscraper-chrome-edge.zip",
     "firefox_zip": "downloads/webscraper-firefox.zip",
     "cws_zip": "downloads/webscraper-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "whatfont",
@@ -1075,7 +1075,7 @@
     "chrome_zip": "downloads/whatfont-chrome-edge.zip",
     "firefox_zip": "downloads/whatfont-firefox.zip",
     "cws_zip": "downloads/whatfont-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "wordrewrite",
@@ -1086,7 +1086,7 @@
     "chrome_zip": "downloads/wordrewrite-chrome-edge.zip",
     "firefox_zip": "downloads/wordrewrite-firefox.zip",
     "cws_zip": "downloads/wordrewrite-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   },
   {
     "id": "zoterocite",
@@ -1097,6 +1097,6 @@
     "chrome_zip": "downloads/zoterocite-chrome-edge.zip",
     "firefox_zip": "downloads/zoterocite-firefox.zip",
     "cws_zip": "downloads/zoterocite-cws.zip",
-    "has_screenshots": false
+    "has_screenshots": true
   }
 ]
