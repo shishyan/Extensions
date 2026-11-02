@@ -3,7 +3,7 @@
   "name": "CSSPeeper \u2014 Free Design-System Color Palette, CSS & SVG Extractor",
   "short_name": "CSSPeeper",
   "version": "1.0.0",
-  "description": "100% Free CSS Peeper Pro alternative: Extract any website's full HEX/RGB color palette, typography scale, SVG/image assets & :root CSS variables in 1 click.",
+  "description": "100% Free CSS Peeper Pro alternative: Extract any website's full HEX/RGB color palette, typography scale, SVG/image assets &...",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",

@@ -3,7 +3,7 @@
   "name": "JSONViewer \u2014 Free JSON Tree Formatter, Path Filter & TypeScript Generator",
   "short_name": "JSONViewer",
   "version": "1.0.0",
-  "description": "100% Free JSON Viewer Pro alternative: Automatic JSON & JSON-LD dark-mode tree formatter, key/path filter & 1-click TypeScript interface generator.",
+  "description": "100% Free JSON Viewer Pro alternative: Automatic JSON & JSON-LD dark-mode tree formatter, key/path filter & 1-click TypeScript...",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "EditCookie \u2014 Cookie & LocalStorage Inspector",
   "version": "1.0.0",
-  "description": "Free, ad-free Cookie, localStorage & sessionStorage Inspector, Live Key-Value Editor, 1-Click JSON/Netscape Exporter & Site Storage Cleaner.",
+  "description": "Free, ad-free Cookie, localStorage & sessionStorage Inspector, Live Key-Value Editor, 1-Click JSON/Netscape Exporter & Site...",
   "permissions": [
     "storage",
     "activeTab"

@@ -3,7 +3,7 @@
   "name": "BlazeSnippet \u2014 Free /cmd Command Palette, Date Math & Dynamic Template Engine",
   "short_name": "BlazeSnippet",
   "version": "1.0.0",
-  "description": "100% Free Text Blaze Pro alternative: Smart /cmd slash templates, automatic date-offset math ({+3d}, {next monday}), fill-in placeholders & Alt+B command bar.",
+  "description": "100% Free Text Blaze Pro alternative: Smart /cmd slash templates, automatic date-offset math ({+3d}, {next monday}), fill-in...",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",

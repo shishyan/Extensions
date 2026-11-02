@@ -3,7 +3,7 @@
   "name": "DashVault \u2014 Free Zero-Knowledge Password Generator, Local Vault & Breach Auditor",
   "short_name": "DashVault",
   "version": "1.0.0",
-  "description": "100% Free 1Password & Dashlane alternative: WebCrypto 24-char password generator, 1-click password field auto-filler & k-Anonymity breach exposure checker.",
+  "description": "100% Free 1Password & Dashlane alternative: WebCrypto 24-char password generator, 1-click password field auto-filler &...",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",

@@ -1,10 +1,15 @@
 {
   "manifest_version": 3,
-  "name": "ResponsiveView — Multi-Device Viewport Simulator",
+  "name": "ResponsiveView \u2014 Multi-Device Viewport Simulator",
   "version": "1.0.0",
-  "description": "Multi-device viewport simulator (iPhone 16 Pro, Pixel 9, iPad Air, MacBook Pro), media-query breakpoint auditor & responsive frame tester.",
-  "permissions": ["storage", "activeTab"],
-  "host_permissions": ["<all_urls>"],
+  "description": "Multi-device viewport simulator (iPhone 16 Pro, Pixel 9, iPad Air, MacBook Pro), media-query breakpoint auditor & responsive...",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -18,9 +23,15 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["styles.css"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "styles.css"
+      ],
       "run_at": "document_idle"
     }
   ],

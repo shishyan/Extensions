@@ -3,7 +3,7 @@
   "name": "StreakCRM \u2014 Free In-Browser Kanban Deal Pipeline & Contact CRM",
   "short_name": "StreakCRM",
   "version": "1.0.0",
-  "description": "100% Free Streak CRM Pro alternative: In-browser Kanban deal pipeline (Lead -> Contacted -> Demo -> Proposal -> Won), deal value calculator & CSV exporter.",
+  "description": "100% Free Streak CRM Pro alternative: In-browser Kanban deal pipeline (Lead -> Contacted -> Demo -> Proposal -> Won), deal value...",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",

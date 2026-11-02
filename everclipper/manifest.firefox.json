@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "EverClipper \u2014 4-Mode Web Clipper & Offline Notebook",
   "version": "1.0.0",
-  "description": "4-Mode Web Clipper (Simplified Article, Full Page HTML, Selection Quote, Bookmark Card), Notebook Folder Organizer & Offline Archive Exporter.",
+  "description": "4-Mode Web Clipper (Simplified Article, Full Page HTML, Selection Quote, Bookmark Card), Notebook Folder Organizer & Offline...",
   "permissions": [
     "storage",
     "activeTab"

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "PrintClean \u2014 Interactive Element Zapper & Clean PDF Print Engine",
   "version": "1.0.0",
-  "description": "Click-to-delete unwanted page elements with Undo, strip nav/aside/footer/iframe clutter in 1 click, and scale typography for PDF printing.",
+  "description": "Click-to-delete unwanted page elements with Undo, strip nav/aside/footer/iframe clutter in 1 click, and scale typography for PDF...",
   "permissions": [
     "storage",
     "activeTab",

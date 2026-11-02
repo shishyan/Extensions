@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "ResponsiveView \u2014 Multi-Device Viewport Simulator",
   "version": "1.0.0",
-  "description": "Multi-device viewport simulator (iPhone 16 Pro, Pixel 9, iPad Air, MacBook Pro), media-query breakpoint auditor & responsive frame tester.",
+  "description": "Multi-device viewport simulator (iPhone 16 Pro, Pixel 9, iPad Air, MacBook Pro), media-query breakpoint auditor & responsive...",
   "permissions": [
     "storage",
     "activeTab"
