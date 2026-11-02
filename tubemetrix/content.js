@@ -425,7 +425,7 @@
         <div class="tm-metric"><div class="tm-metric-val" style="color:#38bdf8">${formatCompact(feedSummary.avgVph)}</div><div class="tm-metric-lbl">Avg VPH</div></div>
         <div class="tm-metric"><div class="tm-metric-val" style="color:#fb7185">${feedSummary.outliers}</div><div class="tm-metric-lbl">2x+ Hits</div></div>
       </div>
-      <div style="font-size:11px;font-weight:800;color:#94a3b8;margin-top:6px;">Re-Sort & Filter Current Page Videos (vidIQ Presets):</div>
+      <div style="font-size:11px;font-weight:800;color:var(--tm-text-secondary);margin-top:6px;">Re-Sort & Filter Current Page Videos (vidIQ Presets):</div>
       <div class="tm-drawer-row">
         <button class="tm-btn" data-sort="tmOutlier">🔥 Sort by Outlier</button>
         <button class="tm-btn" data-sort="tmVph">🚀 Blowing Up (VPH)</button>
@@ -474,7 +474,7 @@
       <span class="tm-stat">Med: <strong>${formatCompact(feedSummary.medianViews)}</strong></span>
       <span class="tm-stat">VPH: <strong>${formatCompact(feedSummary.avgVph)}</strong></span>
       <span class="tm-stat tm-hot">🔥 Outliers: <strong>${feedSummary.outliers}</strong></span>
-      <span style="font-size:10px;color:#94a3b8;">▾</span>
+      <span style="font-size:10px;color:var(--tm-text-secondary);">▾</span>
     `;
   }
 
@@ -500,7 +500,7 @@
     const card = document.createElement("div");
     card.id = "tm-search-companion";
     card.className = "tm-card";
-    card.innerHTML = `<div style="color:#94a3b8;">⚡ <strong>TubeMetrix Search Intelligence:</strong> Analyzing real SERP views, VPH, title saturation & hidden gems for "<strong>${q}</strong>"...</div>`;
+    card.innerHTML = `<div style="color:var(--tm-text-secondary);">⚡ <strong>TubeMetrix Search Intelligence:</strong> Analyzing real SERP views, VPH, title saturation & hidden gems for "<strong>${q}</strong>"...</div>`;
     targetContainer.prepend(card);
 
     chrome.runtime.sendMessage({ type: "TM_KEYWORD_RESEARCH", query: q }, (resp) => {
@@ -512,11 +512,11 @@
       let currentTab = "suggestions";
       const renderTabList = (tabKey) => {
         const list = d[tabKey] && d[tabKey].length ? d[tabKey] : d.suggestions;
-        if (!list || !list.length) return `<div style="color:#94a3b8;padding:8px;">No keywords found for this filter.</div>`;
+        if (!list || !list.length) return `<div style="color:var(--tm-text-secondary);padding:8px;">No keywords found for this filter.</div>`;
         return `
           <table style="width:100%;border-collapse:collapse;font-size:11px;">
             <thead>
-              <tr style="color:#94a3b8;text-align:left;border-bottom:1px solid #1e293b;">
+              <tr style="color:var(--tm-text-secondary);text-align:left;border-bottom:1px solid #1e293b;">
                 <th style="padding:5px;">Keyword (Click to Copy)</th>
                 <th style="padding:5px;">Est. Vol</th>
                 <th style="padding:5px;">Comp</th>
@@ -529,7 +529,7 @@
                 .map(
                   (row) => `
                 <tr class="tm-kw-tr" data-kw="${row.keyword.replace(/"/g, "&quot;")}" style="border-bottom:1px solid rgba(30,41,59,0.6);cursor:pointer;">
-                  <td style="padding:5px;font-weight:600;color:#e2e8f0;">${row.keyword}</td>
+                  <td style="padding:5px;font-weight:600;color:var(--tm-text-primary);">${row.keyword}</td>
                   <td style="padding:5px;color:#38bdf8;">${formatCompact(row.estMonthlySearches)}</td>
                   <td style="padding:5px;color:#f59e0b;">${row.competition}</td>
                   <td style="padding:5px;font-weight:800;color:#10b981;">${row.opportunity}</td>
@@ -573,7 +573,7 @@
 
           ${
             st.topChannels && st.topChannels.length
-              ? `<div style="font-size:11px;color:#94a3b8;margin-bottom:8px;">🏆 <strong>Top Ranking Channels:</strong> ${st.topChannels
+              ? `<div style="font-size:11px;color:var(--tm-text-secondary);margin-bottom:8px;">🏆 <strong>Top Ranking Channels:</strong> ${st.topChannels
                   .map((c) => `<span style="color:#e2e8f0">${c.name} (${c.count})</span>`)
                   .join(" · ")}</div>`
               : ""
@@ -944,7 +944,7 @@
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
           <div style="background:#0f0f0f;padding:12px;border-radius:12px;border:1px solid #27272a;">
-            <div style="font-size:11px;color:#94a3b8;margin-bottom:8px;font-weight:700;">🌙 YouTube Dark Mode Home Card</div>
+            <div style="font-size:11px;color:var(--tm-text-secondary);margin-bottom:8px;font-weight:700;">🌙 YouTube Dark Mode Home Card</div>
             <img class="tm-sim-img" src="${thumbUrl}" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;" />
             <div class="tm-sim-t" style="color:#f1f1f1;font-size:14px;font-weight:700;margin-top:8px;">${meta.title}</div>
             <div style="color:#aaa;font-size:12px;margin-top:3px;">${meta.author || "Your Channel"} • 48K views • 3 hours ago</div>
@@ -963,18 +963,18 @@
         ${
           rivalSamples.length
             ? `<div style="margin-top:16px;">
-                <div style="font-size:12px;font-weight:800;color:#cbd5e1;margin-bottom:8px;">⚔️ Side-by-Side Shelf Standout Check vs Current Sidebar Videos:</div>
+                <div style="font-size:12px;font-weight:800;color:var(--tm-text-secondary);margin-bottom:8px;">⚔️ Side-by-Side Shelf Standout Check vs Current Sidebar Videos:</div>
                 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
-                  <div style="border:2px solid #10b981;border-radius:10px;padding:6px;background:#090d16;">
+                  <div style="border:2px solid #10b981;border-radius:10px;padding:6px;background:transparent;">
                     <img class="tm-sim-img" src="${thumbUrl}" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;" />
                     <div class="tm-sim-t" style="font-size:11px;font-weight:700;margin-top:5px;color:#34d399;">[TEST] ${meta.title}</div>
                   </div>
                   ${rivalSamples
                     .map(
                       (r) => `
-                    <div style="border:1px solid #1e293b;border-radius:10px;padding:6px;background:#090d16;">
+                    <div style="border:1px solid var(--tm-border-subtle);border-radius:10px;padding:6px;background:transparent;">
                       <img src="https://i.ytimg.com/vi/${r.videoId}/mqdefault.jpg" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;" />
-                      <div style="font-size:11px;margin-top:5px;color:#cbd5e1;">${r.title.slice(0, 58)}</div>
+                      <div style="font-size:11px;margin-top:5px;color:var(--tm-text-secondary);">${r.title.slice(0, 58)}</div>
                     </div>`
                     )
                     .join("")}
@@ -1018,7 +1018,7 @@
     const panel = document.createElement("div");
     panel.id = "tubeiq-watch-panel";
     panel.className = "tm-card";
-    panel.innerHTML = `<div style="color:#94a3b8;">⚡ <strong>TubeMetrix Inspector:</strong> Auditing video metadata, tags, search ranks & captions...</div>`;
+    panel.innerHTML = `<div style="color:var(--tm-text-secondary);">⚡ <strong>TubeMetrix Inspector:</strong> Auditing video metadata, tags, search ranks & captions...</div>`;
     secondary.prepend(panel);
 
     const meta = await extractRichWatchData();
@@ -1090,7 +1090,7 @@
             <button class="tm-btn tm-btn-emerald" id="tm-track-chan">➕ Track Competitor</button>
           </div>
 
-          <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:#94a3b8;margin-bottom:5px;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:var(--tm-text-secondary);margin-bottom:5px;">
             <span>12-Point Optimization Checklist</span>
             <span>Actionable: <strong style="color:#38bdf8">${audit.actionable}/50</strong> · Perf: <strong style="color:#10b981">${audit.performance}/50</strong></span>
           </div>
@@ -1113,7 +1113,7 @@
               ? `<div style="font-size:11px;color:#34d399;margin-bottom:6px;">🎯 <strong>Tripled Keywords (Title + Desc + Tags):</strong> ${audit.tripled.join(", ")}</div>`
               : `<div style="font-size:11px;color:#f59e0b;margin-bottom:6px;">💡 <strong>Tip:</strong> Repeat your #1 target keyword in Title, Description & Tags for a Tripled Keyword boost.</div>`
           }
-          <div style="font-size:11px;font-weight:700;color:#94a3b8;">Video Tags (Green badge = Live YouTube Search Top-20 Rank):</div>
+          <div style="font-size:11px;font-weight:700;color:var(--tm-text-secondary);">Video Tags (Green badge = Live YouTube Search Top-20 Rank):</div>
           <div id="tm-vtags-container" class="tm-tags-box">
             ${
               vTags.length
@@ -1125,10 +1125,10 @@
                         }</span>`
                     )
                     .join("")
-                : `<span style="color:#94a3b8;">Creator added 0 hidden tags — click "Generate 20 High-Rank Tags" above!</span>`
+                : `<span style="color:var(--tm-text-secondary);">Creator added 0 hidden tags — click "Generate 20 High-Rank Tags" above!</span>`
             }
           </div>
-          <div style="font-size:11px;font-weight:700;color:#94a3b8;margin-top:8px;">Channel Topic Tags (${meta.channelKeywords.length}):</div>
+          <div style="font-size:11px;font-weight:700;color:var(--tm-text-secondary);margin-top:8px;">Channel Topic Tags (${meta.channelKeywords.length}):</div>
           <div class="tm-tags-box" style="max-height:85px;">
             ${
               meta.channelKeywords.length
@@ -1150,7 +1150,7 @@
           <div id="tm-transcript-area" class="tm-scroll-box">
             ${
               transcriptSegs === null
-                ? `<div style="color:#94a3b8;">⏳ Loading YouTube TimedText captions...</div>`
+                ? `<div style="color:var(--tm-text-secondary);">⏳ Loading YouTube TimedText captions...</div>`
                 : transcriptSegs.length === 0
                 ? `<div style="color:#f59e0b;">No caption track available on this video.</div>`
                 : transcriptSegs
@@ -1188,7 +1188,7 @@
         tabBody = `
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
             <div>
-              <div style="font-size:13px;font-weight:800;color:#f8fafc;">${meta.author || "Channel Overview"}</div>
+              <div style="font-size:13px;font-weight:800;color:var(--tm-text-primary);">${meta.author || "Channel Overview"}</div>
               <div style="font-size:11px;color:#38bdf8;">${meta.channelHandle || ""} · ${meta.subscribersText || "Active"} Subscribers</div>
             </div>
             <button class="tm-btn tm-btn-emerald" id="tm-spy-chan-now">🔍 Deep Audit Channel</button>
@@ -1209,7 +1209,7 @@
               </div>
               ${
                 channelSpyData.breakoutVideo
-                  ? `<div style="padding:7px;background:#090d16;border:1px solid #1e293b;border-radius:8px;font-size:11px;">
+                  ? `<div style="padding:7px;background:transparent;border:1px solid var(--tm-border-subtle);border-radius:8px;font-size:11px;">
                       🔥 <strong>#1 Channel Outlier (${channelSpyData.breakoutVideo.outlierScore}x):</strong>
                       <a href="/watch?v=${channelSpyData.breakoutVideo.videoId}" style="color:#38bdf8;font-weight:700;text-decoration:none;">${channelSpyData.breakoutVideo.title}</a>
                       (${formatCompact(channelSpyData.breakoutVideo.views)} views)
@@ -1217,7 +1217,7 @@
                   : ""
               }
             `
-              : `<div style="font-size:11px;color:#94a3b8;">Click <strong>🔍 Deep Audit Channel</strong> above to pull ${meta.author || "this creator"}'s last 30 uploads, median views, monthly revenue & #1 breakout outlier.</div>`
+              : `<div style="font-size:11px;color:var(--tm-text-secondary);">Click <strong>🔍 Deep Audit Channel</strong> above to pull ${meta.author || "this creator"}'s last 30 uploads, median views, monthly revenue & #1 breakout outlier.</div>`
           }
         `;
       }
@@ -1236,7 +1236,7 @@
         </div>
         ${tabBody}
         <div style="margin-top:8px;text-align:right;">
-          <a href="https://paypal.me/influenzian" target="_blank" rel="noopener" style="display:inline-block;padding:3px 9px;border-radius:6px;background:rgba(30,41,59,0.7);border:1px solid rgba(148,163,184,0.2);color:#94a3b8;font-size:10.5px;font-weight:600;text-decoration:none;">Donate</a>
+          <a href="https://paypal.me/influenzian" target="_blank" rel="noopener" style="display:inline-block;padding:3px 9px;border-radius:6px;background:transparent;border:1px solid rgba(148,163,184,0.2);color:var(--tm-text-secondary);font-size:10.5px;font-weight:600;text-decoration:none;">Donate</a>
         </div>
       `;
 
@@ -1342,7 +1342,7 @@
           const chaps = buildAutoChaptersFromTranscript(transcriptSegs || [], meta.lengthSeconds);
           if (chaps.length) {
             const area = panel.querySelector("#tm-transcript-area");
-            area.innerHTML = `<div style="color:#34d399;font-weight:800;margin-bottom:6px;">✅ Generated ${chaps.length} YouTube Chapters (Copied to Clipboard!):</div><pre style="white-space:pre-wrap;font-family:monospace;color:#f8fafc;">${chaps.join("\n")}</pre>`;
+            area.innerHTML = `<div style="color:#34d399;font-weight:800;margin-bottom:6px;">✅ Generated ${chaps.length} YouTube Chapters (Copied to Clipboard!):</div><pre style="white-space:pre-wrap;font-family:monospace;color:var(--tm-text-primary);">${chaps.join("\n")}</pre>`;
             copyText(chaps.join("\n"), genChaps, "✅ Chapters Copied!");
           }
         };
@@ -1446,7 +1446,7 @@
     bar.innerHTML = `
       <div class="tm-card-header" style="margin-bottom:8px;padding-bottom:6px;">
         <div class="tm-brand">💬 TubeMetrix Comment Intelligence & Reply Templates</div>
-        <span id="tm-comment-count-msg" style="font-size:11px;color:#94a3b8;">Loaded comments ready to filter</span>
+        <span id="tm-comment-count-msg" style="font-size:11px;color:var(--tm-text-secondary);">Loaded comments ready to filter</span>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
         <button class="tm-btn tm-active-filter" data-cfilter="all">All Comments</button>
@@ -1456,7 +1456,7 @@
         <button class="tm-btn tm-btn-secondary" data-cfilter="long">📖 Detailed Stories (25+ w)</button>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
-        <span style="font-size:11px;color:#94a3b8;font-weight:700;">1-Click Reply Templates:</span>
+        <span style="font-size:11px;color:var(--tm-text-secondary);font-weight:700;">1-Click Reply Templates:</span>
         <button class="tm-btn tm-btn-secondary" data-reply="Thanks so much for watching! Glad this helped — what topic should we cover next? 🙌">🙌 Thank + Ask Question</button>
         <button class="tm-btn tm-btn-secondary" data-reply="Great question! I'm putting together a dedicated follow-up video on this exact point — stay tuned! 🔥">🔥 Great Question</button>
         <button class="tm-btn tm-btn-secondary" data-reply="Appreciate you sharing your perspective! Pinned/noted for the community 💡">💡 Appreciate Feedback</button>
@@ -1522,7 +1522,7 @@
         <div class="tm-metric"><div id="tm-chan-out" class="tm-metric-val" style="color:#fb7185">${feedSummary.outliers}</div><div class="tm-metric-lbl">2x+ Outliers</div></div>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
-        <span style="font-size:11px;font-weight:800;color:#94a3b8;">Presets:</span>
+        <span style="font-size:11px;font-weight:800;color:var(--tm-text-secondary);">Presets:</span>
         <button class="tm-btn" data-cpreset="outliers">🔥 Channel Outliers (1.5x+)</button>
         <button class="tm-btn" data-cpreset="velocity">🚀 Blowing Up (VPH)</button>
         <button class="tm-btn" data-cpreset="tophits">🏆 Top Hits (Most Viewed)</button>

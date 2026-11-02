@@ -494,15 +494,9 @@
       <li><a class="nav-item" href="#tubemetrix"><i data-lucide="zap"></i> TubeMetrix Pro</a></li>
     </ul>
 
-    <div class="nav-section-title">Ecosystem Links</div>
-    <ul class="nav-list">
-      <li><a class="nav-item" href="https://shishyan.in" target="_blank"><i data-lucide="home"></i> Home Manager</a></li>
-      <li><a class="nav-item" href="https://exams.shishyan.in" target="_blank"><i data-lucide="award"></i> Exams Suite</a></li>
-      <li><a class="nav-item" href="https://games.shishyan.in" target="_blank"><i data-lucide="gamepad-2"></i> Play Games</a></li>
-      <li><a class="nav-item" href="https://guru.shishyan.in" target="_blank"><i data-lucide="globe"></i> Guru Kula Desam</a></li>
-      <li><a class="nav-item" href="https://code.shishyan.in" target="_blank"><i data-lucide="code"></i> Cloud Code</a></li>
-      <li><a class="nav-item" href="https://desktop.shishyan.in" target="_blank"><i data-lucide="monitor"></i> Cloud Desktop</a></li>
-      <li><a class="nav-item" href="https://github.com/shishyan/Extensions" target="_blank"><i data-lucide="github"></i> GitHub Source</a></li>
+    <div class="nav-section-title">Extensions Directory</div>
+    <ul class="nav-list" id="sidebarExtensionsList" style="max-height: calc(100vh - 280px); overflow-y: auto; padding-right: 4px;">
+      <!-- Populated dynamically with all 100 extension items -->
     </ul>
   </aside>
 
@@ -618,7 +612,7 @@
       badge.textContent = `Showing ${list.length} extensions`;
 
       grid.innerHTML = list.map((item, idx) => `
-        <div class="item-card">
+        <div class="item-card" id="ext-${item.id}">
           <div>
             <div class="card-head">
               <span class="card-title">#${idx + 1} ${item.short_name || item.name}</span>
@@ -633,6 +627,19 @@
           </div>
         </div>
       `).join("");
+
+      const sideList = document.getElementById("sidebarExtensionsList");
+      if (sideList && (!sideList.children || sideList.children.length === 0)) {
+        sideList.innerHTML = extensionsData.map((item, idx) => `
+          <li>
+            <a class="nav-item" href="#ext-${item.id}" style="padding:5px 8px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${item.short_name || item.name}">
+              <span style="font-size:10px;font-weight:700;color:var(--muted);width:20px;display:inline-block;">#${idx + 1}</span>
+              <span style="overflow:hidden;text-overflow:ellipsis;">${item.short_name || item.name}</span>
+            </a>
+          </li>
+        `).join("");
+      }
+
       lucide.createIcons();
     }
 
