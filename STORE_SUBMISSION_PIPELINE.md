@@ -11,15 +11,15 @@
 | Extension | Target Replaced | CWS Package | Store Assets | Status |
 | :--- | :--- | :--- | :--- | :--- |
 | **TubeMetrix** (`#1`) | vidIQ Max / TubeBuddy Legend / 1of10 | `dist-cws/tubemetrix-cws.zip` | 128px icon, 440x280 promo, 1400x560 marquee, 3x 1280x800 screenshots | **In Review (`Pending review`)** on CWS |
-| **ReturnLikes** (`#2`) | Return YouTube Dislike (5M+ users) | `dist-cws/returnlikes-cws.zip` | 128px icon, 440x280 promo, 1400x560 marquee, 3x 1280x800 screenshots | **Packaged & Staged** (Awaiting CWS first-review clearance) |
-| **SponsorBlock** (`#3`) | SponsorBlock for YouTube (1M+ users) | `dist-cws/sponsorblock-cws.zip` | Native YouTube transparent HUD | Ready for asset packaging |
-| **VideoSpeed** (`#4`) | Video Speed Controller (3M+ users) | `dist-cws/videospeed-cws.zip` | 0.1x–16x HTML5 speed controller | Ready for asset packaging |
-| **DarkZen** (`#5`) | Dark Reader (5M+ users) | `dist-cws/darkzen-cws.zip` | OLED Dark Mode & Blue-Light filter | Ready for asset packaging |
-| **OneTab** (`#6`) | OneTab (2M+ users) | `dist-cws/onetab-cws.zip` | 1-click tab collapse & session manager | Ready for asset packaging |
-| **UBlockShield** (`#7`) | AdBlock / uBlock Origin | `dist-cws/ublockshield-cws.zip` | Cosmetic ad, cookie-wall & tracker zapper | Ready for asset packaging |
-| **HoneyCoupon** (`#8`) | Honey / Capital One Shopping | `dist-cws/honeycoupon-cws.zip` | Zero-tracking auto-coupon code tester | Ready for asset packaging |
-| **KeepPrice** (`#9`) | Keepa Amazon Price Tracker | `dist-cws/keepprice-cws.zip` | SVG price history & price drop alerts | Ready for asset packaging |
-| **LoomRecord** (`#10`)| Loom Screen Recorder | `dist-cws/loomrecord-cws.zip` | WebCam + Screen recorder & teleprompter | Ready for asset packaging |
+| **ReturnLikes** (`#2`) | Return YouTube Dislike (5M+ users) | `dist-cws/returnlikes-cws.zip` | 128px icon, 440x280 promo, 1400x560 marquee, 3x 1280x800 screenshots | **Packaged & Ready** |
+| **SponsorBlock** (`#3`) | SponsorBlock for YouTube (1M+ users) | `dist-cws/sponsorblock-cws.zip` | 128px icon, 440x280 promo, 1400x560 marquee, 3x 1280x800 screenshots | **Packaged & Ready** |
+| **VideoSpeed** (`#4`) | Video Speed Controller (3M+ users) | `dist-cws/videospeed-cws.zip` | 128px icon, 440x280 promo, 1400x560 marquee, 3x 1280x800 screenshots | **Packaged & Ready** |
+| **DarkZen** (`#5`) | Dark Reader (5M+ users) | `dist-cws/darkzen-cws.zip` | 128px icon, 440x280 promo, 1400x560 marquee, 3x 1280x800 screenshots | **Packaged & Ready** |
+| **OneTab** (`#6`) | OneTab (2M+ users) | `dist-cws/onetab-cws.zip` | 128px icon, 440x280 promo, 1400x560 marquee, 3x 1280x800 screenshots | **Packaged & Ready** |
+| **UBlockShield** (`#7`) | AdBlock / uBlock Origin | `dist-cws/ublockshield-cws.zip` | 128px icon, 440x280 promo, 1400x560 marquee, 3x 1280x800 screenshots | **Packaged & Ready** |
+| **HoneyCoupon** (`#8`) | Honey / Capital One Shopping | `dist-cws/honeycoupon-cws.zip` | 128px icon, 440x280 promo, 1400x560 marquee, 3x 1280x800 screenshots | **Packaged & Ready** |
+| **KeepPrice** (`#9`) | Keepa Amazon Price Tracker | `dist-cws/keepprice-cws.zip` | 128px icon, 440x280 promo, 1400x560 marquee, 3x 1280x800 screenshots | **Packaged & Ready** |
+| **LoomRecord** (`#10`)| Loom Screen Recorder | `dist-cws/loomrecord-cws.zip` | 128px icon, 440x280 promo, 1400x560 marquee, 3x 1280x800 screenshots | **Packaged & Ready** |
 
 ---
 
